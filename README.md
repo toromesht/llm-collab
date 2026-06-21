@@ -1,68 +1,87 @@
-# SynapseFlow
+# SynapseFlow — Multi-Model Neurosynaptic Orchestration
 
-> 多模型智能协作路由系统 — 让 AI 学会调度 AI
+> An 8-model, all-free, STDP-powered intelligent routing agent.
 
-[![Evaluation](https://img.shields.io/badge/eval-98%20questions-blue)]()
-[![Models](https://img.shields.io/badge/models-6-green)]()
-[![Papers](https://img.shields.io/badge/papers-18-purple)]()
+[![Models](https://img.shields.io/badge/models-8-green)]()
+[![License](https://img.shields.io/badge/license-MIT-blue)]()
+[![Status](https://img.shields.io/badge/status-active-brightgreen)]()
 
-## 架构
+**We need testers!** See [How to Test](#-how-to-test) below.
 
-```
-DS-Think (架构师)
-  ├─ DS-PRO (攻坚手)     ← 难题之王, V3 72%
-  ├─ GLM   (中文脑)      ← 知识推理, V2 91%
-  ├─ Kimi  (文书官)      ← 写作文档
-  └─ QWEN  (多面手)      ← 通用任务
-```
+---
 
-## 目录
+## What it does
+
+SynapseFlow automatically routes your question to the best free AI model — like a brain synapse routing signals.
 
 ```
-SynapseFlow/
-├── engine/                 调度引擎
-│   ├── brain.py            决策路由 (v9, 难度自适应)
-│   ├── reasoning.py        推理增强 (CoT + Self-Consistency)
-│   └── vision.py           图像理解 (Kimi Vision)
-├── eval/                   评价体系
-│   ├── benchmark_v1.py     基础评测 (19题)
-│   ├── benchmark_v2.py     交叉验证 (33题)
-│   ├── benchmark_v3.py     深度难题 (46题)
-│   └── weight_tuner.py     奖惩权重训练器
-├── dataset/                训练数据
-│   ├── math_modeling/      数学建模数据集
-│   ├── competition/        竞赛模型使用记录 (27条)
-│   └── decision_logs/      决策日志
-├── papers/                 论文库
-│   ├── routing/            路由方向 (14篇)
-│   ├── nature/             Nature子刊 (4篇)
-│   └── frontier/           前沿算法 (NeurIPS)
-└── config/                 配置
-    ├── llm-config.template.json
-    └── brain_weights.json
+You ask → Feature extraction → Difficulty scoring → Best model(s) selected → Answer
+
+  8 free models: DS-V4(1.6T) | Qwen3-235B | GLM-4+ | Groq-Llama3.3 | Kimi | SJTUx3
 ```
 
-## 三轮评测结果
+## Benchmark Results
 
-| 模型 | V1 简单 | V2 中等 | V3 难题 | 角色 |
-|------|---------|---------|---------|------|
-| DS-PRO | 84% | 76% | **72%** | 攻坚 |
-| DS-Think | 100% | 88% | 70% | 架构 |
-| GLM | 95% | **91%** | 67% | 中文 |
-| QWEN | 90% | 82% | 67% | 通用 |
-| Kimi | 74% | 73% | 61% | 写作 |
+| Category | Score | vs Industry |
+|----------|-------|-------------|
+| Math (GSM8K 0-shot) | 95% | GPT-4o 5-shot: 93% |
+| Code | 100% | Claude 3.5: 96% |
+| DB Design | 100% | GPT-4o est: 90% |
+| Logic | 67% | GPT-5.5 est: 95% |
+| **Cost** | **$0.15-0.30** | GPT-5.5: $5.00 (1/16) |
 
-## 快速开始
+## Quick Start
 
 ```bash
-git clone https://github.com/toromesht/SynapseFlow.git
-cd SynapseFlow
-pip install openai python-docx
-cp config/llm-config.template.json config/llm-config.json
-# Edit with your API keys
-python engine/brain.py "你的问题"
+git clone https://github.com/toromesht/llm-collab.git
+cd llm-collab
+pip install openai numpy
+
+# Set up your free API keys (all platforms are FREE)
+python setup.py
+
+# Ask a question
+python engine/agent.py "Prove Lagrange's theorem in group theory"
 ```
 
-## 核心论文
+## 🤝 How to Test
 
-基于 MasRouter(ACL 2025) / Dynamic MoE(ACL 2024) / Router-R1(NeurIPS 2025) / Chain-of-Thought / Self-Consistency / DeBERTa Gate(Nature 2025)
+**We need help testing!** If you have 10 minutes:
+
+1. **Clone & setup** (see above)
+2. **Get free API keys** from these platforms:
+   - [DeepSeek](https://platform.deepseek.com) — free
+   - [Alibaba Bailian](https://dashscope.console.aliyun.com) — 1M free tokens
+   - [Zhipu BigModel](https://bigmodel.cn) — 5-day free trial
+   - [Groq](https://console.groq.com) — free tier (VPN needed)
+3. **Run the evaluator**: `python eval/benchmark_v3.py`
+4. **Try your own questions**: `python engine/agent.py "your question"`
+5. **Report results**: Open an Issue with your findings
+
+**What to test:**
+- Does the router pick the right model for your question?
+- Does it handle math? Code? Chinese? Logic?
+- Any bugs, crashes, or weird behavior?
+- How does it compare to ChatGPT/Claude on your test questions?
+
+**Every tester helps!** Even just running `python eval/benchmark_v3.py` and posting the output is valuable.
+
+## Architecture
+
+```
+engine/agent.py          Main agent (auto routing)
+engine/brain.py           STDP + BCM + Lateral Inhib + Pruning engine
+engine/api_server.py      OpenAI-compatible API (for LMSYS submission)
+engine/train_router.py    STDP classifier training
+cpp/router.h              High-speed C++ routing (100x Python)
+R/model_analysis.R        Statistical analysis & visualization
+eval/                     Evaluation suite (3 rounds, 98 questions)
+```
+
+## Paper-Driven Design
+
+Built on: MasRouter(ACL 2025) · Dynamic MoE(ACL 2024) · Router-R1(NeurIPS 2025) · RACER(2025) · STDP(NatNeuro 2000) · BCM(JNeuro 1982) · Nature SciRep 2025
+
+## License
+
+MIT — use it, modify it, build on it.
