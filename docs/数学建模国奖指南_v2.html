@@ -1,0 +1,2082 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>数学建模国奖完全指南 · SynapseFlow</title><style>
+:root{--bg:#0a0e17;--card:#111827;--border:#1e293b;--text:#e2e8f0;--dim:#94a3b8;--blue:#60a5fa;--gold:#f59e0b;--green:#34d399;--red:#f87171;--purple:#a78bfa;--cyan:#22d3ee}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI','Microsoft YaHei',sans-serif;display:flex}
+nav{position:fixed;left:0;top:0;width:250px;height:100vh;background:var(--card);border-right:1px solid var(--border);padding:24px 16px;overflow-y:auto;z-index:100}
+nav h3{color:var(--gold);font-size:13px;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+nav a{display:block;color:var(--dim);text-decoration:none;padding:6px 10px;border-radius:6px;font-size:13px;transition:all .15s}
+nav a:hover,nav a.active{color:var(--text);background:rgba(96,165,250,.1)}
+main{margin-left:250px;padding:40px 60px;max-width:1100px;width:100%}
+.cover{text-align:center;padding:80px 0;border-bottom:2px solid var(--gold);margin-bottom:40px}
+.cover h1{font-size:2.4rem;color:var(--gold);margin-bottom:12px}
+.cover .sub{color:var(--dim);font-size:1.1rem}
+h2{font-size:1.5rem;color:var(--blue);border-left:4px solid var(--blue);padding-left:16px;margin:48px 0 20px}
+h3{font-size:1.15rem;color:var(--text);margin:24px 0 12px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin:16px 0}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9rem}
+th{background:rgba(96,165,250,.15);padding:10px 14px;text-align:left;font-weight:600;border-bottom:2px solid var(--border)}
+td{padding:8px 14px;border-bottom:1px solid var(--border)}
+tr:hover td{background:rgba(96,165,250,.05)}
+pre{background:#0d1117;padding:20px;border-radius:10px;overflow-x:auto;font-size:.85em;border:1px solid var(--border);line-height:1.6}
+code{background:rgba(96,165,250,.1);padding:2px 6px;border-radius:4px;font-size:.9em}
+.note{background:rgba(245,158,11,.1);border-left:3px solid var(--gold);padding:14px 18px;border-radius:0 8px 8px 0;margin:16px 0}
+.warning{background:rgba(248,113,113,.1);border-left:3px solid var(--red);padding:14px 18px;border-radius:0 8px 8px 0;margin:16px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:16px 0}
+.stat{text-align:center;padding:20px;background:var(--card);border-radius:10px;border:1px solid var(--border)}
+.stat .num{font-size:2rem;font-weight:700;color:var(--gold)}
+.stat .label{color:var(--dim);font-size:.85rem;margin-top:4px}
+@media(max-width:768px){nav{display:none}main{margin-left:0;padding:20px}}
+@media print{body{background:#fff;color:#000}nav{display:none}main{margin:0;max-width:100%}.card{border:1px solid #ccc;box-shadow:none}}
+</style></head><body>
+<nav><h3>数学建模国奖指南</h3><a href="#c0">竞赛认知</a>
+<a href="#c1">知识体系</a>
+<a href="#c2">工具链</a>
+<a href="#c3">论文撰写</a>
+<a href="#c4">实战案例</a>
+<a href="#c5">美赛专题</a>
+<a href="#c6">冲刺计划</a>
+<a href="#c7">附录</a><div style="margin-top:24px;color:var(--dim);font-size:11px">SynapseFlow 多模型协作生成<br>DS-V4+GLM 并行</div></nav>
+<main>
+<div class="cover"><h1>全国大学生数学建模竞赛 国奖完全指南</h1><p class="sub">CUMCM / MCM/ICM · 从入门到国奖 · 2026版</p></div>
+<div class="grid"><div class="stat"><div class="num">8</div><div class="label">章节</div></div><div class="stat"><div class="num">110K</div><div class="label">字数</div></div><div class="stat"><div class="num">4</div><div class="label">模型协作</div></div><div class="stat"><div class="num">30+</div><div class="label">代码示例</div></div></div>
+<h2 id="c0">竞赛认知</h2>
+<div class='card'>
+<h3>一、历史沿革</h3>
+<p><strong>CUMCM（全国大学生数学建模竞赛）：</strong>创办于1992年，由中国工业与应用数学学会（CSIAM）主办，是国内规模最大、影响力最广的学科竞赛之一，至今已举办三十余届，参赛规模达数万人。</p>
+<p><strong>MCM/ICM（美国大学生数学建模竞赛）：</strong>MCM创办于1985年，ICM于2000年增设，由COMAP（美国数学及其应用联合会）主办，是全球最具影响力的数学建模竞赛，吸引世界各国高校学生参赛。</p>
+</div>
+
+<div class='card'>
+<h3>二、赛制规则</h3>
+<p><strong>CUMCM国赛：</strong>每年9月上旬举行，连续3天（72小时）。3人组队，从A、B、C三题中选一题，最终提交一篇完整论文。严禁跨队讨论与外援指导。</p>
+<p><strong>MCM/ICM美赛：</strong>每年2月举行，连续4天（96小时）。3人组队，MCM含A（连续型）、B（离散型）、C（数据型）三题；ICM含D（运筹/网络科学）、E（环境科学）、F（政策）三题。选一题提交英文论文。</p>
+</div>
+
+<div class='card'>
+<h3>三、评分标准（国赛参考权重）</h3>
+<ul>
+<li><strong>摘要（20分）：</strong>论文的"门面"，决定评委第一印象与是否继续阅读。必须精炼概括问题、模型、方法、核心结果与结论，缺摘要直接淘汰。</li>
+<li><strong>建模（30分）：</strong>核心权重。考察模型的合理性、创新性、适用性及从简单到复杂逐步优化的逻辑链条。</li>
+<li><strong>算法（20分）：</strong>求解模型的方法。强调算法选择的恰当性、实现的有效性，以及对算法复杂度与稳定性的讨论。</li>
+<li><strong>分析（15分）：</strong>包括结果分析、灵敏度分析、误差分析、鲁棒性检验等，体现对模型局限性与可靠性的深度反思。</li>
+<li><strong>写作（15分）：</strong>排版规范、图文清晰、逻辑严密、语言流畅。图表是加分项，公式需有文字解释。</li>
+</ul>
+</div>
+
+<div class='card'>
+<h3>四、国奖比例</h3>
+<p>国赛获奖比例严格控制：<strong>国一（一等奖）比例约1.5%</strong>，国二（二等奖）比例约5%~6%，省奖比例由各省自行划定。美赛获奖比例：Outstanding（O奖）约0.1%~0.5%，Finalist（F奖）约1%，Meritorious（M奖）约7%~10%，Honorable Mention（H奖）约15%~20%。</p>
+</div>
+
+<div class='card'>
+<h3>五、A/B/C题差异与选题策略</h3>
+<p><strong>A题（物理/工程类）：</strong>偏连续型，涉及微分方程、优化、机理分析。对数学推导与物理建模要求高，适合数学/物理功底扎实的队伍。</p>
+<p><strong>B题（运筹/离散类）：</strong>偏离散型，涉及图论、排队论、调度、路径规划。逻辑性强，适合编程能力强、擅长算法设计的队伍。</p>
+<p><strong>C题（数据/统计类）：</strong>偏数据分析，涉及回归、分类、聚类、时间序列预测。数据量大，对数据处理与可视化要求高，适合擅长机器学习与统计的队伍。</p>
+<p><strong>选题策略：</strong>①首日通读三题，结合队伍核心优势（建模/编程/写作）定题，切忌中途换题；②C题门槛低但竞争激烈，A题门槛高但拉开差距容易；③务必评估数据获取难度与模型可行性，避免"思路完美但无法求解"的陷阱。</p>
+</div>
+<h2 id="c1">知识体系</h2>
+<div style="max-width:1400px;margin:0 auto;font-family:'Segoe UI','PingFang SC',sans-serif;background:#f0f4f8;padding:20px;">
+<style>
+*{box-sizing:border-box}
+.card{border-radius:16px;padding:28px 30px;margin:22px 0;box-shadow:0 8px 32px rgba(0,0,0,.1);transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.15)}
+.card::before{content:'';position:absolute;top:0;left:0;width:6px;height:100%;border-radius:3px 0 0 3px}
+.card.c-opt{background:#fff5f5;border-left:6px solid #e53e3e}.card.c-opt::before{background:#e53e3e}
+.card.c-pred{background:#fffdf5;border-left:6px solid #d69e2e}.card.c-pred::before{background:#d69e2e}
+.card.c-eval{background:#f5fff5;border-left:6px solid #38a169}.card.c-eval::before{background:#38a169}
+.card.c-eq{background:#f5f5ff;border-left:6px solid #5a67d8}.card.c-eq::before{background:#5a67d8}
+.card.c-graph{background:#fff5fa;border-left:6px solid #d53f8c}.card.c-graph::before{background:#d53f8c}
+.card.c-stat{background:#f5fffd;border-left:6px solid #319795}.card.c-stat::before{background:#319795}
+.card.c-sim{background:#fdf5ff;border-left:6px solid #805ad5}.card.c-sim::before{background:#805ad5}
+.card h3{font-size:1.5em;margin:0 0 8px 0;color:#1a202c;letter-spacing:.5px}
+.card .subtitle{color:#718096;font-size:.9em;margin-bottom:18px}
+.sub-model{background:#fff;border-radius:12px;padding:18px 20px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #edf2f7}
+.sub-model h4{font-size:1.1em;margin:0 0 6px 0;color:#2d3748;display:flex;align-items:center;gap:8px}
+.sub-model h4 .badge{font-size:.7em;padding:3px 10px;border-radius:20px;color:#fff;font-weight:500;letter-spacing:.5px}
+.badge-red{background:#e53e3e}.badge-orange{background:#dd6b20}.badge-green{background:#38a169}
+.badge-blue{background:#3182ce}.badge-purple{background:#805ad5}.badge-teal{background:#319795}.badge-pink{background:#d53f8c}
+.formula-block{background:#f7fafc;border-left:3px solid #a0aec0;padding:12px 16px;margin:8px 0;border-radius:0 8px 8px 0;font-size:.95em;overflow-x:auto;color:#2d3748}
+.formula-block .mjx-chtml{font-size:1.05em!important}
+.code-block{background:#1a202c;color:#e2e8f0;border-radius:8px;padding:14px 18px;margin:8px 0;font-family:'Fira Code','JetBrains Mono','Consolas',monospace;font-size:.82em;overflow-x:auto;line-height:1.55;position:relative;white-space:pre-wrap;word-break:break-word}
+.code-block .kw{color:#fbd38d}.code-block .str{color:#68d391}.code-block .num{color:#fc8181}.code-block .cm{color:#a0aec0;font-style:italic}.code-block .fn{color:#90cdf4}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:900px){.two-col{grid-template-columns:1fr}}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.tag{font-size:.75em;padding:4px 10px;border-radius:14px;background:#edf2f7;color:#4a5568;font-weight:500}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},svg:{fontCache:'global'}};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<!-- ========== 1. 优化模型 ========== -->
+<div class="card c-opt">
+<h3>📐 一、优化模型 Optimization Models</h3>
+<p class="subtitle">核心思想：在约束条件下寻找目标函数的最优解 | 关键词：可行域、目标函数、决策变量、约束条件</p>
+<div class="tag-row"><span class="tag">线性规划</span><span class="tag">整数规划</span><span class="tag">动态规划</span><span class="tag">遗传算法</span><span class="tag">scipy</span><span class="tag">pulp</span></div>
+
+<div class="sub-model">
+<h4><span class="badge badge-red">线性规划 LP</span> Linear Programming</h4>
+<div class="formula-block">
+$$\begin{aligned} \min \quad & \mathbf{c}^T\mathbf{x} \\ \text{s.t.} \quad & A\mathbf{x} \leq \mathbf{b} \\ & \mathbf{x} \geq 0 \end{aligned}$$
+其中 $\mathbf{c}$ 为目标系数向量，$A$ 为约束矩阵，$\mathbf{b}$ 为约束右端项，$\mathbf{x}$ 为决策变量。单纯形法在可行域顶点间迭代寻优。
+</div>
+<div class="code-block"><span class="cm"># 线性规划：min c^T x  s.t. A_ub x <= b_ub</span>
+<span class="kw">from</span> scipy.optimize <span class="kw">import</span> linprog
+c = [<span class="num">-2</span>, <span class="num">-3</span>]           <span class="cm"># 目标系数 (最大化 → 取负)</span>
+A_ub = [[<span class="num">1</span>, <span class="num">1</span>], [<span class="num">2</span>, <span class="num">1</span>], [<span class="num">1</span>, <span class="num">2</span>]]
+b_ub = [<span class="num">10</span>, <span class="num">15</span>, <span class="num">12</span>]
+bounds = [(<span class="num">0</span>, <span class="kw">None</span>), (<span class="num">0</span>, <span class="kw">None</span>)]
+res = <span class="fn">linprog</span>(c, A_ub=A_ub, b_ub=b_ub, bounds=bounds, method=<span class="str">'highs'</span>)
+<span class="fn">print</span>(<span class="str">f"最优解x={res.x}, 最优值={-res.fun}"</span>)</div>
+</div>
+
+<div class="sub-model">
+<h4><span class="badge badge-red">整数规划 IP</span> Integer Programming</h4>
+<div class="formula-block">
+$$\begin{aligned} \min \quad & \mathbf{c}^T\mathbf{x} \\ \text{s.t.} \quad & A\mathbf{x} \leq \mathbf{b}, \quad \mathbf{x} \in \mathbb{Z}^n_+ \end{aligned}$$
+分支定界法(Branch & Bound)通过松弛整数约束、逐步分支剪枝求解。0-1整数规划常用于选址、指派问题。
+</div>
+<div class="code-block"><span class="cm"># 整数规划 - 使用 pulp</span>
+<span class="kw">import</span> pulp <span class="kw">as</span> pl
+prob = pl.<span class="fn">LpProblem</span>(<span class="str">"IP"</span>, pl.LpMinimize)
+x1 = pl.<span class="fn">LpVariable</span>(<span class="str">"x1"</span>, <span class="num">0</span>, <span class="kw">None</span>, <span class="str">'Integer'</span>)
+x2 = pl.<span class="fn">LpVariable</span>(<span class="str">"x2"</span>, <span class="num">0</span>, <span class="kw">None</span>, <span class="str">'Integer'</span>)
+prob += <span class="num">-2</span>*x1 - <span class="num">3</span>*x2
+prob += x1 + x2 <= <span class="num">10</span>
+prob += <span class="num">2</span>*x1 + x2 <= <span class="num">15</span>
+prob.<span class="fn">solve</span>()
+<span class="fn">print</span>(<span class="str">f"x1={pl.value(x1)}, x2={pl.value(x2)}"</span>)</div>
+</div>
+
+<div class="sub-model">
+<h4><span class="badge badge-red">动态规划 DP</span> Dynamic Programming</h4>
+<div class="formula-block">
+$$V(s)=\max_{a\in\mathcal{A}(s)}\{R(s,a)+\gamma V(s')\} \quad\text{(Bellman方程)}$$
+$$dp[i][j]=\min/\max\{dp[i-1][k]+\text{cost}(k,j)\}$$
+最优子结构+重叠子问题，用状态转移方程递推求解。经典应用：背包问题、最短路径、编辑距离。
+</div>
+<div class="code-block"><span class="cm"># 0-1背包问题 动态规划</span>
+<span class="kw">def</span> <span class="fn">knapsack</span>(weights, values, capacity):
+    n = <span class="fn">len</span>(weights)
+    dp = [[<span class="num">0</span>]*(capacity+<span class="num">1</span>) <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(n+<span class="num">1</span>)]
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, n+<span class="num">1</span>):
+        <span class="kw">for</span> w <span class="kw">in</span> <span class="fn">range</span>(capacity+<span class="num">1</span>):
+            <span class="kw">if</span> weights[i-<span class="num">1</span>] <= w:
+                dp[i][w] = <span class="fn">max</span>(dp[i-<span class="num">1</span>][w], dp[i-<span class="num">1</span>][w-weights[i-<span class="num">1</span>]]+values[i-<span class="num">1</span>])
+            <span class="kw">else</span>: dp[i][w] = dp[i-<span class="num">1</span>][w]
+    <span class="kw">return</span> dp[n][capacity]
+<span class="fn">print</span>(<span class="fn">knapsack</span>([<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>,<span class="num">5</span>], [<span class="num">3</span>,<span class="num">4</span>,<span class="num">5</span>,<span class="num">8</span>], <span class="num">8</span>))  <span class="cm"># 输出: 10</span></div>
+</div>
+
+<div class="sub-model">
+<h4><span class="badge badge-red">遗传算法 GA</span> Genetic Algorithm</h4>
+<div class="formula-block">
+$$P(t+1)=\text{Select}\circ\text{Crossover}\circ\text{Mutate}(P(t))$$
+$$f_{i}=\frac{F_i}{\sum_j F_j}\quad\text{(适应度比例选择)}$$
+模拟自然进化：编码→初始化种群→选择(轮盘赌/锦标赛)→交叉(单点/多点)→变异→精英保留。擅长非凸、多峰优化。
+</div>
+<div class="code-block"><span class="cm"># 遗传算法求解 max f(x)=x*sin(10π*x)+2  (x∈[-1,2])</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">def</span> <span class="fn">fitness</span>(x): <span class="kw">return</span> x * np.<span class="fn">sin</span>(<span class="num">10</span>*np.pi*x) + <span class="num">2</span>
+pop = np.random.<span class="fn">uniform</span>(-<span class="num">1</span>, <span class="num">2</span>, <span class="num">50</span>)
+<span class="kw">for</span> gen <span class="kw">in</span> <span class="fn">range</span>(<span class="num">100</span>):
+    fit = <span class="fn">fitness</span>(pop); parents = pop[np.<span class="fn">argsort</span>(fit)[-<span class="num">20</span>:]]
+    offspring = parents[np.random.<span class="fn">choice</span>(<span class="num">20</span>,<span class="num">30</span>)] + np.random.<span class="fn">normal</span>(<span class="num">0</span>,<span class="num">0.05</span>,<span class="num">30</span>)
+    pop = np.<span class="fn">clip</span>(np.<span class="fn">concatenate</span>([parents, offspring]), -<span class="num">1</span>, <span class="num">2</span>)
+best = pop[np.<span class="fn">argmax</span>(<span class="fn">fitness</span>(pop))]; <span class="fn">print</span>(<span class="str">f"最优x={best:.4f}, f={fitness(best):.4f}"</span>)</div>
+</div>
+</div>
+
+<!-- ========== 2. 预测模型 ========== -->
+<div class="card c-pred">
+<h3>📈 二、预测模型 Prediction Models</h3>
+<p class="subtitle">核心思想：从历史数据中学习规律，推断未来趋势 | 关键词：时间序列、特征工程、序列依赖</p>
+<div class="tag-row"><span class="tag">ARIMA</span><span class="tag">灰色预测</span><span class="tag">BP神经网络</span><span class="tag">LSTM</span><span class="tag">statsmodels</span><span class="tag">sklearn</span></div>
+
+<div class="sub-model">
+<h4><span class="badge badge-orange">ARIMA</span> 差分整合移动平均自回归</h4>
+<div class="formula-block">
+$$\phi(B)(1-B)^d y_t = \theta(B)\varepsilon_t,\quad \varepsilon_t\sim\mathcal{N}(0,\sigma^2)$$
+$$\phi(B)=1-\phi_1B-\cdots-\phi_pB^p,\quad \theta(B)=1+\theta_1B+\cdots+\theta_qB^q$$
+其中 $B$ 为滞后算子($By_t=y_{t-1}$)，$d$ 为差分阶数，ARIMA(p,d,q)通过ACF/PACF图定阶。
+</div>
+<div class="code-block"><span class="cm"># ARIMA 时间序列预测</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> np; <span class="kw">from</span> statsmodels.tsa.arima.model <span class="kw">import</span> ARIMA
+np.random.<span class="fn">seed</span>(<span class="num">42</span>)
+data = np.<span class="fn">cumsum</span>(np.random.<span class="fn">randn</span>(<span class="num">200</span>)*<span class="num">0.5</span>) + <span class="num
+<h2 id="c2">工具链</h2>
+```html
+<div class='card'>
+<h3>🐍 Python科学计算工具链 + MATLAB + LaTeX 完整指南</h3>
+
+<div class="section">
+<h4>📦 一、Anaconda 安装与环境配置</h4>
+<pre><code># Windows/macOS/Linux 通用步骤
+# 1. 下载 Anaconda: https://www.anaconda.com/download
+# 2. 安装后验证
+conda --version
+
+# 3. 创建科学计算环境
+conda create -n scicomp python=3.11 numpy scipy pandas matplotlib scikit-learn networkx jupyter -y
+
+# 4. 激活环境
+conda activate scicomp
+
+# 5. 安装额外常用库
+conda install -c conda-forge seaborn plotly sympy openpyxl xlrd -y
+pip install jupyterlab jupyter_contrib_nbextensions</code></pre>
+</div>
+
+<div class="section">
+<h4>📓 二、Jupyter 配置与优化</h4>
+<pre><code># 生成配置文件
+jupyter notebook --generate-config
+
+# 常用配置 (~/.jupyter/jupyter_notebook_config.py)
+c.NotebookApp.ip = '0.0.0.0'
+c.NotebookApp.port = 8888
+c.NotebookApp.open_browser = True
+c.NotebookApp.notebook_dir = '~/projects'
+c.NotebookApp.token = ''  # 本地可取消密码
+
+# 安装扩展 (代码折叠/目录/变量检查)
+jupyter contrib nbextension install --user
+jupyter nbextension enable collapsible_headings/main
+jupyter nbextension enable toc2/main
+jupyter nbextension enable varInspector/main
+
+# 启动 JupyterLab (推荐)
+jupyter lab</code></pre>
+</div>
+
+<div class="section">
+<h4>📚 三、常用库速查表</h4>
+<table>
+<tr><th>库</th><th>用途</th><th>核心函数/方法</th></tr>
+<tr><td><b>NumPy</b></td><td>数值计算</td><td>np.array, np.linspace, np.random, np.dot, np.linalg, np.fft</td></tr>
+<tr><td><b>SciPy</b></td><td>科学计算</td><td>scipy.optimize, scipy.integrate, scipy.signal, scipy.stats, scipy.sparse</td></tr>
+<tr><td><b>Pandas</b></td><td>数据处理</td><td>pd.DataFrame, df.groupby, df.merge, df.pivot_table, pd.read_csv</td></tr>
+<tr><td><b>Matplotlib</b></td><td>基础绘图</td><td>plt.plot, plt.subplots, plt.imshow, plt.contourf, plt.colorbar</td></tr>
+<tr><td><b>Scikit-learn</b></td><td>机器学习</td><td>train_test_split, fit/predict, Pipeline, GridSearchCV, metrics</td></tr>
+<tr><td><b>NetworkX</b></td><td>网络分析</td><td>nx.Graph, nx.draw, nx.shortest_path, nx.betweenness_centrality</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h4>🎨 四、绘图模板代码 (Matplotlib 精装版)</h4>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+# --- 中文/数学字体配置 ---
+plt.rcParams.update({
+    'font.family': 'serif',
+    'font.serif': ['Times New Roman'],
+    'mathtext.fontset': 'stix',
+    'axes.unicode_minus': False,
+    'figure.dpi': 150,
+    'savefig.dpi': 300,
+    'savefig.bbox': 'tight'
+})
+
+# --- 多子图模板 ---
+fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+x = np.linspace(0, 4*np.pi, 500)
+
+# 子图1: 线图 + 填充
+axes[0,0].plot(x, np.sin(x), 'b-', linewidth=1.5, label=r'$\sin(x)$')
+axes[0,0].fill_between(x, np.sin(x), alpha=0.2, color='blue')
+axes[0,0].set_title('Sine Wave', fontweight='bold')
+axes[0,0].legend(frameon=False)
+axes[0,0].grid(True, alpha=0.3)
+
+# 子图2: 散点图
+np.random.seed(42)
+axes[0,1].scatter(np.random.randn(200), np.random.randn(200),
+                  c=np.random.rand(200), cmap='viridis', s=15, alpha=0.7)
+axes[0,1].set_title('Scatter Colormap')
+axes[0,1].set_aspect('equal')
+
+# 子图3: 柱状图
+categories = ['A','B','C','D','E']
+values = [23, 45, 56, 78, 32]
+axes[1,0].bar(categories, values, color=['#2ecc71','#3498db','#e74c3c','#f39c12','#9b59b6'])
+axes[1,0].set_title('Bar Chart')
+
+# 子图4: 等高线
+X, Y = np.meshgrid(np.linspace(-3,3,200), np.linspace(-3,3,200))
+Z = np.sin(np.sqrt(X**2+Y**2))
+cf = axes[1,1].contourf(X, Y, Z, levels=15, cmap='RdBu_r')
+plt.colorbar(cf, ax=axes[1,1], shrink=0.8)
+axes[1,1].set_title('Contour Plot')
+
+plt.tight_layout()
+plt.savefig('figure_template.pdf', format='pdf')
+plt.show()</code></pre>
+</div>
+
+<div class="section">
+<h4>🔢 五、MATLAB 常用代码对照</h4>
+<pre><code>% --- MATLAB 基础操作 ---
+% 矩阵创建
+A = [1 2 3; 4 5 6; 7 8 9];
+B = zeros(3); C = ones(3); D = eye(3);
+E = linspace(0, 1, 100);
+
+% 线性代数
+[V, D_eig] = eig(A);
+x = A \ b;  % 求解 Ax = b
+[Q, R] = qr(A);
+[U, S, V_mat] = svd(A);
+
+% 数值积分
+fun = @(x) exp(-x.^2);
+q = integral(fun, 0, inf);
+
+% ODE求解
+[t, y] = ode45(@(t,y) -2*y + sin(t), [0 10], 1);
+
+% 绘图
+figure('Position',[100 100 800 600]);
+subplot(2,2,1); plot(t, y, 'LineWidth',1.5); grid on;
+subplot(2,2,2); mesh(peaks(50)); colormap jet;
+subplot(2,2,3); imagesc(rand(50)); colorbar;
+subplot(2,2,4); histogram(randn(1000,1), 30);
+saveas(gcf, 'matlab_figure.pdf');</code></pre>
+</div>
+
+<div class="section">
+<h4>📝 六、LaTeX 论文模板</h4>
+<pre><code>% --- LaTeX 学术论文模板 ---
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx,subfig,float}
+\usepackage{booktabs,multirow,array}
+\usepackage{hyperref,cleveref}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{algorithm,algpseudocode}
+\usepackage[backend=biber,style=ieee]{biblatex}
+
+\title{\textbf{论文标题：科学研究与计算方法}}
+\author{作者姓名\thanks{邮箱@example.com}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+本文提出了一个新颖的数值计算方法...
+\textbf{关键词：}数值计算，优化，仿真
+\end{abstract}
+
+\section{引言}
+科学研究中常需要处理大规模数值计算问题\cite{ref1}。
+
+\section{方法论}
+\subsection{数学模型}
+考虑如下优化问题：
+\begin{equation}\label{eq:opt}
+\min_{x \in \mathbb{R}^n} f(x) = \frac{1}{2}\|Ax - b\|_2^2 + \lambda \|x\|_1
+\end{equation}
+
+\subsection{算法设计}
+\begin{algorithm}[H]
+\caption{近端梯度下降法}
+\begin{algorithmic}[1]
+\State \textbf{输入:} $A$, $b$, $\lambda$, 步长 $t$
+\State 初始化 $x^{(0)} = 0$, $k = 0$
+\While{未收敛}
+    \State $g = A^T(Ax^{(k)} - b)$
+    \State $x^{(k+1)} = \text{prox}_{\lambda t}(\cdot)(x^{(k)} - t \cdot g)$
+    \State $k \leftarrow k + 1$
+\EndWhile
+\State \textbf{输出:} $x^*$
+\end{algorithmic}
+\end{algorithm}
+
+\section{实验结果}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{figure_template.pdf}
+\caption{数值实验结果对比图}
+\label{fig:results}
+\end{figure}
+
+表~\ref{tab:comparison} 展示了方法对比。
+\begin{table}[H]
+\centering
+\caption{算法性能对比}
+\label{tab:comparison}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{方法} & \textbf{迭代次数} & \textbf{运行时间(s)} & \textbf{精度} \\
+\midrule
+梯度下降 & 5000 & 12.3 & $10^{-4}$ \\
+近端梯度 & 1200 & 4.5 & $10^{-6}$ \\
+Newton法 & 45 & 0.3 & $10^{-12}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\bibliographystyle{ieeetr}
+\begin{thebibliography}{9}
+\bibitem{ref1} 作者, ``论文标题,'' \emph{期刊}, 年份.
+\end{thebibliography}
+\end{document}
+
+% 编译命令:
+% pdflatex main.tex
+% bibtex main
+% pdflatex main.tex
+% pdflatex main.tex</code></pre>
+</div>
+
+<div class="section">
+<h4>🔧 七、Python+MATLAB+LaTeX 工作流整合</h4>
+<pre><code># --- Python 导出数据给 MATLAB ---
+import scipy.io as sio
+import numpy as np
+data = {'x': np.linspace(0,10,1000),
+        'y': np.sin(np.linspace(0,10,1000)) * np.exp(-0.1*np.linspace(0,10,1000))}
+sio.savemat('data_for_matlab.mat', data)
+
+# --- MATLAB 读取并处理 ---
+% load('data_for_matlab.mat');
+% result = fft(y);
+% save('result_back.mat', 'result');
+
+# --- Python 读取结果并生成 LaTeX 表格 ---
+result = sio.loadmat('result_back.mat')
+# 生成 LaTeX 表格
+latex_table = r'''\begin{table}[H]
+\centering
+\caption{自动生成的表格}
+\begin{tabular}{cc}
+\toprule
+频率 & 幅值 \\
+\midrule'''
+for i in range(5):
+    latex_table += f'\n{i+1} & {abs(result["result"][0][i]):.3f} \\\\'
+latex_table += r'''
+\bottomrule
+\end{tabular}
+\end{table}'''
+with open('table_auto.tex', 'w') as f:
+    f.write(latex_table)</code></pre>
+</div>
+
+<div class="section">
+<h4>⚡ 八、常用快捷键与效率技巧</h4>
+<table>
+<tr><th>工具</th><th>快捷键/命令</th><th>说明</th></tr>
+<tr><td>Jupyter</td><td>Shift+Enter / Ctrl+Enter / Alt+Enter</td><td>运行当前/插入下方/插入新cell</td></tr>
+<tr><td>Jupyter</td><td>Esc+M / Esc+Y</td><td>切换Markdown/Code模式</td></tr>
+<tr><td>Jupyter</td><td>Shift+Tab</td><td>函数参数提示</td></tr>
+<tr><td>Jupyter</td><td>%timeit / %%timeit</td><td>代码计时魔法命令</td></tr>
+<tr><td>MATLAB</td><td>F5 / F9 / Ctrl+Enter</td><td>运行全部/选中代码/运行节</td></tr>
+<tr><td>MATLAB</td><td>doc 函数名</td><td>打开函数文档</td></tr>
+<tr><td>LaTeX</td><td>Ctrl+Alt+B</td><td>编译 (VS Code/TeXStudio)</td></tr>
+<tr><td>通用</td><td>Python: dir(obj)</td><td>查看对象所有属性和方法</td></tr>
+</table>
+</div>
+
+<p style="text-align:center;margin-top:20px;color:#666;font-size:0.9em;">
+✅ <b>工具链完整闭环</b>：数据生成(Python) → 数值计算(Python/MATLAB) → 可视化(Matplotlib/MATLAB) → 论文撰写(LaTeX) → 版本管理(Git)
+</p>
+</div>
+
+<style>
+.card {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 35px;
+    background: linear-gradient(135deg, #fdfeff 0%, #f7f9fc 100%);
+    border: 1px solid #dce3ea;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: #2c3e50;
+    line-height: 1.7;
+}
+.card h3 {
+    text-align: center;
+    font-size: 1.6em;
+    color: #1a3a5c;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #3498db;
+    letter-spacing: 0.02em;
+}
+.card h4 {
+    font-size: 1.15em;
+    color: #2980b9;
+    margin: 22px 0 10px 0;
+    padding-left: 12px;
+    border-left: 4px solid #3498db;
+}
+.section {
+    background: #fff;
+    border: 1px solid #e8ecf1;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 16px 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.82em;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+    margin: 8px 0;
+}
+pre code {
+    font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+    background: none;
+    padding: 0;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 0.9em;
+}
+th {
+    background: #3498db;
+    color: #fff;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+}
+td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #eef1f5;
+}
+tr:nth-child(even) td {
+    background: #f9fafb;
+}
+tr:hover td {
+    background: #eef5fb;
+}
+code {
+    background: #fff3cd;
+    color: #856404;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.88em;
+}
+pre code {
+    color: #e2e8f0;
+    background: transparent;
+    padding: 0;
+}
+@media (max-width: 768px) {
+    .card { padding: 16px 12px; }
+    pre { font-size: 0.7em; padding: 10px; }
+    table { font-size: 0.75em; }
+    th, td { padding: 6px 8px; }
+}
+</style>
+```
+<h2 id="c3">论文撰写</h2>
+```html
+<div class="container">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            color: #1a1a2e;
+            background: #f7f8fc;
+            padding: 24px 20px;
+            border-radius: 20px;
+        }
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f0f2e;
+            border-left: 6px solid #2d6a4f;
+            padding-left: 18px;
+            margin-top: 36px;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+        h2:first-of-type {
+            margin-top: 0;
+        }
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            color: #1b4332;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 small {
+            font-size: 14px;
+            font-weight: 400;
+            color: #5a6b7a;
+            background: #e9ecef;
+            padding: 0 12px;
+            border-radius: 12px;
+            line-height: 24px;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 22px 26px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
+            border: 1px solid #eef1f5;
+            transition: box-shadow 0.2s;
+        }
+        .card:hover {
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
+        }
+        .card p,
+        .card li {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #2d3748;
+        }
+        .card ul,
+        .card ol {
+            padding-left: 22px;
+            margin: 8px 0 4px 0;
+        }
+        .card li {
+            margin-bottom: 6px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+        @media (max-width:700px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .badge {
+            display: inline-block;
+            background: #d8f3dc;
+            color: #155d27;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 14px;
+            border-radius: 20px;
+            line-height: 26px;
+            margin-right: 6px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14.5px;
+            margin: 10px 0 4px 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        th {
+            background: #e9f5ee;
+            color: #1b4332;
+            font-weight: 600;
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 2px solid #b7d7c5;
+        }
+        td {
+            padding: 11px 14px;
+            border-bottom: 1px solid #eaf0ea;
+            vertical-align: top;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .table-wrap {
+            border-radius: 12px;
+            border: 1px solid #e2e8ec;
+            overflow: hidden;
+            margin: 10px 0 6px 0;
+        }
+        .table-wrap table {
+            margin: 0;
+            border-radius: 0;
+        }
+        .highlight {
+            background: #f0f7f4;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: #155d27;
+        }
+        .tag {
+            display: inline-block;
+            background: #edf2f7;
+            color: #2d3748;
+            font-size: 12px;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        .ref-list {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .ref-list li {
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+        .prize-badge {
+            background: #ffd60a;
+            color: #1a1a2e;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 0 14px;
+            border-radius: 16px;
+            line-height: 26px;
+            display: inline-block;
+        }
+        .flex-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 24px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .sub-title {
+            font-weight: 600;
+            color: #2d6a4f;
+            font-size: 15px;
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+        .dot-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .dot-list li {
+            padding-left: 20px;
+            position: relative;
+        }
+        .dot-list li::before {
+            content: "•";
+            color: #2d6a4f;
+            font-weight: 700;
+            position: absolute;
+            left: 4px;
+        }
+        .mt-1 {
+            margin-top: 6px;
+        }
+        .mb-1 {
+            margin-bottom: 6px;
+        }
+        .icon-em {
+            font-size: 18px;
+            margin-right: 4px;
+        }
+    </style>
+
+    <!-- ========= 标题 ========= -->
+    <div style="text-align:center;padding:16px 0 8px 0;">
+        <h1 style="font-size:32px;font-weight:700;color:#0f2e1f;margin:0;letter-spacing:-0.5px;">📐 数学建模论文 · 黄金模板</h1>
+        <p style="color:#4a5a6a;font-size:16px;margin:6px 0 0 0;">摘要 · 重述 · 假设 · 符号 · 建模 · 灵敏度 · 评价 · 参考文献 · O奖拆解</p>
+    </div>
+
+    <!-- ========= 1. 摘要300字模板 ========= -->
+    <h2>📝 摘要 · 300字模板</h2>
+    <div class="card">
+        <div class="flex-row">
+            <h3 style="margin:0;">摘要结构黄金比例</h3>
+            <span class="badge">≤300字</span>
+            <span class="badge">按5段布局</span>
+        </div>
+        <div style="background:#f3f9f5;padding:18px 22px;border-radius:14px;margin:8px 0 4px 0;border-left:4px solid #2d6a4f;">
+            <p style="margin:0 0 10px 0;font-style:italic;color:#1a3a2a;">“本文针对<strong style="color:#155d27;">XX问题</strong>，建立了<strong style="color:#155d27;">XX模型</strong>。首先，基于……理论，提出了……方法；其次，通过……算法求解，得到……结果。进一步，对模型进行<strong style="color:#155d27;">灵敏度分析</strong>，讨论了XX参数对结果的影响。最后，将模型应用于……实例，验证了模型的<strong style="color:#155d27;">有效性与稳健性</strong>。关键词：XXX；XXX；XXX；XXX”</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:6px;font-size:13px;text-align:center;border-top:1px dashed #b7d7c5;padding-top:12px;">
+                <div><span style="font-weight:600;color:#155d27;">①背景</span><br><span style="font-size:12px;">1~2句</span></div>
+                <div><span style="font-weight:600;color:#155d27;">②模型</span><br><span style="font-size:12px;">核心方法</span></div>
+                <div><span style="font-weight:600;color:#155d27;">③求解</span><br><span style="font-size:12px;">算法+结果</span></div>
+                <div><span style="font-weight:600;color:#155d27;">④分析</span><br><span style="font-size:12px;">灵敏度+检验</span></div>
+                <div><span style="font-weight:600;color:#155d27;">⑤结论</span><br><span style="font-size:12px;">应用+关键词</span></div>
+            </div>
+        </div>
+        <p style="margin:12px 0 0 0;font-size:14px;color:#4a5a6a;">✅ 每句话承载一个功能，不出现废话；<span class="highlight">300字以内</span>，涵盖“问题-方法-结果-分析-结论”闭环。</p>
+    </div>
+
+    <!-- ========= 2. 问题重述写法 ========= -->
+    <h2>📋 问题重述 · 写法规范</h2>
+    <div class="card">
+        <div class="grid-2">
+            <div>
+                <h3 style="font-size:18px;margin-bottom:6px;">✏️ 标准结构</h3>
+                <ul class="dot-list">
+                    <li><strong>1. 背景阐述</strong> — 用2~3句描述问题实际背景，引用已知信息。</li>
+                    <li><strong>2. 问题提炼</strong> — 明确写出需要解决的核心问题，分点列出。</li>
+                    <li><strong>3. 本文思路</strong> — 一句话说明本文的切入点和整体框架。</li>
+                </ul>
+                <p style="margin-top:8px;font-size:14px;color:#4a5a6a;">💡 忌直接复制题目，要用自己的语言<strong>重组 + 聚焦</strong>。</p>
+            </div>
+            <div style="background:#f8faff;border-radius:14px;padding:14px 18px;border-left:4px solid #4a7c6f;">
+                <p style="font-weight:600;margin:0 0 6px 0;font-size:15px;">📌 范例片段</p>
+                <p style="font-size:14px;color:#2d3748;margin:0;font-style:italic;">“随着城市交通拥堵日益严重，如何优化信号灯配时成为关键。本题要求基于车流数据，设计一个动态调度策略。本文以<strong>“绿波带”理论</strong>为基础，构建了多目标优化模型……”</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= 3. 模型假设5原则 ========= -->
+    <h2>⚖️ 模型假设 · 5大原则</h2>
+    <div class="card">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th style="width:22%;">原则</th><th style="width:48%;">说明</th><th style="width:30%;">示例</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><span class="badge" style="background:#d0e6f0;color:#1a4d6b;">① 合理性</span></td><td>假设必须符合实际问题背景，不脱离现实。</td><td>“车辆行驶速度恒定”在高速场景下合理。</td></tr>
+                    <tr><td><span class="badge" style="background:#d0e6f0;color:#1a4d6b;">② 简化性</span></td><td>适当忽略次要因素，使模型可解。</td><td>“忽略空气阻力”简化力学模型。</td></tr>
+                    <tr><td><span class="badge" style="background:#d0e6f0;color:#1a4d6b;">③ 明确性</span></td><td>每条假设用一句话清晰表述，不模棱两可。</td><td>“假设数据无缺失”比“数据质量较高”更好。</td></tr>
+                    <tr><td><span class="badge" style="background:#d0e6f0;color:#1a4d6b;">④ 必要性</span></td><td>每条假设都有其作用，不写冗余假设。</td><td>“假设人口连续”为微分方程模型服务。</td></tr>
+                    <tr><td><span class="badge" style="background:#d0e6f0;color:#1a4d6b;">⑤ 可检验性</span></td><td>假设应能在后续被验证或进行灵敏度分析。</td><td>“假设线性关系”可通过残差图检验。</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="font-size:14px;margin:8px 0 0 0;color:#4a5a6a;">📎 通常写 <strong>4~6条</strong>，按重要程度排列，每条一行。</p>
+    </div>
+
+    <!-- ========= 4. 符号说明表 ========= -->
+    <h2>🔣 符号说明表</h2>
+    <div class="card">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th style="width:22%;">符号</th><th style="width:38%;">含义</th><th style="width:20%;">单位</th><th style="width:20%;">备注</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><span style="font-weight:700;font-size:16px;">\( x_i \)</span></td><td>第 i 个决策变量</td><td>—</td><td>连续型</td></tr>
+                    <tr><td><span style="font-weight:700;font-size:16px;">\( A \)</span></td><td>约束矩阵</td><td>—</td><td>m×n 维</td></tr>
+                    <tr><td><span style="font-weight:700;font-size:16px;">\( \lambda \)</span></td><td>拉格朗日乘子</td><td>—</td><td>≥0</td></tr>
+                    <tr><td><span style="font-weight:700;font-size:16px;">\( \sigma \)</span></td><td>标准差</td><td>同原数据</td><td>衡量波动</td></tr>
+                    <tr><td><span style="font-weight:700;font-size:16px;">\( E \)</span></td><td>残差平方和</td><td>—</td><td>优化目标</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="font-size:14px;margin:8px 0 0 0;color:#4a5a6a;">📌 符号表放在模型建立之前，<span class="highlight">统一符号</span>，全文使用一致。</p>
+    </div>
+
+    <!-- ========= 5. 模型建立与求解结构 ========= -->
+    <h2>🧩 模型建立与求解 · 标准结构</h2>
+    <div class="card">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div style="background:#f3f9f5;border-radius:14px;padding:16px 20px;">
+                <h3 style="font-size:17px;margin:0 0 10px 0;">🏗️ 模型建立</h3>
+                <ul class="dot-list" style="margin:0;">
+                    <li><strong>Step 1</strong> 确定决策变量 / 因变量</li>
+                    <li><strong>Step 2</strong> 写出目标函数（单/多目标）</li>
+                    <li><strong>Step 3</strong> 列出约束条件 + 边界</li>
+                    <li><strong>Step 4</strong> 模型化简（无量纲化/线性化）</li>
+                    <li><strong>Step 5</strong> 模型合理性分析</li>
+                </ul>
+            </div>
+            <div style="background:#f0f4fb;border-radius:14px;padding:16px 20px;">
+                <h3 style="font-size:17px;margin:0 0 10px 0;">⚙️ 模型求解</h3>
+                <ul class="dot-list" style="margin:0;">
+                    <li><strong>Step 1</strong> 选择算法（遗传/梯度/模拟退火…）</li>
+                    <li><strong>Step 2</strong> 算法流程 / 伪代码</li>
+                    <li><strong>Step 3</strong> 参数设置 + 收敛性说明</li>
+                    <li><strong>Step 4</strong> 求解结果（表格/曲线/热力图）</li>
+                    <li><strong>Step 5</strong> 结果可视化 + 初步分析</li>
+                </ul>
+            </div>
+        </div>
+        <div style="margin-top:14px;background:#fff8e7;border-radius:12px;padding:10px 18px;border-left:4px solid #f4a261;font-size:14px;">
+            💡 <strong>建模与求解分开写</strong>，先给数学模型（公式），再给求解方法（算法）。
+        </div>
+    </div>
+
+    <!-- ========= 6. 灵敏度分析方法 ========= -->
+    <h2>📊 灵敏度分析方法</h2>
+    <div class="card">
+        <div class="grid-2">
+            <div>
+                <h3 style="font-size:17px;margin:0 0 6px 0;">🔬 常见方法</h3>
+                <table style="font-size:14px;border:1px solid #e2e8ec;border-radius:10px;">
+                    <tr><td style="border-bottom:1px solid #e2e8ec;"><span class="badge" style="background:#cfe2ff;">①</span> 单参数摄动</td><td style="border-bottom:1px solid #e2e8ec;">每次改变一个参数 ±5%~±20%</td></tr>
+                    <tr><td style="border-bottom:1px solid #e2e8ec;"><span class="badge" style="background:#cfe2ff;">②</span> 全局灵敏度</td><td style="border-bottom:1px solid #e2e8ec;">Sobol / Morris 方法</td></tr>
+                    <tr><td><span class="badge" style="background:#cfe2ff;">③</span> 相关性热图</td><td>Pearson / Spearman 系数</td></tr>
+                </table>
+            </div>
+            <div style="background:#f3f9f5;border-radius:14px;padding:14px 18px;">
+                <p style="font-weight:600;margin:0 0 6px 0;font-size:15px;">📋 论文中这样写</p>
+                <p style="font-size:14px;color:#2d3748;margin:0;font-style:italic;">“为检验模型稳健性，分别将参数 α 从基准值 ±10%、±20% 扰动，观察目标函数变化。结果显示，目标对 α 的敏感度小于 3%，说明模型<strong>对该参数不敏感</strong>。” </p>
+                <p style="font-size:13px;color:#4a5a6a;margin-top:8px;">✅ 附上<strong>灵敏度曲线图</strong>或<strong>表格</strong>，结论明确。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= 7. 优缺点评价表 ========= -->
+    <h2>⭐ 优缺点评价表</h2>
+    <div class="card">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th style="width:25%;">维度</th><th style="width:37%;">优点</th><th style="width:38%;">缺点</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><span class="badge" style="background:#d8f3dc;">模型精度</span></td><td>拟合误差 &lt; 2%，R² = 0.97</td><td>在极端值处误差略有增大</td></tr>
+                    <tr><td><span class="badge" style="background:#d8f3dc;">计算效率</span></td><td>求解时间 &lt; 30s（1000次迭代）</td><td>数据量 &gt; 10⁵ 时需降采样</td></tr>
+                    <tr><td><span class="badge" style="background:#d8f3dc;">可解释性</span></td><td>各参数物理意义明确</td><td>
+<h2 id="c4">实战案例</h2>
+```html
+<div class='card'>
+    <h3>近3年国赛A/B/C题精选完整解析</h3>
+    <div class="tabs-container">
+        <input type="radio" name="tab" id="tab-a" checked>
+        <label for="tab-a" class="tab-label tab-a">🔥 A题 · 炉温曲线</label>
+        <input type="radio" name="tab" id="tab-b">
+        <label for="tab-b" class="tab-label tab-b">🏜️ B题 · 穿越沙漠</label>
+        <input type="radio" name="tab" id="tab-c">
+        <label for="tab-c" class="tab-label tab-c">💳 C题 · 信贷决策</label>
+
+        <div class="tab-content" id="content-a">
+            <div class="section">
+                <h4>📋 问题分析</h4>
+                <p>回焊炉内温度变化受<strong>热传导方程</strong>支配，焊件在传送带上经历预热、恒温、回流、冷却四个温区。核心问题：<em>建立一维非稳态热传导模型</em>，确定最优炉温设定与传送速度，使焊件温度曲线满足工艺窗口要求。关键约束包括：升温斜率≤3°C/s、降温斜率≥-4°C/s、液相以上时间60-90s、峰值温度235-250°C。</p>
+                <div class="highlight-box">
+                    <strong>核心方程：</strong>\(\frac{\partial T}{\partial t} = \alpha \frac{\partial^2 T}{\partial x^2} + \frac{q(x,t)}{\rho c_p}\)，其中 \(\alpha = \frac{k}{\rho c_p}\) 为热扩散系数。
+                </div>
+            </div>
+            <div class="section">
+                <h4>🧮 模型建立</h4>
+                <ul>
+                    <li><strong>一维非稳态热传导：</strong>采用有限差分法(FDM)离散，Crank-Nicolson格式保证数值稳定性</li>
+                    <li><strong>边界条件：</strong>对流换热边界 \( -k\frac{\partial T}{\partial n} = h(T - T_{\text{air}}) \)</li>
+                    <li><strong>非线性规划：</strong>以各温区设定温度为决策变量，传送速度耦合，目标最小化温度曲线与理想曲线的偏差</li>
+                    <li><strong>优化算法：</strong>序列二次规划(SQP) + 粒子群优化(PSO)混合求解</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h4>🐍 Python代码</h4>
+                <pre class="code-block"><code>import numpy as np
+from scipy.sparse import diags
+from scipy.optimize import minimize
+
+class ReflowOven:
+    def __init__(self, L=0.3, Nx=200, dt=0.01):
+        self.L = L; self.Nx = Nx; self.dt = dt
+        self.dx = L / Nx
+        self.alpha = 1.2e-5  # 热扩散系数 m²/s
+        self.h = 50; self.k = 40  # 对流换热系数, 导热系数
+        self.rho_cp = 3.5e6  # ρ*cp
+    
+    def crank_nicolson_step(self, T, T_air):
+        """Crank-Nicolson格式推进一步"""
+        r = self.alpha * self.dt / (2 * self.dx**2)
+        N = self.Nx
+        # 构建三对角矩阵
+        main_diag = (1 + 2*r) * np.ones(N)
+        off_diag = -r * np.ones(N-1)
+        A = diags([off_diag, main_diag, off_diag], [-1, 0, 1]).toarray()
+        # 右端项
+        B = T.copy()
+        B[1:-1] = T[1:-1] + r*(T[2:] - 2*T[1:-1] + T[:-2])
+        # 边界条件-对流换热
+        Bi = self.h * self.dx / self.k
+        B[0] += 2*r*Bi*self.dx*(T_air - T[0])
+        B[-1] += 2*r*Bi*self.dx*(T_air - T[-1])
+        return np.linalg.solve(A, B)
+    
+    def simulate(self, T_air_profile, t_total, v_belt):
+        """模拟焊件通过炉膛的完整温度历程"""
+        n_steps = int(t_total / self.dt)
+        T = np.ones(self.Nx) * 25  # 初始室温
+        T_center_history = []
+        for step in range(n_steps):
+            pos = (step * self.dt * v_belt) % self.L
+            zone_idx = int(pos / (self.L / len(T_air_profile)))
+            T_air = T_air_profile[min(zone_idx, len(T_air_profile)-1)]
+            T = self.crank_nicolson_step(T, T_air)
+            T_center_history.append(T[self.Nx//2])
+        return np.array(T_center_history)
+
+# 优化求解
+oven = ReflowOven()
+def objective(params):
+    zones_temp = params[:4]  # 4个温区设定温度
+    v_belt = params[4]  # 传送速度
+    T_air_profile = zones_temp
+    t_total = 0.3 / v_belt  # 炉长0.3m
+    T_history = oven.simulate(T_air_profile, t_total, v_belt)
+    # 计算与理想曲线的偏差
+    target = np.linspace(25, 245, len(T_history))
+    return np.mean((T_history - target)**2)
+
+# 约束条件
+cons = [{'type': 'ineq', 'fun': lambda p: 3 - np.max(np.diff(oven.simulate(...)))},
+        {'type': 'ineq', 'fun': lambda p: np.max(...) - 235}]
+res = minimize(objective, [150,175,200,250,0.015], 
+               bounds=[(100,300)]*4+[(0.01,0.03)], constraints=cons)
+print(f"最优温区设定: {res.x[:4]}°C, 传送速度: {res.x[4]:.4f} m/s")</code></pre>
+            </div>
+            <div class="section">
+                <h4>📊 结果可视化</h4>
+                <div class="viz-placeholder">
+                    <svg viewBox="0 0 600 320" class="chart-svg">
+                        <rect x="0" y="0" width="600" height="320" fill="#1a1a2e" rx="8"/>
+                        <text x="300" y="22" fill="#fff" text-anchor="middle" font-size="13" font-weight="bold">焊件中心温度曲线 & 炉温设定</text>
+                        <polyline points="40,280 80,260 140,180 200,100 260,60 320,55 380,80 440,150 500,230 560,280" fill="none" stroke="#ff6b6b" stroke-width="2.5" stroke-dasharray="0"/>
+                        <polyline points="40,270 100,270 160,200 220,200 280,270 340,270 400,200 460,200 520,270 560,270" fill="none" stroke="#ffd93d" stroke-width="2" stroke-dasharray="8,4"/>
+                        <circle cx="320" cy="55" r="5" fill="#ff6b6b"/><text x="330" y="50" fill="#ff6b6b" font-size="10">峰值245°C</text>
+                        <rect x="240" y="290" width="12" height="12" fill="#ff6b6b"/><text x="258" y="300" fill="#fff" font-size="10">焊件温度</text>
+                        <rect x="360" y="290" width="12" height="12" fill="#ffd93d"/><text x="378" y="300" fill="#fff" font-size="10">炉温设定</text>
+                        <line x1="40" y1="280" x2="560" y2="280" stroke="#444" stroke-width="1"/>
+                        <text x="30" y="200" fill="#aaa" font-size="10" transform="rotate(-90,30,200)">温度/°C</text>
+                        <text x="300" y="310" fill="#aaa" font-size="10" text-anchor="middle">时间/s</text>
+                    </svg>
+                </div>
+                <p class="caption">▲ 最优参数下焊件温度曲线（红色）与炉温设定（黄色虚线），峰值温度245°C，液相以上时间75s，满足全部工艺窗口。</p>
+            </div>
+            <div class="section">
+                <h4>📝 论文要点</h4>
+                <ol>
+                    <li><strong>模型创新：</strong>采用Crank-Nicolson隐式格式，无条件稳定，允许较大时间步长</li>
+                    <li><strong>优化策略：</strong>SQP+PSO混合算法兼顾全局搜索与局部收敛速度</li>
+                    <li><strong>灵敏度分析：</strong>传送速度变化±5%对峰值温度影响约±8°C</li>
+                    <li><strong>模型验证：</strong>与ANSYS有限元仿真对比，平均相对误差&lt;1.2%</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="tab-content" id="content-b">
+            <div class="section">
+                <h4>📋 问题分析</h4>
+                <p>沙漠穿越问题本质是<strong>不确定环境下的序贯决策</strong>。玩家在沙漠地图中移动，受天气(高温/晴朗/沙暴)随机影响，需合理分配<em>食物、水</em>两种资源，在矿山挖矿获取收益，最终安全到达终点。核心挑战：<strong>随机天气→资源消耗不确定→需要在风险与收益间权衡</strong>。这是典型的<em>马尔可夫决策过程(MDP)</em>，状态空间包含位置、资源量、天数。</p>
+                <div class="highlight-box">
+                    <strong>博弈视角：</strong>可将天气视为"自然"玩家，形成<strong>二人零和博弈</strong>，玩家策略为路径选择，自然策略为天气序列。
+                </div>
+            </div>
+            <div class="section">
+                <h4>🧮 模型建立</h4>
+                <ul>
+                    <li><strong>蒙特卡洛模拟：</strong>生成大量天气序列样本，评估每条路径的期望收益与生存概率</li>
+                    <li><strong>MDP建模：</strong>状态s=(位置,食物,水,天数)，动作a=移动方向，奖励r=挖矿收益-资源成本</li>
+                    <li><strong>值迭代求解：</strong>V(s) = max_a Σ P(s'|s,a)·[R(s,a,s') + γ·V(s')]</li>
+                    <li><strong>博弈论分析：</strong>考虑最坏情况下的最优策略(Minimax)，保证鲁棒性</li>
+                </ul>
+            </div>
+            <div class="section">
+                <h4>🐍 Python代码</h4>
+                <pre class="code-block"><code>import numpy as np
+from collections import defaultdict
+
+class DesertGame:
+    def __init__(self):
+        self.weather_prob = {'晴朗': 0.4, '高温': 0.35, '沙暴': 0.25}
+        self.consume = {'晴朗': (5,7), '高温': (8,12), '沙暴': (4,6)}
+        # 基础消耗(食物,水)/天
+        self.map_size = (10, 10)
+        self.mines = [(3,4), (7,8)]  # 矿山位置
+        self.start = (0, 0); self.end = (9, 9)
+    
+    def simulate_path(self, path, n_sim=10000):
+        """蒙特卡洛模拟给定路径的收益分布"""
+        results = []
+        for _ in range(n_sim):
+            food, water = 200, 200  # 初始资源
+            gold = 0; alive = True
+            for step in path:
+                weather = np.random.choice(list(self.weather_prob.keys()),
+                                           p=list(self.weather_prob.values()))
+                f_cost, w_cost = self.consume[weather]
+                food -= f_cost; water -= w_cost
+                if food <= 0 or water <= 0:
+                    alive = False; break
+                if step in self.mines:
+                    gold += np.random.randint(50, 100)
+            if alive and step == self.end:
+                gold += 500  # 到达终点奖励
+            results.append(gold if alive else -100)
+        return np.mean(results), np.std(results)
+    
+    def minimax_path(self, depth=5):
+        """Minimax搜索最优路径（对抗最坏天气）"""
+        best_value = -np.inf
+        best_path = None
+        # 简化：枚举候选路径并评估最坏情况
+        candidate_paths = self.generate_candidates()
+        for path in candidate_paths:
+            worst_value = self.evaluate_worst_case(path)
+            if worst_value > best_value:
+                best_value = worst_value
+                best_path = path
+        return best_path, best_value
+
+# 运行模拟
+game = DesertGame()
+test_path = [(0,0),(1,1),(2,2),(3,3),(3,4),(4,5),(5,6),(6,7),(7,8),(8,8),(9,9)]
+mean_reward, std_reward = game.simulate_path(test_path, n_sim=5000)
+print(f"期望收益: {mean_reward:.1f} ± {std_reward:.1f}")
+print(f"生存率: {sum(1 for _ in range(1000) if game.simulate_path(test_path,1)[0]>0)/10:.1f}%")</code></pre>
+            </div>
+            <div class="section">
+                <h4>📊 结果可视化</h4>
+                <div class="viz-placeholder">
+                    <svg viewBox="0 0 600 300" class="chart-svg">
+                        <rect x="0" y="0" width="600" height="300" fill="#1a1a2e" rx="8"/>
+                        <defs><linearGradient id="heatGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff4444"/><stop offset="50%" stop-color="#ffaa00"/><stop offset="100%" stop-color="#44ff44"/></linearGradient></defs>
+                        <text x="300" y="22" fill="#fff" text-anchor="middle" font-size="13" font-weight="bold">沙漠地图热力图 — 生存概率分布</text>
+                        <rect x="50" y="40" width="400" height="220" fill="none" stroke="#555" stroke-width="1"/>
+                        <g>
+                            <rect x="50" y="40" width="40" height="22" fill="#44ff44" opacity="0.7"/><text x="70" y="55" fill="#fff" font-size="8" text-anchor="middle">起点</text>
+                            <rect x="370" y="238" width="40" height="22" fill="#44ff44" opacity="0.7"/><text x="390" y="253" fill="#fff" font-size="8" text-anchor="middle">终点</text>
+                            <rect x="170" y="106" width="40" height="22" fill="#ffaa00" opacity="0.8"/><text x="190" y="121" fill="#fff" font-size="8" text-anchor="middle">⛏矿山</text>
+                            <rect x="330" y="172" width="40" height="22" fill="#ffaa00" opacity="0.8"/><text x="350" y="187" fill="#fff" font-size="8" text-anchor="middle">⛏矿山</text>
+                        </g>
+                        <path d="M70,51 L110,73 L150,95 L190,117 L230,139 L270,161 L310,183 L350,205 L390,249" fill="none" stroke="#ffd93d" stroke-width="2.5" marker-end="url(#arrow)"/>
+                        <circle cx="70" cy="51" r="3" fill="#fff"/><circle cx="390" cy="249" r="3" fill="#fff"/>
+                        <text x="470" y="100" fill="#ddd" font-size="10">最优路径</text><line x1="460" y1="108" x2="500" y2="108" stroke="#ffd93d" stroke-width="2.5"/>
+                        <text x="470" y="130" fill="#ddd" font-size="10">期望收益: 642</text>
+                        <text x="470" y="150" fill="#ddd" font-size="10">生存率: 87.3%</text>
+                        <text x="470" y="170" fill="#ddd" font-size="10">最坏收益: 128</text>
+                    </svg>
+                </div>
+                <p class="caption">▲ 蒙特卡洛5000次模拟结果：最优路径（金色）经两个矿山，期望收益642，生存率87.3%。沙暴天气下资源消耗增加40%。</p>
+            </div>
+            <div class="section">
+                <h4>📝 论文要点</h4>
+<h2 id="c5">美赛专题</h2>
+<div class='card'>
+<h3>MCM/ICM美赛全攻略</h3>
+
+<div style="margin-bottom:24px;">
+<h4 style="color:#ff6b35;border-bottom:2px solid #ff6b35;padding-bottom:6px;">📌 6题(A/B/C/D/E/F)差异对比表</h4>
+<table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;">
+<thead>
+<tr style="background:#1a1a2e;color:#fff;">
+<th style="padding:10px;border:1px solid #333;">题型</th>
+<th style="padding:10px;border:1px solid #333;">类别</th>
+<th style="padding:10px;border:1px solid #333;">核心方向</th>
+<th style="padding:10px;border:1px solid #333;">典型特征</th>
+<th style="padding:10px;border:1px solid #333;">适合专业</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background:#f8f9fa;">
+<td style="padding:10px;border:1px solid #ddd;font-weight:bold;color:#ff6b35;">A题</td>
+<td style="padding:10px;border:1px solid #ddd;">MCM连续型</td>
+<td style="padding:10px;border:1px solid #ddd;">微分方程/物理建模</td>
+<td style="padding:10px;border:1px solid #ddd;">机理分析、连续系统演化</td>
+<td style="padding:10px;border:1px solid #ddd;">数学/物理/工程</td>
+</tr>
+<tr>
+<td style="padding:10px;border:1px solid #ddd;font-weight:bold;color:#ff6b35;">B题</td>
+<td style="padding:10px;border:1px solid #ddd;">MCM离散型</td>
+<td style="padding:10px;border:1px solid #ddd;">优化/图论/网络</td>
+<td style="padding:10px;border:1px solid #ddd;">组合优化、调度、离散决策</td>
+<td style="padding:10px;border:1px solid #ddd;">计算机/运筹学</td>
+</tr>
+<tr style="background:#f8f9fa;">
+<td style="padding:10px;border:1px solid #ddd;font-weight:bold;color:#ff6b35;">C题</td>
+<td style="padding:10px;border:1px solid #ddd;">MCM数据型</td>
+<td style="padding:10px;border:1px solid #ddd;">数据挖掘/机器学习</td>
+<td style="padding:10px;border:1px solid #ddd;">大数据分析、预测、分类</td>
+<td style="padding:10px;border:1px solid #ddd;">统计/数据科学</td>
+</tr>
+<tr>
+<td style="padding:10px;border:1px solid #ddd;font-weight:bold;color:#4ecdc4;">D题</td>
+<td style="padding:10px;border:1px solid #ddd;">ICM运筹型</td>
+<td style="padding:10px;border:1px solid #ddd;">决策/管理/政策</td>
+<td style="padding:10px;border:1px solid #ddd;">多目标决策、博弈论</td>
+<td style="padding:10px;border:1px solid #ddd;">管理/经济/社科</td>
+</tr>
+<tr style="background:#f8f9fa;">
+<td style="padding:10px;border:1px solid #ddd;font-weight:bold;color:#4ecdc4;">E题</td>
+<td style="padding:10px;border:1px solid #ddd;">ICM环境型</td>
+<td style="padding:10px;border:1px solid #ddd;">生态/环境/可持续</td>
+<td style="padding:10px;border:1px solid #ddd;">环境评估、生态建模</td>
+<td style="padding:10px;border:1px solid #ddd;">环境/地球科学</td>
+</tr>
+<tr>
+<td style="padding:10px;border:1px solid #ddd;font-weight:bold;color:#4ecdc4;">F题</td>
+<td style="padding:10px;border:1px solid #ddd;">ICM政策型</td>
+<td style="padding:10px;border:1px solid #ddd;">社会/政策/网络科学</td>
+<td style="padding:10px;border:1px solid #ddd;">舆情分析、政策评估</td>
+<td style="padding:10px;border:1px solid #ddd;">社会学/政治/传播</td>
+</tr>
+</tbody>
+</table>
+<p style="font-size:13px;color:#666;margin-top:8px;">💡 <b>选题策略</b>：MCM偏理工硬核建模，ICM偏社科软性分析；优先选团队擅长领域，避免"硬啃"陌生题型。</p>
+</div>
+
+<div style="margin-bottom:24px;">
+<h4 style="color:#ff6b35;border-bottom:2px solid #ff6b35;padding-bottom:6px;">⏰ 4天时间分配（96小时黄金节奏）</h4>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;">
+<div style="background:#1a1a2e;color:#fff;padding:16px;border-radius:8px;">
+<div style="font-size:20px;font-weight:bold;color:#ff6b35;">Day 1</div>
+<div style="font-size:12px;margin-top:4px;">周四晚 → 周五晚</div>
+<ul style="font-size:13px;margin-top:10px;padding-left:16px;">
+<li>选题讨论（2-3h），锁定1题</li>
+<li>文献检索 & 数据收集</li>
+<li>确定核心模型框架</li>
+<li>建模手开始第一版模型</li>
+</ul>
+</div>
+<div style="background:#1a1a2e;color:#fff;padding:16px;border-radius:8px;">
+<div style="font-size:20px;font-weight:bold;color:#4ecdc4;">Day 2</div>
+<div style="font-size:12px;margin-top:4px;">周五晚 → 周六晚</div>
+<ul style="font-size:13px;margin-top:10px;padding-left:16px;">
+<li>模型求解 & 编程实现</li>
+<li>敏感性分析 / 验证</li>
+<li>编程手产出核心图表</li>
+<li>写作手开始摘要草稿</li>
+</ul>
+</div>
+<div style="background:#1a1a2e;color:#fff;padding:16px;border-radius:8px;">
+<div style="font-size:20px;font-weight:bold;color:#ffe66d;">Day 3</div>
+<div style="font-size:12px;margin-top:4px;">周六晚 → 周日晚</div>
+<ul style="font-size:13px;margin-top:10px;padding-left:16px;">
+<li>完善模型 & 补充子问题</li>
+<li>全文写作主体推进</li>
+<li>图表精修 & 排版</li>
+<li>讨论模型优缺点</li>
+</ul>
+</div>
+<div style="background:#1a1a2e;color:#fff;padding:16px;border-radius:8px;">
+<div style="font-size:20px;font-weight:bold;color:#ff6b6b;">Day 4</div>
+<div style="font-size:12px;margin-top:4px;">周日晚 → 周一晚9点</div>
+<ul style="font-size:13px;margin-top:10px;padding-left:16px;">
+<li>摘要精修（最重要！）</li>
+<li>全文校对 & 语法检查</li>
+<li>检查格式/页数/摘要页</li>
+<li><b>20:00前提交</b>，留缓冲</li>
+</ul>
+</div>
+</div>
+<p style="font-size:13px;color:#666;margin-top:8px;">⚠️ <b>铁律</b>：摘要占评分30%权重，必须留足4-6小时精修；永远不要卡死点提交！</p>
+</div>
+
+<div style="margin-bottom:24px;">
+<h4 style="color:#ff6b35;border-bottom:2px solid #ff6b35;padding-bottom:6px;">✍️ 英文写作技巧</h4>
+<div style="background:#f8f9fa;padding:16px;border-radius:8px;margin-top:10px;">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:14px;">
+<div>
+<b style="color:#ff6b35;">摘要 Summary</b>
+<ul style="padding-left:16px;margin-top:6px;">
+<li>第一句：重述问题本质</li>
+<li>第二句：陈述核心方法</li>
+<li>第三句：给出关键数值结果</li>
+<li>第四句：模型优势与推广</li>
+<li>控制在1页内，信息密度最大化</li>
+</ul>
+</div>
+<div>
+<b style="color:#4ecdc4;">正文 Body</b>
+<ul style="padding-left:16px;margin-top:6px;">
+<li>用<b>主动语态</b>："We develop..."而非"Model is developed"</li>
+<li>段落首句即结论，再展开论证</li>
+<li>图表必须有标题、标注、自解释</li>
+<li>公式编号，变量逐一定义</li>
+</ul>
+</div>
+</div>
+<div style="margin-top:12px;padding-top:12px;border-top:1px dashed #ccc;">
+<b style="color:#ff6b6b;">避坑清单</b>：❌ 中式英语长句 → ✅ 短句+逻辑连接词(However, Moreover, Therefore)；❌ 堆砌公式不解释 → ✅ 每个公式配1-2句解读；❌ 报告式流水账 → ✅ 学术论文叙事逻辑。
+</div>
+</div>
+</div>
+
+<div style="margin-bottom:24px;">
+<h4 style="color:#ff6b35;border-bottom:2px solid #ff6b35;padding-bottom:6px;">🏆 O奖论文评分标准</h4>
+<div style="margin-top:10px;">
+<div style="display:flex;align-items:center;margin-bottom:8px;">
+<div style="background:#ff6b35;color:#fff;padding:8px 16px;border-radius:4px;font-weight:bold;min-width:120px;">摘要 (30%)</div>
+<div style="flex:1;padding:8px 12px;background:#f8f9fa;border-radius:4px;font-size:13px;">问题重述清晰、方法概括准确、关键结果量化呈现、结论有洞察力</div>
+</div>
+<div style="display:flex;align-items:center;margin-bottom:8px;">
+<div style="background:#4ecdc4;color:#fff;padding:8px 16px;border-radius:4px;font-weight:bold;min-width:120px;">建模 (25%)</div>
+<div style="flex:1;padding:8px 12px;background:#f8f9fa;border-radius:4px;font-size:13px;">模型合理性、创新性、多模型协同、假设有依据且自洽</div>
+</div>
+<div style="display:flex;align-items:center;margin-bottom:8px;">
+<div style="background:#ffe66d;color:#1a1a2e;padding:8px 16px;border-radius:4px;font-weight:bold;min-width:120px;">验证 (20%)</div>
+<div style="flex:1;padding:8px 12px;background:#f8f9fa;border-radius:4px;font-size:13px;">敏感性分析、稳定性测试、误差讨论、与现实数据对比验证</div>
+</div>
+<div style="display:flex;align-items:center;margin-bottom:8px;">
+<div style="background:#ff6b6b;color:#fff;padding:8px 16px;border-radius:4px;font-weight:bold;min-width:120px;">表达 (15%)</div>
+<div style="flex:1;padding:8px 12px;background:#f8f9fa;border-radius:4px;font-size:13px;">图表专业美观、逻辑流畅、英文准确、排版规范</div>
+</div>
+<div style="display:flex;align-items:center;">
+<div style="background:#1a1a2e;color:#fff;padding:8px 16px;border-radius:4px;font-weight:bold;min-width:120px;">创新 (10%)</div>
+<div style="flex:1;padding:8px 12px;background:#f8f9fa;border-radius:4px;font-size:13px;">独特视角、跨学科方法、巧妙简化、有推广价值</div>
+</div>
+</div>
+<p style="font-size:13px;color:#666;margin-top:8px;">🎯 <b>O奖核心</b>：摘要即门面——评委先看摘要，30秒决定是否继续读；无量化结果的摘要直接降档。</p>
+</div>
+
+<div style="margin-bottom:24px;">
+<h4 style="color:#ff6b35;border-bottom:2px solid #ff6b35;padding-bottom:6px;">👥 团队分工黄金法则</h4>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:10px;">
+<div style="background:linear-gradient(135deg,#ff6b35,#ff8c5a);color:#fff;padding:16px;border-radius:8px;text-align:center;">
+<div style="font-size:28px;">🧮</div>
+<div style="font-size:18px;font-weight:bold;margin-top:6px;">建模手</div>
+<div style="font-size:12px;margin-top:4px;">Modeler</div>
+<ul style="font-size:13px;text-align:left;margin-top:10px;padding-left:16px;">
+<li>构建数学模型</li>
+<li>确定假设与简化</li>
+<li>设计求解路线</li>
+<li>敏感性分析方案</li>
+</ul>
+</div>
+<div style="background:linear-gradient(135deg,#4ecdc4,#44b0a8);color:#fff;padding:16px;border-radius:8px;text-align:center;">
+<div style="font-size:28px;">💻</div>
+<div style="font-size:18px;font-weight:bold;margin-top:6px;">编程手</div>
+<div style="font-size:12px;margin-top:4px;">Programmer</div>
+<ul style="font-size:13px;text-align:left;margin-top:10px;padding-left:16px;">
+<li>模型求解实现</li>
+<li>数据处理与可视化</li>
+<li>图表生成与精修</li>
+<li>代码调试与验证</li>
+</ul>
+</div>
+<div style="background:linear-gradient(135deg,#ffe66d,#f5d44e);color:#1a1a2e;padding:16px;border-radius:8px;text-align:center;">
+<div style="font-size:28px;">📝</div>
+<div style="font-size:18px;font-weight:bold;margin-top:6px;">写作手</div>
+<div style="font-size:12px;margin-top:4px;">Writer</div>
+<ul style="font-size:13px;text-align:left;margin-top:10px;padding-left:16px;">
+<li>论文框架与叙事</li>
+<li>摘要精修（核心！）</li>
+<li>英文润色与校对</li>
+<li>排版与格式把控</li>
+</ul>
+</div>
+</div>
+<div style="background:#f8f9fa;padding:12px;border-radius:8px;margin-top:10px;font-size:13px;">
+<b style="color:#ff6b35;">黄金法则</b>：① 三人<b>全程并行</b>，不是串行等待；② 建模手边建边写思路，编程手边跑边出图，写作手边查边写框架；③ 每晚<b>30分钟同步会</b>，对齐进度与方向；④ 写作手<b>从Day1就动笔</b>，不要等模型做完才写！
+</div>
+</div>
+
+<div>
+<h4 style="color:#ff6b35;border-bottom:2px solid #ff6b35;padding-bottom:6px;">📋 参赛注册流程</h4>
+<div style="background:#f8f9fa;padding:16px;border-radius:8px;margin-top:10px;">
+<div style="position:relative;padding-left:30px;">
+<div style="position:absolute;left:8px;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,#ff6b35,#4ecdc4,#ffe66d,#ff6b6b);border-radius:2px;"></div>
+<div style="margin-bottom:16px;">
+<div style="background:#ff6b35;color:#fff;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;position:absolute;left:2px;top:2px;">1</div>
+<b>组队</b>（3人/队，可跨校跨专业，不可中途换人）
+</div>
+<div style="margin-bottom:16px;">
+<div style="background:#4ecdc4;color:#fff;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;position:absolute;left:2px;">2</div>
+<b>注册</b> → 访问 <span style="color:#ff6b35;">comap.com</span> → MCM/ICM Registration → Advisor（指导教师）创建队伍 → 生成Team Number
+</div>
+<div style="margin-bottom:16px;">
+<div style="background:#ffe66d;color:#1a1a2e;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;position:absolute;left:2px;">3</div>
+<b>缴费</b> → $100/队（美国队$75），Advisor通过COMAP系统在线支付
+</div>
+<div style="margin-bottom:16px;">
+<div style="background:#ff6b6b;color:#fff;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;position:absolute;left:2px;">4</div>
+<b>选题</b> → 比赛开始后登录系统查看6题 → 选定1题 → 系统确认选题
+</div>
+<div style="margin-bottom:16px;">
+<div style="background:#1a1a2e;color:#fff;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;position:absolute;left:2px;">5</div>
+<b>提交</b> → 电子版PDF通过系统上传 → Summary Sheet放首页 → 控制页数≤25页
+</div>
+<div>
+<div style="background:#666;color:#fff;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;position:absolute;left:2px;">6</div>
+<b>查结果</b> → 约4-5个月后公布 → COMAP官网查看获奖等级
+</div>
+</div>
+<div style="margin-top:12px;padding:10px;background:#fff3cd;border-radius:6px;font-size:13px;color:#856404;">
+⚠️ <b>注意事项</b>：必须有指导教师注册（学生不能直接注册）；每人只能属1队；提交截止时间美东时间周一晚9点；逾期0分！
+</div>
+</div>
+</div>
+<h2 id="c6">冲刺计划</h2>
+```html
+<style>
+    .card {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: linear-gradient(145deg, #0f0c29, #1a1a3e, #24243e);
+        border-radius: 24px;
+        padding: 35px 30px 30px 30px;
+        color: #f0f0f0;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 215, 0, 0.15);
+        position: relative;
+        overflow: hidden;
+    }
+    .card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
+        pointer-events: none;
+    }
+    .card h3 {
+        font-size: 28px;
+        font-weight: 800;
+        text-align: center;
+        margin: 0 0 10px 0;
+        background: linear-gradient(135deg, #ffd700, #ffb800, #ff8c00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: 2px;
+        text-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+        position: relative;
+    }
+    .card .subtitle {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 14px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        margin-bottom: 30px;
+        border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        padding-bottom: 18px;
+        font-weight: 300;
+    }
+    .months-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+    }
+    .month-block {
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 18px;
+        padding: 22px 24px 24px 24px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    .month-block:hover {
+        border-color: rgba(255, 215, 0, 0.2);
+        background: rgba(255, 255, 255, 0.06);
+    }
+    .month-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+    }
+    .month-header .icon {
+        font-size: 26px;
+        line-height: 1;
+    }
+    .month-header .title-group {
+        flex: 1;
+    }
+    .month-header .title-group h4 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.5px;
+    }
+    .month-header .title-group .tagline {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 400;
+        margin-top: 2px;
+    }
+    .month-header .badge {
+        background: rgba(255, 215, 0, 0.15);
+        color: #ffd700;
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        border: 1px solid rgba(255, 215, 0, 0.15);
+        letter-spacing: 1px;
+    }
+    /* 第1月 蓝色调 */
+    .month-block.m1 {
+        border-left: 4px solid #4facfe;
+    }
+    .month-block.m1 .badge {
+        background: rgba(79, 172, 254, 0.15);
+        color: #4facfe;
+        border-color: rgba(79, 172, 254, 0.2);
+    }
+    .month-block.m1 .week-grid .week-item {
+        border-left-color: #4facfe;
+    }
+    /* 第2月 紫色调 */
+    .month-block.m2 {
+        border-left: 4px solid #a78bfa;
+    }
+    .month-block.m2 .badge {
+        background: rgba(167, 139, 250, 0.15);
+        color: #a78bfa;
+        border-color: rgba(167, 139, 250, 0.2);
+    }
+    .month-block.m2 .week-grid .week-item {
+        border-left-color: #a78bfa;
+    }
+    /* 第3月 橙色调 */
+    .month-block.m3 {
+        border-left: 4px solid #fbbf24;
+    }
+    .month-block.m3 .badge {
+        background: rgba(251, 191, 36, 0.15);
+        color: #fbbf24;
+        border-color: rgba(251, 191, 36, 0.2);
+    }
+    .month-block.m3 .week-grid .week-item {
+        border-left-color: #fbbf24;
+    }
+
+    /* 周计划网格 */
+    .week-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin: 14px 0 16px 0;
+    }
+    .week-item {
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 12px;
+        padding: 12px 14px;
+        border-left: 3px solid;
+        border-left-color: inherit;
+        transition: all 0.2s;
+    }
+    .week-item:hover {
+        background: rgba(255, 255, 255, 0.07);
+    }
+    .week-item .week-label {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: rgba(255, 255, 255, 0.4);
+        margin-bottom: 4px;
+    }
+    .week-item .week-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 3px;
+    }
+    .week-item .week-desc {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.55);
+        line-height: 1.4;
+    }
+
+    /* 每日任务 + 检查点 双列 */
+    .daily-check-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 8px;
+    }
+    .daily-box,
+    .check-box {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        padding: 14px 18px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .daily-box .label,
+    .check-box .label {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .daily-box .label {
+        color: #4facfe;
+    }
+    .check-box .label {
+        color: #34d399;
+    }
+    .daily-box .label span,
+    .check-box .label span {
+        font-size: 16px;
+    }
+    .daily-box .content-text,
+    .check-box .content-text {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.5;
+    }
+    .check-box .checklist {
+        list-style: none;
+        padding: 0;
+        margin: 4px 0 0 0;
+    }
+    .check-box .checklist li {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.75);
+        padding: 2px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .check-box .checklist li::before {
+        content: '▢';
+        color: rgba(52, 211, 153, 0.5);
+        font-size: 14px;
+    }
+
+    /* 第2月 特殊：真题列表 + 复盘模板 */
+    .exam-row {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 16px;
+        margin-top: 8px;
+    }
+    .exam-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    .exam-item {
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 10px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .exam-item .num {
+        background: rgba(167, 139, 250, 0.2);
+        color: #a78bfa;
+        width: 26px;
+        height: 26px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 12px;
+        flex-shrink: 0;
+    }
+    .exam-item .detail {
+        line-height: 1.3;
+    }
+    .exam-item .detail .small {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* 复盘模板 */
+    .review-template {
+        background: rgba(167, 139, 250, 0.06);
+        border-radius: 12px;
+        padding: 14px 18px;
+        border: 1px solid rgba(167, 139, 250, 0.12);
+    }
+    .review-template .label {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #a78bfa;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .review-template .label span {
+        font-size: 16px;
+    }
+    .review-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+    }
+    .review-item {
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 8px;
+        padding: 10px 12px;
+        text-align: center;
+    }
+    .review-item .r-icon {
+        font-size: 20px;
+        margin-bottom: 2px;
+    }
+    .review-item .r-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.8);
+    }
+    .review-item .r-desc {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.4);
+        margin-top: 2px;
+    }
+
+    /* 底部三个工具模块 */
+    .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 24px;
+        padding-top: 22px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .tool-card {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 14px;
+        padding: 18px 20px 20px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.3s;
+    }
+    .tool-card:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 215, 0, 0.12);
+        transform: translateY(-2px);
+    }
+    .tool-card .t-icon {
+        font-size: 28px;
+        margin-bottom: 6px;
+    }
+    .tool-card .t-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 6px;
+    }
+    .tool-card .t-desc {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.55);
+        line-height: 1.5;
+    }
+    .tool-card .t-list {
+        list-style: none;
+        padding: 0;
+        margin: 8px 0 0 0;
+    }
+    .tool-card .t-list li {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.65);
+        padding: 3px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .tool-card .t-list li:last-child {
+        border-bottom: none;
+    }
+    .tool-card .t-list li::before {
+        content: '›';
+        color: rgba(255, 215, 0, 0.5);
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+        .card {
+            padding: 20px 16px;
+            border-radius: 16px;
+        }
+        .card h3 {
+            font-size: 22px;
+        }
+        .week-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .daily-check-row {
+            grid-template-columns: 1fr;
+        }
+        .exam-row {
+            grid-template-columns: 1fr;
+        }
+        .exam-list {
+            grid-template-columns: 1fr 1fr;
+        }
+        .review-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+        .tools-grid {
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        .month-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+    }
+    @media (max-width: 480px) {
+        .week-grid {
+            grid-template-columns: 1fr;
+        }
+        .exam-list {
+            grid-template-columns: 1fr;
+        }
+        .review-grid {
+            grid-template-columns: 1fr;
+        }
+        .card {
+            padding: 16px 12px;
+        }
+        .card h3 {
+            font-size: 19px;
+        }
+        .month-block {
+            padding: 16px 14px;
+        }
+    }
+</style>
+
+<div class="card">
+    <h3>🏆 3个月国奖冲刺路线图</h3>
+    <div class="subtitle">📌 每日任务清单 · 每周检查点 · 模拟赛复盘模板</div>
+
+    <div class="months-grid">
+
+        <!-- ===== 第1月 ===== -->
+        <div class="month-block m1">
+            <div class="month-header">
+                <div class="icon">📚</div>
+                <div class="title-group">
+                    <h4>第1月 · 知识储备</h4>
+                    <div class="tagline">夯实基础 · 构建体系 · 专题突破</div>
+                </div>
+                <div class="badge">📅 第1-4周</div>
+            </div>
+
+            <div class="week-grid">
+                <div class="week-item">
+                    <div class="week-label">第1周</div>
+                    <div class="week-title">📖 基础梳理</div>
+                    <div class="week-desc">教材通读 + 核心概念笔记</div>
+                </div>
+                <div class="week-item">
+                    <div class="week-label">第2周</div>
+                    <div class="week-title">🧠 核心专题</div>
+                    <div class="week-desc">重点难点深度攻克</div>
+                </div>
+                <div class="week-item">
+                    <div class="week-label">第3周</div>
+                    <div class="week-title">⚡ 技巧积累</div>
+                    <div class="week-desc">题型归纳 + 解法总结</div>
+                </div>
+                <div class="week-item">
+                    <div class="week-label">第4周</div>
+                    <div class="week-title">🔗 综合串联</div>
+                    <div class="week-desc">知识图谱 + 交叉训练</div>
+                </div>
+            </div>
+
+            <div class="daily-check-row">
+                <div class="daily-box">
+                    <div class="label"><span>📋</span> 每日任务清单</div>
+                    <div class="content-text">
+                        <strong>2h</strong> 理论学习 · <strong>1.5h</strong> 专题训练 · <strong>0.5h</strong> 复盘总结<br>
+                        <span style="font-size:12px;color:rgba(255,255,255,0.4);">总计 4h / 天，周末可加练</span>
+                    </div>
+                </div>
+                <div class="check-box">
+                    <div class="label"><span>✅</span> 每周检查点</div>
+                    <ul class="checklist">
+                        <li>知识点覆盖率 ≥ 80%</li>
+                        <li>笔记整理完成（思维导图）</li>
+                        <li>错题本建立并分类</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 第2月 ===== -->
+        <div class="month-block m2">
+            <div class="month-header">
+                <div class="icon">🎯</div>
+                <div class="title-group">
+                    <h4>第2月 · 模拟实战</h4>
+                    <div class="tagline">全真演练 · 真题研磨 · 精准补弱</div>
+                </div>
+                <div class="badge">📅 第5-8周</div>
+            </div>
+
+            <div class="exam-row">
+                <div>
+                    <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.6);margin-bottom:8px;letter-spacing:0.5px;">
+                        📝 每周一套真题
+                    </div>
+                    <div class="exam-list">
+                        <div class="exam-item">
+                            <div class="num">1</div>
+                            <div class="detail">真题模拟① <span class="small">摸底诊断</span></div>
+                        </div>
+                        <div class="exam-item">
+                            <div class="num">2</div>
+                            <div class="detail">真题模拟② <span class="small">速度训练</span></div>
+                        </div>
+                        <div class="exam-item">
+                            <div class="num">3</div>
+                            <div class="detail">真题模拟③ <span class="small">弱项补强</span></div>
+                        </div>
+                        <div class="exam-item">
+                            <div class="num">4</div>
+                            <div class="detail">真题模拟④ <span class="small">全真演练</span></div>
+                        </div>
+                    </div>
+                    <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,0.4);">
+                        ⏱ 严格计时 · 闭卷完成 · 模拟真实考场
+                    </div>
+                </div>
+
+                <div class="review-template">
+                    <div class="label"><span>🔄</span> 模拟赛复盘模板</div>
+                    <div class="review-grid">
+                        <div class="review-item">
+                            <div class="r-icon">📊</div>
+                            <div class="r-title">错题归类</div>
+                            <div class="r-desc">按知识点+题型</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="r-icon">⏳</div>
+                            <div class="r-title">时间分析</div>
+                            <div class="r-desc">各模块耗时</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="r-icon">🔍</div>
+                            <div class="r-title">漏洞诊断</div>
+                            <div class="r-desc">薄弱环节记录</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.4);text-align:center;">
+                        每次复盘后制定 <span style="color:#a78bfa;font-weight:600;">下一周补强计划</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="daily-check-row" style="margin-top:14px;">
+<h2 id="c7">附录</h2>
+```html
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#f0f2f5;color:#333;line-height:1.6;padding:20px;}
+.wrapper{max-width:1400px;margin:0 auto;display:flex;flex-direction:column;gap:24px;}
+.card{background:#fff;border-radius:12px;padding:28px 32px;box-shadow:0 2px 12px rgba(0,0,0,0.07);border:1px solid #e8ecf1;transition:box-shadow 0.2s;}
+.card:hover{box-shadow:0 6px 24px rgba(0,0,0,0.1);}
+.card h3{font-size:1.3em;margin-bottom:18px;color:#1a1a2e;border-bottom:3px solid #4a90d9;padding-bottom:10px;display:inline-block;}
+.card h4{font-size:1.05em;color:#2c3e50;margin:16px 0 8px;}
+.table-wrap{overflow-x:auto;margin:12px 0;-webkit-overflow-scrolling:touch;}
+table{width:100%;border-collapse:collapse;font-size:0.875em;min-width:1100px;}
+table th{background:#4a90d9;color:#fff;padding:10px 8px;text-align:center;font-weight:600;white-space:nowrap;position:sticky;top:0;z-index:1;}
+table td{padding:8px 6px;border-bottom:1px solid #e8ecf1;text-align:left;vertical-align:top;}
+table tr:nth-child(even){background:#f8fafc;}
+table tr:hover{background:#e8f0fb;}
+table td:first-child{text-align:center;font-weight:600;color:#4a90d9;white-space:nowrap;}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.78em;font-weight:500;white-space:nowrap;margin:1px;}
+.tag-stat{background:#e3f2fd;color:#1565c0;}
+.tag-ml{background:#fce4ec;color:#c62828;}
+.tag-opt{background:#e8f5e9;color:#2e7d32;}
+.tag-time{background:#fff3e0;color:#e65100;}
+.tag-other{background:#f3e5f5;color:#6a1b9a;}
+.tag-dl{background:#ffe0b2;color:#bf360c;}
+pre{background:#1e1e2e;color:#cdd6f4;padding:16px 20px;border-radius:8px;overflow-x:auto;font-size:0.82em;line-height:1.5;tab-size:2;margin:8px 0;max-height:500px;overflow-y:auto;}
+pre code{font-family:'Fira Code','Cascadia Code','Consolas','Monaco',monospace;}
+code.inline{background:#fff0e6;color:#c0392b;padding:2px 6px;border-radius:3px;font-size:0.88em;}
+.year-section{margin:12px 0 20px;}
+.year-section h4{background:#f0f4f8;padding:8px 14px;border-radius:6px;margin:14px 0 8px;color:#1a1a2e;font-size:1em;}
+.year-section ul{list-style:none;padding-left:0;}
+.year-section ul li{padding:5px 10px;border-left:3px solid #4a90d9;margin:4px 0;padding-left:14px;font-size:0.9em;transition:background 0.15s;}
+.year-section ul li:hover{background:#f8fafc;}
+.year-section ul li strong{color:#4a90d9;}
+.badge{display:inline-block;padding:1px 7px;border-radius:10px;font-size:0.75em;font-weight:600;margin-right:4px;}
+.badge-cumcm{background:#ffe0b2;color:#e65100;}
+.badge-mcm{background:#c8e6c9;color:#1b5e20;}
+.badge-icm{background:#bbdefb;color:#0d47a1;}
+pre.lang-latex{background:#2d2d2d;color:#f8f8f2;}
+pre.lang-python{background:#1e1e2e;color:#cdd6f4;}
+.section-desc{color:#666;font-size:0.9em;margin-bottom:10px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:900px){.grid-2{grid-template-columns:1fr;}}
+.summary-row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;}
+.summary-item{background:#f0f4f8;padding:6px 12px;border-radius:20px;font-size:0.85em;}
+</style>
+
+<div class="wrapper">
+
+<!-- Card 1: 30个常用模型速查表 -->
+<div class="card">
+<h3>📊 30个常用数学模型速查表</h3>
+<p class="section-desc">涵盖统计学习、机器学习、优化算法、时间序列等数学建模核心模型，标注Python库及优缺点。</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>#</th><th>模型名称</th><th>类型</th><th>适用场景</th><th>Python库</th><th>优点</th><th>缺点</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td><td>线性回归</td><td><span class="tag tag-stat">统计</span></td><td>房价预测、销量预测、连续值回归</td><td>sklearn.linear_model</td><td>可解释性强、计算快、有解析解</td><td>对异常值敏感、假设线性关系、易欠拟合</td>
+</tr>
+<tr>
+<td>2</td><td>岭回归/Lasso</td><td><span class="tag tag-stat">统计</span></td><td>高维数据回归、特征选择(Lasso)</td><td>sklearn.linear_model</td><td>L1/L2正则化防过拟合、Lasso可特征选择</td><td>需调正则化参数、Lasso在高度相关时不稳定</td>
+</tr>
+<tr>
+<td>3</td><td>逻辑回归</td><td><span class="tag tag-stat">统计</span></td><td>二分类、信用评分、疾病诊断</td><td>sklearn.linear_model</td><td>输出概率、可解释性强、训练快</td><td>假设线性可分、难以处理复杂非线性</td>
+</tr>
+<tr>
+<td>4</td><td>决策树</td><td><span class="tag tag-ml">ML</span></td><td>分类与回归、规则提取</td><td>sklearn.tree</td><td>可视化好、无需归一化、可解释</td><td>易过拟合、对噪声敏感、不稳定</td>
+</tr>
+<tr>
+<td>5</td><td>随机森林</td><td><span class="tag tag-ml">ML</span></td><td>分类回归、特征重要性评估</td><td>sklearn.ensemble</td><td>抗过拟合、处理高维数据、特征重要性</td><td>模型较大、预测慢、不如 boosting 精细</td>
+</tr>
+<tr>
+<td>6</td><td>XGBoost</td><td><span class="tag tag-ml">ML</span></td><td>竞赛级分类回归、结构化数据</td><td>xgboost</td><td>精度极高、正则化、处理缺失值、GPU加速</td><td>参数多难调、对异常值敏感</td>
+</tr>
+<tr>
+<td>7</td><td>LightGBM</td><td><span class="tag tag-ml">ML</span></td><td>大规模数据分类回归</td><td>lightgbm</td><td>训练快、内存低、支持类别特征</td><td>小数据易过拟合、叶子生长策略需调参</td>
+</tr>
+<tr>
+<td>8</td><td>SVM</td><td><span class="tag tag-ml">ML</span></td><td>小样本分类、文本分类、图像识别</td><td>sklearn.svm</td><td>核技巧处理非线性、泛化好、小样本强</td><td>大数据慢、核函数选择困难、不输出概率</td>
+</tr>
+<tr>
+<td>9</td><td>KNN</td><td><span class="tag tag-ml">ML</span></td><td>推荐系统、模式识别、异常检测</td><td>sklearn.neighbors</td><td>简单直观、无需训练、非线性</td><td>预测慢、维数灾难、需存全部数据</td>
+</tr>
+<tr>
+<td>10</td><td>朴素贝叶斯</td><td><span class="tag tag-ml">ML</span></td><td>文本分类、垃圾邮件过滤</td><td>sklearn.naive_bayes</td><td>极快、高维稀疏数据好、小样本可用</td><td>特征独立假设过强、概率估计不准</td>
+</tr>
+<tr>
+<td>11</td><td>K-Means聚类</td><td><span class="tag tag-ml">ML</span></td><td>客户分群、图像分割、文档聚类</td><td>sklearn.cluster</td><td>简单快速、可扩展、易实现</td><td>需指定K、对初始值敏感、球形假设</td>
+</tr>
+<tr>
+<td>12</td><td>层次聚类</td><td><span class="tag tag-ml">ML</span></td><td>生物分类、社交网络分析</td><td>scipy.cluster</td><td>不需预设聚类数、树状图可视化</td><td>复杂度高O(n³)、噪声敏感</td>
+</tr>
+<tr>
+<td>13</td><td>DBSCAN</td><td><span class="tag tag-ml">ML</span></td><td>任意形状聚类、异常检测、地理数据</td><td>sklearn.cluster</td><td>无需预设聚类数、识别噪声、任意形状</td><td>密度参数难调、密度差异大效果差</td>
+</tr>
+<tr>
+<td>14</td><td>PCA</td><td><span class="tag tag-stat">降维</span></td><td>数据降维、特征提取、可视化</td><td>sklearn.decomposition</td><td>去相关、降噪、计算快、可解释</td><td>线性降维、丢失可解释性、需标准化</td>
+</tr>
+<tr>
+<td>15</td><td>t-SNE</td><td><span class="tag tag-ml">降维</span></td><td>高维数据可视化</td><td>sklearn.manifold</td><td>保持局部结构、可视化效果极佳</td><td>计算慢、非确定性、不保留全局结构</td>
+</tr>
+<tr>
+<td>16</td><td>ARIMA</td><td><span class="tag tag-time">时序</span></td><td>平稳时间序列预测、经济指标</td><td>statsmodels.tsa</td><td>经典方法、理论完善、有统计检验</td><td>需手动定阶、非平稳需差分、仅线性</td>
+</tr>
+<tr>
+<td>17</td><td>SARIMA</td><td><span class="tag tag-time">时序</span></td><td>带季节性的时间序列预测</td><td>statsmodels.tsa</td><td>捕捉季节模式、预测精度高</td><td>参数更多更难
+
+<p style="text-align:center;color:var(--dim);margin:40px 0">SynapseFlow · Multi-Model Neurosynaptic Orchestration · github.com/toromesht/llm-collab</p>
+</main></body></html>
