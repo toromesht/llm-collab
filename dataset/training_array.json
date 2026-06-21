@@ -1,6 +1,6 @@
 {
   "version": "v1",
-  "total_entries": 225,
+  "total_entries": 252,
   "entries": [
     {
       "id": "math_hard",
@@ -2514,6 +2514,249 @@
       ],
       "routing_rule": "ban",
       "reason": "db ban: ['Kimi', 'Groq-Llama']"
+    },
+    {
+      "id": "new_calculus_0",
+      "question": "求f(x)=ln(x)在x=1处的切线方程",
+      "answer": "y=x-1",
+      "category": "calculus",
+      "features": {
+        "calculus": 3
+      }
+    },
+    {
+      "id": "new_knowledge_1",
+      "question": "地球到太阳的平均距离约多少公里",
+      "answer": "1.5亿",
+      "category": "knowledge",
+      "features": {
+        "knowledge": 3
+      }
+    },
+    {
+      "id": "new_chinese_2",
+      "question": "床前明月光下一句",
+      "answer": "疑是地上霜",
+      "category": "chinese",
+      "features": {
+        "chinese": 3
+      }
+    },
+    {
+      "id": "new_calculus_3",
+      "question": "求∫(2x+1)dx从0到2",
+      "answer": "6",
+      "category": "calculus",
+      "features": {
+        "calculus": 3
+      }
+    },
+    {
+      "id": "new_chinese_4",
+      "question": "春眠不觉晓作者",
+      "answer": "孟浩然",
+      "category": "chinese",
+      "features": {
+        "chinese": 3
+      }
+    },
+    {
+      "id": "new_linear_algebra_5",
+      "question": "向量(1,2,3)和(4,5,6)的点积",
+      "answer": "32",
+      "category": "linear_algebra",
+      "features": {
+        "linear_algebra": 3
+      }
+    },
+    {
+      "id": "new_probability_6",
+      "question": "抛两个骰子和为7的概率",
+      "answer": "1/6",
+      "category": "probability",
+      "features": {
+        "probability": 3
+      }
+    },
+    {
+      "id": "new_probability_7",
+      "question": "标准正态分布P(-1<Z<1)≈",
+      "answer": "0.68",
+      "category": "probability",
+      "features": {
+        "probability": 3
+      }
+    },
+    {
+      "id": "new_calculus_8",
+      "question": "e^x的泰勒展开前三项",
+      "answer": "1+x+x^2/2",
+      "category": "calculus",
+      "features": {
+        "calculus": 3
+      }
+    },
+    {
+      "id": "new_linear_algebra_9",
+      "question": "矩阵[[1,0],[0,1]]的秩",
+      "answer": "2",
+      "category": "linear_algebra",
+      "features": {
+        "linear_algebra": 3
+      }
+    },
+    {
+      "id": "new_calculus_10",
+      "question": "求f(x)=x^3-3x^2+2x的导数",
+      "answer": "3x^2-6x+2",
+      "category": "calculus",
+      "features": {
+        "calculus": 3
+      }
+    },
+    {
+      "id": "new_knowledge_11",
+      "question": "中国最长的河流",
+      "answer": "长江",
+      "category": "knowledge",
+      "features": {
+        "knowledge": 3
+      }
+    },
+    {
+      "id": "new_calculus_12",
+      "question": "求lim(x->0) sin(3x)/x",
+      "answer": "3",
+      "category": "calculus",
+      "features": {
+        "calculus": 3
+      }
+    },
+    {
+      "id": "new_code_13",
+      "question": "用Python写二分查找",
+      "answer": "def binary_search",
+      "category": "code",
+      "features": {
+        "code": 3
+      }
+    },
+    {
+      "id": "new_probability_14",
+      "question": "从52张扑克抽1张红心概率",
+      "answer": "1/4",
+      "category": "probability",
+      "features": {
+        "probability": 3
+      }
+    },
+    {
+      "id": "new_chinese_15",
+      "question": "三人行必有我师出自",
+      "answer": "论语",
+      "category": "chinese",
+      "features": {
+        "chinese": 3
+      }
+    },
+    {
+      "id": "new_linear_algebra_16",
+      "question": "矩阵[[2,1],[1,2]]的特征值",
+      "answer": "3,1",
+      "category": "linear_algebra",
+      "features": {
+        "linear_algebra": 3
+      }
+    },
+    {
+      "id": "new_logic_17",
+      "question": "5个人排一列，A不在第一个B不在最后一个，几种排法？",
+      "answer": "78",
+      "category": "logic",
+      "features": {
+        "logic": 3
+      }
+    },
+    {
+      "id": "new_knowledge_18",
+      "question": "DNA的全称",
+      "answer": "脱氧核糖核酸",
+      "category": "knowledge",
+      "features": {
+        "knowledge": 3
+      }
+    },
+    {
+      "id": "new_logic_19",
+      "question": "如果所有A是B，没有B是C，A和C什么关系？",
+      "answer": "A不是C",
+      "category": "logic",
+      "features": {
+        "logic": 3
+      }
+    },
+    {
+      "id": "new_code_20",
+      "question": "用Python写哈希表实现",
+      "answer": "class HashMap",
+      "category": "code",
+      "features": {
+        "code": 3
+      }
+    },
+    {
+      "id": "new_code_21",
+      "question": "用Python写BFS图遍历",
+      "answer": "def bfs",
+      "category": "code",
+      "features": {
+        "code": 3
+      }
+    },
+    {
+      "id": "new_logic_22",
+      "question": "三个盒子一个苹果，标签全错，最少开几个盒子？",
+      "answer": "1",
+      "category": "logic",
+      "features": {
+        "logic": 3
+      }
+    },
+    {
+      "id": "new_code_23",
+      "question": "用Python写LRU缓存",
+      "answer": "class LRUCache",
+      "category": "code",
+      "features": {
+        "code": 3
+      }
+    },
+    {
+      "id": "new_knowledge_24",
+      "question": "第一个登月的人",
+      "answer": "阿姆斯特朗",
+      "category": "knowledge",
+      "features": {
+        "knowledge": 3
+      }
+    },
+    {
+      "id": "new_code_25",
+      "question": "用Python写动态规划爬楼梯",
+      "answer": "def climbStairs",
+      "category": "code",
+      "features": {
+        "code": 3
+      }
+    },
+    {
+      "id": "new_knowledge_26",
+      "question": "元素周期表第一个元素",
+      "answer": "氢",
+      "category": "knowledge",
+      "features": {
+        "knowledge": 3
+      }
     }
   ]
 }
