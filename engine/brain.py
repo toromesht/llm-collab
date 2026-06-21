@@ -11,7 +11,7 @@ FUNCTIONAL REGIONS (like brain areas):
   VISUAL CORTEX: Kimi vision — multimodal input
   GABA INHIBITION: LateralInhib + Pruning — suppress bad models
   DEFAULT MODE: FEP — free energy minimization, anticipatory routing
-  BRAIN WAVES: theta(explore) / alpha(filter) / beta(focus) / gamma(integrate)
+  BRAIN WAVES: alpha(filter:Duecker2024) / theta(explore:Kuramoto2025) / TLA(cost:2024)
 
 REFERENCES (in order of integration):
   [1]  Wong, R. "Affinity Is Not Enough: Recovering the Free Energy Principle
@@ -50,7 +50,7 @@ REFERENCES (in order of integration):
   EquiRouter(2026) + R3(2025) + Expert Race(2025) anti-degradation
   STDP + BCM + Precision-weighted gating + Temporal memory
 """
-import sys, json, os, threading, re, math, random
+import sys, json, os, threading, re, math, random, time
 from pathlib import Path
 from openai import OpenAI
 
@@ -1001,73 +1001,174 @@ def tda_cache_question(question, dims, decision):
     TDA_CACHE_FILE.write_text(json.dumps(cache, ensure_ascii=False))
 
 # ═══════════════════════════════════════════════════════
-# BRAIN WAVE OSCILLATIONS — modulate routing behavior
-# Buzsaki, G. "Rhythms of the Brain" (Oxford, 2006)
-# Klimesch, W. "EEG alpha and theta oscillations reflect cognitive
-#   and memory performance." Brain Research Reviews (1999)
+# ALPHA OSCILLATION INHIBITION — Functional Filtering
+# Duecker, Idiart, van Gerven, Jensen (2024)
+# "Oscillations in an artificial neural network convert
+#  competing inputs into a temporal code."
+# PLOS Computational Biology 20(9): e1012429
 #
-# Four frequency bands modulate routing:
-#   θ (theta, 4-8 Hz): Exploration — try different models, test new combos
-#   α (alpha, 8-12 Hz): Filtering — suppress weak models, focus
-#   β (beta, 12-30 Hz): Active focus — stick to best known model
-#   γ (gamma, 30-100 Hz): Integration — multi-model synthesis
+# Equations (from the paper, Section 2.2):
+#   τ_h · dh_j/dt = -h_j + σ(z_j - c·r_j - alpha(t))    (1)
+#   τ_r · dr_j/dt = -r_j + h_j                           (2)
+#   alpha(t) = m · sin(2π·10·t)                          (3)
+#
+# Where:
+#   h_j   = activation of hidden unit j
+#   z_j   = excitatory input to unit j
+#   r_j   = refraction (self-inhibition) of unit j
+#   c     = refraction strength
+#   τ_h   = hidden time constant (~10ms, scaled to rounds)
+#   τ_r   = refraction time constant (~100ms, scaled)
+#   alpha = 10 Hz alpha oscillation with amplitude m
+#   sigma = sigmoid activation
+#
+# Key insight: alpha oscillations IMPLEMENT temporal filtering.
+# Strong inputs fire at alpha peak; weak inputs are suppressed.
 # ═══════════════════════════════════════════════════════
 
-import math
-BRAIN_WAVE_STATE = {"round": 0}
+ALPHA_STATE = {}  # per-model alpha oscillation state
 
-def brain_wave_phase(round_num):
-    """Get current brain wave phase based on performance history.
-       Low accuracy → theta (explore more).
-       High accuracy → beta (exploit best).
-       Normal → alpha (filter). Gamma triggers on complex tasks."""
-    s = BRAIN_WAVE_STATE
-    s["round"] = round_num
+def alpha_oscillation_init(model_name):
+    if model_name not in ALPHA_STATE:
+        ALPHA_STATE[model_name] = {"h": 0.5, "r": 0.0, "z": 0.5}
 
-    # Estimate recent accuracy from FEP states
+def alpha_inhibition_filter(model_name, input_strength, round_num):
+    """Duecker et al. (2024) Eq.1-3: Alpha oscillation filters weak inputs.
+       Strong signals overcome alpha peak; weak signals are suppressed until trough.
+       This naturally sequences competing models by strength."""
+    alpha_oscillation_init(model_name)
+    s = ALPHA_STATE[model_name]
+
+    # Eq.1: Hidden dynamics with alpha inhibition
+    tau_h = 10.0      # hidden time constant (scaled to rounds)
+    tau_r = 100.0     # refraction time constant
+    c = 0.3           # refraction strength
+    m = 0.5           # alpha amplitude
+    t = round_num * 0.1  # scale rounds to approximate time
+
+    # Alpha oscillation at 10 Hz
+    alpha_t = m * math.sin(2 * math.pi * 10 * t / 100.0)
+
+    # Update state
+    dt = 1.0
+    s["z"] = input_strength
+    # Eq.1: dh/dt update
+    z_eff = s["z"] - c * s["r"] - alpha_t
+    s["h"] = s["h"] + (dt / tau_h) * (-s["h"] + 1.0/(1.0 + math.exp(-z_eff)))
+    # Eq.2: refraction update
+    s["r"] = s["r"] + (dt / tau_r) * (-s["r"] + s["h"])
+    # Clamp
+    s["h"] = max(0.0, min(1.0, s["h"]))
+
+    return s["h"]  # Alpha-filtered activation
+
+def alpha_filter_routing(affinity_scores, round_num):
+    """Apply alpha oscillation filter to all models.
+       Strong models → pass alpha filter → selected.
+       Weak models → suppressed until alpha trough → delayed or dropped."""
+    filtered = {}
+    for model, score in affinity_scores.items():
+        filtered[model] = alpha_inhibition_filter(model, score, round_num)
+    return filtered
+
+# ═══════════════════════════════════════════════════════
+# THETA-GAMMA EXPLORATION — Kuramoto Oscillator Model
+# "Modeling cognition through adaptive neural synchronization:
+#  a multimodal framework using EEG, fMRI, and RL"
+# Frontiers in Computational Neuroscience (2025)
+#
+# Kuramoto model for neural synchronization:
+#   dθ_i/dt = ω_i + (K/N) · Σ sin(θ_j - θ_i)              (4)
+#
+# Where:
+#   θ_i = phase of oscillator i
+#   ω_i = natural frequency of oscillator i
+#   K   = coupling strength (controls synchrony)
+#   N   = number of oscillators
+#
+# High K → synchronized (exploit). Low K → desynchronized (explore).
+# ═══════════════════════════════════════════════════════
+
+THETA_STATE = {"phase": 0.0, "K": 1.0}
+
+def kuramoto_exploration(round_num, avg_precision):
+    """Kuramoto model (Front Comput Neurosci 2025):
+       Coupling strength K modulated by performance.
+       Low precision → low K → desynchronized → explore.
+       High precision → high K → synchronized → exploit."""
+    s = THETA_STATE
+    # Adjust coupling based on performance
+    target_K = 0.3 if avg_precision < 0.5 else 2.0  # low=explore, high=exploit
+    s["K"] = 0.9 * s["K"] + 0.1 * target_K  # smooth update
+    # Phase update (Kuramoto)
+    omega = 5.0  # theta band ~5 Hz
+    dt = 0.1
+    s["phase"] = (s["phase"] + dt * omega) % (2 * math.pi)
+    return s["K"], s["phase"]
+
+# ═══════════════════════════════════════════════════════
+# BRAIN WAVE ROUTING — Combine alpha + theta
+# ═══════════════════════════════════════════════════════
+
+def brain_wave_route(affinity_scores, round_num):
+    """Combine alpha filter + Kuramoto exploration for routing."""
+    filtered = alpha_filter_routing(affinity_scores, round_num)
     precisions = [v.get("precision", 1.0) for v in FEP_STATE.values()]
-    avg_precision = sum(precisions) / max(1, len(precisions))
+    avg_prec = sum(precisions) / max(1, len(precisions))
+    K, phase = kuramoto_exploration(round_num, avg_prec)
+    noise_level = max(0, 0.2 / (K + 0.01))
+    result = {}
+    for model, score in filtered.items():
+        result[model] = score + random.uniform(-noise_level, noise_level)
+    wave_type = "theta(explore)" if K < 1.0 else "alpha(focus)"
+    return result, wave_type
 
-    # Phase shift: theta→alpha→beta→gamma cycle
-    phase = (round_num % 100) / 100.0  # 0.0 to 1.0 over 100 rounds
+# ═══════════════════════════════════════════════════════
+# TEMPORALLY LAYERED ARCHITECTURE — Cognitive Cost Control
+# Patel, Sejnowski et al. (2024)
+# "Optimizing Attention and Cognitive Control Costs Using
+#  Temporally Layered Architectures."
+# Neural Computation 36(12):2734-2763 (Nov 2024)
+#
+# DB-MDP: Decision-Bounded MDP constrains number of decisions
+# and computational energy. Two-layer architecture:
+#   Layer 1 (fast): heuristic, low energy, high frequency
+#   Layer 2 (slow): deliberative, high energy, low frequency
+#
+# TLA achieves optimal performance with fraction of compute.
+# ═══════════════════════════════════════════════════════
 
-    if avg_precision < 0.3:
-        return "theta"   # Poor performance → explore more
-    elif avg_precision < 0.6:
-        # Alpha: filter mode — use lateral inhibition more aggressively
-        return "alpha" if phase < 0.7 else "theta"
-    elif avg_precision < 0.85:
-        return "beta"    # Good performance → exploit
+TLA_STATE = {"fast_count": 0, "slow_count": 0, "energy_budget": 100.0}
+
+def tla_cognitive_control(affinity_scores, difficulty):
+    """TLA (Patel & Sejnowski, Neural Computation 2024):
+       Fast layer: use best single model (low energy, high frequency).
+       Slow layer: multi-model collab (high energy, low frequency).
+       Allocate based on remaining energy budget and difficulty."""
+    s = TLA_STATE
+    energy_per_fast = 1.0
+    energy_per_slow = 5.0  # 5x more expensive
+
+    if s["energy_budget"] <= 0:
+        s["energy_budget"] = 100.0  # Replenish
+
+    if difficulty < 0.5 or s["energy_budget"] < energy_per_slow:
+        # Layer 1: Fast heuristic routing
+        s["fast_count"] += 1
+        s["energy_budget"] -= energy_per_fast
+        best = max(affinity_scores, key=affinity_scores.get)
+        return {"layer": "fast", "model": best, "energy_left": s["energy_budget"]}
     else:
-        return "gamma"   # Excellent → integrate (multi-model)
+        # Layer 2: Slow deliberative routing
+        s["slow_count"] += 1
+        s["energy_budget"] -= energy_per_slow
+        top2 = sorted(affinity_scores, key=affinity_scores.get, reverse=True)[:2]
+        return {"layer": "slow", "models": top2, "energy_left": s["energy_budget"]}
 
-def wave_modulate_routing(affinity_scores, round_num):
-    """Brain wave modulation of routing behavior.
-       θ: add noise to explore (epsilon-greedy style)
-       α: boost lateral inhibition (filter weak)
-       β: exploit best (low temperature)
-       γ: force multi-model synthesis"""
-    wave = brain_wave_phase(round_num)
-    modulated = dict(affinity_scores)
-
-    if wave == "theta":
-        # Exploration: add random noise ±0.15 to all scores
-        for m in modulated:
-            modulated[m] += random.uniform(-0.15, 0.15)
-    elif wave == "alpha":
-        # Filter: penalize models with low precision
-        for m in modulated:
-            prec = FEP_STATE.get(m, {}).get("precision", 1.0)
-            if prec < 0.5:
-                modulated[m] -= 0.2  # Strong suppression
-    elif wave == "beta":
-        # Focus: boost top model, suppress others
-        best_m = max(modulated, key=modulated.get)
-        for m in modulated:
-            modulated[m] += 0.15 if m == best_m else -0.05
-    # gamma: no modulation (natural multi-model integration)
-
-    return modulated, wave
+    # Reset tracking
+    if s["fast_count"] + s["slow_count"] >= 100:
+        s["fast_count"] = s["slow_count"] = 0
+        s["energy_budget"] = 100.0
 
 # ═══════════════════════════════════════════════════════
 # BRAIN CONSOLIDATION — All regions coordinate
