@@ -1,0 +1,14 @@
+{
+  "router": "SynapseFlow-STDP v15",
+  "training_data": "aisfuture/jisi_data (500 samples)",
+  "benchmark": "ORBIT (ICML 2026) compatible",
+  "score": 0.646,
+  "baselines": {
+    "Random Router": 0.5,
+    "GPT-4o (single best)": 0.68,
+    "RouteLLM-BERT": 0.72,
+    "Matrix Factorization": 0.74,
+    "GraphRouter (ICLR 2025)": 0.76,
+    "SynapseFlow-STDP (this work)": 0.646
+  }
+}
