@@ -24,7 +24,6 @@ for p in [Path.home() / ".synapseflow" / "config.json",
 # ─── Model Pool ──────────────────────────────────────
 POOL = {
     "DS-V4":    (OpenAI(api_key=CFG["deepseek_pro"]["api_key"], base_url=CFG["deepseek_pro"]["base_url"]), CFG["deepseek_pro"]["model"]),  # DeepSeek V4 Pro 1.6T
-    "GLM-5.2":  (OpenAI(api_key=CFG.get("glm_52",{}).get("api_key",""), base_url="https://api.z.ai/v1"), "glm-5.2[1m]"),  # GLM-5.2 744B
     "Kimi":     (OpenAI(api_key=CFG["kimi"]["api_key"], base_url=CFG["kimi"]["base_url"]), CFG["kimi"]["model"]),
     "GLM-4":    (OpenAI(api_key=CFG["sjtu_zhiyuan"]["api_key"], base_url=CFG["sjtu_zhiyuan"]["base_url"]), "glm"),  # GLM-4 (SJTU)
     "QWEN":     (OpenAI(api_key=CFG["sjtu_zhiyuan"]["api_key"], base_url=CFG["sjtu_zhiyuan"]["base_url"]), "qwen"),
