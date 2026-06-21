@@ -1,0 +1,26 @@
+{
+  "DS-V4": {
+    "accuracy": 100.0,
+    "samples": 135
+  },
+  "SJTU-DS-Think": {
+    "accuracy": 100.0,
+    "samples": 58
+  },
+  "Qwen3-235B": {
+    "accuracy": 100.0,
+    "samples": 61
+  },
+  "Groq-Llama": {
+    "accuracy": 100.0,
+    "samples": 122
+  },
+  "GLM-4+": {
+    "accuracy": 100.0,
+    "samples": 62
+  },
+  "QWEN": {
+    "accuracy": 100.0,
+    "samples": 62
+  }
+}
