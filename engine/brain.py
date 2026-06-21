@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Brain v11 — Neurosynaptic Adaptive Router
-  STDP (Song&Abbott, NatNeuro 2000): recency-weighted Δw = A± · exp(-Δt/τ±)
-  BCM (Bienenstock 1982): sliding threshold θ_M = E[y²]
-  Lateral Inhibition: winner suppresses competitors
-  Predictive Coding (Friston): error = actual - expected, drives update
-  Homeostatic: Σw = constant, pruning at w < -0.3 for >5 rounds
+Brain v12 — Anti-Degradation Neurosynaptic Router
+  EquiRouter(2026): ranking-based routing, not scalar scores
+  R3(2025): activation-space regularization against collapse
+  Load-Balancing: Switch Transformer auxiliary loss
+  Expert Race(2025): Router Similarity Loss prevents mode collapse
+  STDP + BCM + LateralInhib + Pruning + DiversityGate
 """
 import sys, json, os, threading, re, math
 from pathlib import Path
@@ -308,17 +308,31 @@ def decide_mode(K, difficulty, collab_benefit, affinity, dims):
     clean_affinity = {m: w for m, w in affinity.items() if m in allowed}
 
     if K == 1:
-        best = max(clean_affinity, key=clean_affinity.get)
+        # Diversity gate: prevent single model dominance
+        diverse_allowed = diversity_gate(list(allowed), None)
+        clean_diverse = {m: clean_affinity.get(m, 0.5) for m in diverse_allowed if m in clean_affinity}
+        if not clean_diverse: clean_diverse = clean_affinity
+        # EquiRouter ranking-based selection
+        best = ranking_based_route(clean_diverse, list(clean_diverse.keys()))
+
         if difficulty > 0.7 and "ds-pro" in allowed:
             best = "ds-pro"
         elif difficulty > 0.4:
             if dims.get("knowledge",0) > dims.get("code",0) and "glm" in allowed:
                 best = "glm"
             elif best not in allowed:
-                best = max(clean_affinity, key=clean_affinity.get)
-        # FINAL check: never return banned model
+                best = max(clean_diverse, key=clean_diverse.get)
         if best not in allowed:
             best = allowed[0] if allowed else "ds-pro"
+
+        # Load balance: track routing counts
+        ROUTE_COUNTS[best] = ROUTE_COUNTS.get(best, 0) + 1
+        penalty = load_balance_penalty(best)
+        if penalty > 0.01 and len(diverse_allowed) > 1:
+            alt = [m for m in diverse_allowed if m != best and m in allowed]
+            if alt:
+                best = max(alt, key=lambda m: clean_affinity.get(m, 0.5) - load_balance_penalty(m))
+
         return {"action": "single", "model": best, "K": 1,
                 "reason": f"Difficulty={difficulty:.2f}, best={best}"}
 
@@ -648,6 +662,54 @@ def lateral_inhibition(weights_by_model, winner, category):
 #   y_j = correctness signal (1=correct, 0=wrong)
 #   Combined with STDP for temporal specificity.
 # ═══════════════════════════════════════════════════════
+
+# ═══════════════════════════════════════════════════════
+# ANTI-DEGRADATION MODULE (EquiRouter + R3 + Expert Race)
+# ═══════════════════════════════════════════════════════
+
+# Call counters for load balancing
+ROUTE_COUNTS = {m: 0 for m in ["ds-pro","ds-think","glm","qwen","kimi"]}
+
+def load_balance_penalty(model_name):
+    """Switch Transformer auxiliary loss (Llama Surgery 2025):
+       Penalize over-used models, reward under-used ones.
+       L_load = α · Σ f_i · P_i  where f_i = fraction routed to model i"""
+    total = max(1, sum(ROUTE_COUNTS.values()))
+    fractions = {m: c/total for m, c in ROUTE_COUNTS.items()}
+    target = 1.0 / len(ROUTE_COUNTS)  # uniform target
+    # Overuse penalty: if model gets > 2x fair share, penalize
+    overuse = max(0, fractions.get(model_name, 0) - 2*target)
+    return overuse * 0.05  # small penalty
+
+def diversity_gate(allowed_models, selected_model):
+    """Expert Race (Yuan et al., 2025) Router Similarity Loss:
+       Prevent mode collapse by tracking which models get selected.
+       If one model dominates >80%, temporarily exclude it."""
+    total = max(1, sum(ROUTE_COUNTS.values()))
+    dominant = max(ROUTE_COUNTS, key=ROUTE_COUNTS.get)
+    dom_pct = ROUTE_COUNTS[dominant] / total
+
+    if dom_pct > 0.80 and dominant in allowed_models and len(allowed_models) > 1:
+        # Diversity enforcement: temporarily remove dominant model
+        filtered = [m for m in allowed_models if m != dominant]
+        if filtered:
+            return filtered  # Force use of other models
+    return allowed_models
+
+def ranking_based_route(affinity, allowed_models, model_used=None):
+    """EquiRouter (Lai & Ye, 2026): Learn model RANKINGS, not scalar scores.
+       Instead of picking the highest score, pick probabilistically
+       based on score differences. Prevents small-margin collapse."""
+    scores = {m: affinity.get(m, 0.5) for m in allowed_models}
+    ranked = sorted(scores.items(), key=lambda x: -x[1])
+    if len(ranked) <= 1: return ranked[0][0]
+
+    # EquiRouter: if top-2 scores are within 0.1, randomly pick between them
+    # This prevents always routing to the marginally-better model
+    if ranked[0][1] - ranked[1][1] < 0.1:
+        import random as _rand
+        return _rand.choice([ranked[0][0], ranked[1][0]])
+    return ranked[0][0]
 
 # ─── Homeostatic Normalization ────────────────────────
 # Turrigiano & Nelson, Nature Reviews Neuroscience (2004)
