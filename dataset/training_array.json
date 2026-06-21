@@ -1,6 +1,6 @@
 {
   "version": "v1",
-  "total_entries": 20,
+  "total_entries": 225,
   "entries": [
     {
       "id": "math_hard",
@@ -230,6 +230,2290 @@
       ],
       "routing_rule": "ban",
       "reason": "Kimi knowledge 50%"
+    },
+    {
+      "id": "synth_math_20",
+      "features": {
+        "math": 3
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 89,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_21",
+      "features": {
+        "math": 4
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 96,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_22",
+      "features": {
+        "math": 5
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 91,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_23",
+      "features": {
+        "math": 2
+      },
+      "best_model": "Qwen3-235B+DS-V4",
+      "accuracy_pct": 99,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_math_24",
+      "features": {
+        "math": 2
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 93,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_25",
+      "features": {
+        "math": 3,
+        "logic": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 99,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_26",
+      "features": {
+        "math": 4,
+        "code": 2
+      },
+      "best_model": "GLM-4",
+      "accuracy_pct": 93,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_27",
+      "features": {
+        "math": 2,
+        "db": 2,
+        "writing": 2
+      },
+      "best_model": "GLM-4+DS-V4",
+      "accuracy_pct": 100,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_math_28",
+      "features": {
+        "math": 5
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 100,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_29",
+      "features": {
+        "math": 3,
+        "db": 1,
+        "code": 2
+      },
+      "best_model": "GLM-4+DS-V4",
+      "accuracy_pct": 100,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_math_30",
+      "features": {
+        "math": 4,
+        "knowledge": 2,
+        "writing": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 95,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_31",
+      "features": {
+        "math": 5,
+        "knowledge": 1
+      },
+      "best_model": "GLM-4",
+      "accuracy_pct": 92,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_32",
+      "features": {
+        "math": 2
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 99,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_33",
+      "features": {
+        "math": 5,
+        "chinese": 2,
+        "db": 1
+      },
+      "best_model": "GLM-4",
+      "accuracy_pct": 88,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_34",
+      "features": {
+        "math": 5,
+        "chinese": 1
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 81,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_35",
+      "features": {
+        "math": 3,
+        "db": 1,
+        "knowledge": 1
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 90,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_36",
+      "features": {
+        "math": 2
+      },
+      "best_model": "GLM-4+DS-V4",
+      "accuracy_pct": 87,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_math_37",
+      "features": {
+        "math": 5,
+        "writing": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 83,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_38",
+      "features": {
+        "math": 3,
+        "db": 1,
+        "knowledge": 1
+      },
+      "best_model": "GLM-4",
+      "accuracy_pct": 82,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_39",
+      "features": {
+        "math": 3,
+        "chinese": 2,
+        "db": 1
+      },
+      "best_model": "GLM-4+Qwen3-235B",
+      "accuracy_pct": 91,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_math_40",
+      "features": {
+        "math": 3,
+        "logic": 2
+      },
+      "best_model": "GLM-4+DS-V4",
+      "accuracy_pct": 83,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_math_41",
+      "features": {
+        "math": 3,
+        "writing": 1,
+        "chinese": 2
+      },
+      "best_model": "GLM-4",
+      "accuracy_pct": 86,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_math_42",
+      "features": {
+        "math": 3,
+        "db": 1
+      },
+      "best_model": "DS-V4+Qwen3-235B",
+      "accuracy_pct": 95,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_math_43",
+      "features": {
+        "math": 2,
+        "writing": 1
+      },
+      "best_model": "GLM-4+Qwen3-235B",
+      "accuracy_pct": 81,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_math_44",
+      "features": {
+        "math": 2,
+        "chinese": 2,
+        "knowledge": 1
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 88,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_45",
+      "features": {
+        "code": 3,
+        "knowledge": 1
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 81,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_46",
+      "features": {
+        "code": 4
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 83,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_47",
+      "features": {
+        "code": 5,
+        "writing": 2
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 93,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_48",
+      "features": {
+        "code": 5
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 83,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_49",
+      "features": {
+        "code": 4,
+        "logic": 1
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 85,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_50",
+      "features": {
+        "code": 4,
+        "writing": 2
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 82,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_51",
+      "features": {
+        "code": 5,
+        "math": 1,
+        "knowledge": 2
+      },
+      "best_model": "DS-V4+Kimi",
+      "accuracy_pct": 94,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_code_52",
+      "features": {
+        "code": 4
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 81,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_53",
+      "features": {
+        "code": 5,
+        "writing": 1,
+        "db": 2
+      },
+      "best_model": "DS-V4+Kimi",
+      "accuracy_pct": 85,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_code_54",
+      "features": {
+        "code": 3
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 96,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_55",
+      "features": {
+        "code": 5,
+        "knowledge": 1
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 87,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_56",
+      "features": {
+        "code": 4
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 82,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_57",
+      "features": {
+        "code": 4,
+        "math": 1
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 92,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_58",
+      "features": {
+        "code": 2,
+        "writing": 2
+      },
+      "best_model": "Groq-Llama+DS-V4",
+      "accuracy_pct": 98,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_code_59",
+      "features": {
+        "code": 2,
+        "logic": 2
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 83,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_60",
+      "features": {
+        "code": 5
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 90,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_61",
+      "features": {
+        "code": 4
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 82,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_62",
+      "features": {
+        "code": 4
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 91,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_63",
+      "features": {
+        "code": 3,
+        "chinese": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 93,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_64",
+      "features": {
+        "code": 3,
+        "logic": 2
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 96,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_65",
+      "features": {
+        "code": 5,
+        "logic": 1
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 84,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_66",
+      "features": {
+        "code": 2,
+        "chinese": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 86,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_67",
+      "features": {
+        "code": 4
+      },
+      "best_model": "DS-V4+Kimi",
+      "accuracy_pct": 96,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_code_68",
+      "features": {
+        "code": 4,
+        "db": 2,
+        "chinese": 2
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 89,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_code_69",
+      "features": {
+        "code": 5
+      },
+      "best_model": "Kimi+DS-V4",
+      "accuracy_pct": 100,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_logic_70",
+      "features": {
+        "logic": 2
+      },
+      "best_model": "DS-Think",
+      "accuracy_pct": 91,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_71",
+      "features": {
+        "logic": 2,
+        "chinese": 2,
+        "writing": 2
+      },
+      "best_model": "DS-Think",
+      "accuracy_pct": 98,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_72",
+      "features": {
+        "logic": 2,
+        "math": 1
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 100,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_73",
+      "features": {
+        "logic": 3,
+        "math": 1
+      },
+      "best_model": "Kimi+Groq-Llama",
+      "accuracy_pct": 91,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_logic_74",
+      "features": {
+        "logic": 5,
+        "knowledge": 1,
+        "code": 1
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 90,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_75",
+      "features": {
+        "logic": 3,
+        "knowledge": 2
+      },
+      "best_model": "DS-Think",
+      "accuracy_pct": 81,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_76",
+      "features": {
+        "logic": 4,
+        "code": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 83,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_77",
+      "features": {
+        "logic": 3
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 89,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_78",
+      "features": {
+        "logic": 5,
+        "db": 2
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 91,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_79",
+      "features": {
+        "logic": 4,
+        "math": 1,
+        "knowledge": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 88,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_80",
+      "features": {
+        "logic": 5,
+        "knowledge": 2
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 85,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_81",
+      "features": {
+        "logic": 4,
+        "knowledge": 1
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 94,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_82",
+      "features": {
+        "logic": 4,
+        "writing": 1,
+        "chinese": 2
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 84,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_83",
+      "features": {
+        "logic": 3,
+        "code": 1
+      },
+      "best_model": "DS-Think",
+      "accuracy_pct": 85,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_84",
+      "features": {
+        "logic": 4
+      },
+      "best_model": "DS-Think",
+      "accuracy_pct": 95,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_85",
+      "features": {
+        "logic": 2,
+        "knowledge": 1,
+        "db": 1
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 99,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_86",
+      "features": {
+        "logic": 5,
+        "code": 1
+      },
+      "best_model": "DS-Think",
+      "accuracy_pct": 100,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_87",
+      "features": {
+        "logic": 5
+      },
+      "best_model": "DS-Think",
+      "accuracy_pct": 98,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_88",
+      "features": {
+        "logic": 4,
+        "writing": 2,
+        "code": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 98,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_89",
+      "features": {
+        "logic": 3,
+        "knowledge": 1,
+        "db": 1
+      },
+      "best_model": "DS-Think",
+      "accuracy_pct": 95,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_90",
+      "features": {
+        "logic": 2,
+        "writing": 1
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 84,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_91",
+      "features": {
+        "logic": 2,
+        "knowledge": 1,
+        "code": 1
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 92,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_92",
+      "features": {
+        "logic": 2
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 99,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_93",
+      "features": {
+        "logic": 3,
+        "code": 1,
+        "writing": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 92,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_logic_94",
+      "features": {
+        "logic": 4,
+        "math": 2,
+        "knowledge": 2
+      },
+      "best_model": "Groq-Llama",
+      "accuracy_pct": 95,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_95",
+      "features": {
+        "knowledge": 3,
+        "code": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 99,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_96",
+      "features": {
+        "knowledge": 5,
+        "chinese": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 84,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_97",
+      "features": {
+        "knowledge": 2,
+        "writing": 1
+      },
+      "best_model": "Qwen3-235B+DS-Think",
+      "accuracy_pct": 85,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_knowledge_98",
+      "features": {
+        "knowledge": 4,
+        "logic": 2,
+        "writing": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 80,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_99",
+      "features": {
+        "knowledge": 3,
+        "chinese": 1,
+        "math": 2
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 95,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_100",
+      "features": {
+        "knowledge": 4
+      },
+      "best_model": "DS-Think",
+      "accuracy_pct": 96,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_101",
+      "features": {
+        "knowledge": 2
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 82,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_102",
+      "features": {
+        "knowledge": 2,
+        "logic": 2,
+        "db": 1
+      },
+      "best_model": "DS-Think+GLM-4+",
+      "accuracy_pct": 97,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_knowledge_103",
+      "features": {
+        "knowledge": 5,
+        "db": 2,
+        "code": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 87,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_104",
+      "features": {
+        "knowledge": 4
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 86,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_knowledge_105",
+      "features": {
+        "knowledge": 4,
+        "writing": 1
+      },
+      "best_model": "DS-Think+GLM-4+",
+      "accuracy_pct": 95,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_knowledge_106",
+      "features": {
+        "knowledge": 2,
+        "math": 1
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 86,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_knowledge_107",
+      "features": {
+        "knowledge": 4,
+        "db": 1
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 88,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_knowledge_108",
+      "features": {
+        "knowledge": 2,
+        "code": 1,
+        "math": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 93,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_109",
+      "features": {
+        "knowledge": 2,
+        "code": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 90,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_knowledge_110",
+      "features": {
+        "knowledge": 4,
+        "db": 2
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 82,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_111",
+      "features": {
+        "knowledge": 3
+      },
+      "best_model": "Qwen3-235B+DS-Think",
+      "accuracy_pct": 92,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_knowledge_112",
+      "features": {
+        "knowledge": 3,
+        "writing": 2,
+        "logic": 1
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 95,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_knowledge_113",
+      "features": {
+        "knowledge": 2,
+        "logic": 2
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 82,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_114",
+      "features": {
+        "knowledge": 2,
+        "writing": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 88,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_knowledge_115",
+      "features": {
+        "knowledge": 5
+      },
+      "best_model": "DS-Think",
+      "accuracy_pct": 82,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_116",
+      "features": {
+        "knowledge": 2,
+        "code": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 80,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_knowledge_117",
+      "features": {
+        "knowledge": 4,
+        "logic": 1,
+        "chinese": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 80,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_118",
+      "features": {
+        "knowledge": 5,
+        "math": 2,
+        "logic": 2
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 95,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_knowledge_119",
+      "features": {
+        "knowledge": 4
+      },
+      "best_model": "Qwen3-235B+GLM-4+",
+      "accuracy_pct": 99,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_writing_120",
+      "features": {
+        "writing": 2,
+        "logic": 1,
+        "knowledge": 1
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 100,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_121",
+      "features": {
+        "writing": 2,
+        "math": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 94,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_122",
+      "features": {
+        "writing": 5,
+        "math": 1,
+        "knowledge": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 96,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_123",
+      "features": {
+        "writing": 3,
+        "db": 1,
+        "code": 2
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 90,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_124",
+      "features": {
+        "writing": 3,
+        "knowledge": 2,
+        "math": 1
+      },
+      "best_model": "Qwen3-235B+GLM-4+",
+      "accuracy_pct": 83,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_writing_125",
+      "features": {
+        "writing": 4,
+        "db": 1
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 93,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_writing_126",
+      "features": {
+        "writing": 5,
+        "logic": 1
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 81,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_writing_127",
+      "features": {
+        "writing": 2
+      },
+      "best_model": "GLM-4++Qwen3-235B",
+      "accuracy_pct": 98,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_writing_128",
+      "features": {
+        "writing": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 84,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_129",
+      "features": {
+        "writing": 4,
+        "logic": 1,
+        "code": 1
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 88,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_writing_130",
+      "features": {
+        "writing": 5
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 83,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_131",
+      "features": {
+        "writing": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 83,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_writing_132",
+      "features": {
+        "writing": 2,
+        "math": 1,
+        "chinese": 2
+      },
+      "best_model": "Qwen3-235B+GLM-4+",
+      "accuracy_pct": 85,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_writing_133",
+      "features": {
+        "writing": 2,
+        "knowledge": 2,
+        "logic": 1
+      },
+      "best_model": "Kimi+GLM-4+",
+      "accuracy_pct": 96,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_writing_134",
+      "features": {
+        "writing": 3,
+        "code": 1
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 99,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_135",
+      "features": {
+        "writing": 3,
+        "chinese": 1,
+        "db": 2
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 97,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_136",
+      "features": {
+        "writing": 4,
+        "db": 2,
+        "chinese": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 97,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_137",
+      "features": {
+        "writing": 2,
+        "code": 1
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 90,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_138",
+      "features": {
+        "writing": 4
+      },
+      "best_model": "Kimi+Qwen3-235B",
+      "accuracy_pct": 84,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_writing_139",
+      "features": {
+        "writing": 4
+      },
+      "best_model": "GLM-4++Kimi",
+      "accuracy_pct": 97,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_writing_140",
+      "features": {
+        "writing": 2,
+        "db": 1,
+        "math": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 90,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_141",
+      "features": {
+        "writing": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 98,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_142",
+      "features": {
+        "writing": 4,
+        "knowledge": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 94,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_writing_143",
+      "features": {
+        "writing": 4,
+        "math": 1,
+        "db": 1
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 91,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_writing_144",
+      "features": {
+        "writing": 3
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 81,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_chinese_145",
+      "features": {
+        "chinese": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 92,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_chinese_146",
+      "features": {
+        "chinese": 3,
+        "math": 1,
+        "db": 2
+      },
+      "best_model": "Kimi+GLM-4+",
+      "accuracy_pct": 96,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_147",
+      "features": {
+        "chinese": 4,
+        "knowledge": 2
+      },
+      "best_model": "Kimi+GLM-4+",
+      "accuracy_pct": 99,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_148",
+      "features": {
+        "chinese": 4,
+        "db": 1
+      },
+      "best_model": "GLM-4++Kimi",
+      "accuracy_pct": 99,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_149",
+      "features": {
+        "chinese": 4,
+        "math": 2,
+        "knowledge": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 98,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_150",
+      "features": {
+        "chinese": 5,
+        "logic": 1
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 94,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_151",
+      "features": {
+        "chinese": 2,
+        "math": 1,
+        "knowledge": 1
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 91,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_chinese_152",
+      "features": {
+        "chinese": 5,
+        "code": 2,
+        "writing": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 89,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_153",
+      "features": {
+        "chinese": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 100,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_154",
+      "features": {
+        "chinese": 5,
+        "knowledge": 2,
+        "math": 1
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 93,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_155",
+      "features": {
+        "chinese": 5
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 99,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_156",
+      "features": {
+        "chinese": 5,
+        "knowledge": 1
+      },
+      "best_model": "GLM-4++Kimi",
+      "accuracy_pct": 85,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_157",
+      "features": {
+        "chinese": 4,
+        "logic": 1,
+        "code": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 93,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_chinese_158",
+      "features": {
+        "chinese": 3
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 98,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_159",
+      "features": {
+        "chinese": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 88,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_160",
+      "features": {
+        "chinese": 5
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 96,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_161",
+      "features": {
+        "chinese": 3
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 98,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_162",
+      "features": {
+        "chinese": 5,
+        "math": 1
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 80,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_163",
+      "features": {
+        "chinese": 5,
+        "knowledge": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 90,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_chinese_164",
+      "features": {
+        "chinese": 5,
+        "math": 2
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 82,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_chinese_165",
+      "features": {
+        "chinese": 5,
+        "math": 1
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 98,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_chinese_166",
+      "features": {
+        "chinese": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 93,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_chinese_167",
+      "features": {
+        "chinese": 5
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 94,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_chinese_168",
+      "features": {
+        "chinese": 5
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 87,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_chinese_169",
+      "features": {
+        "chinese": 4,
+        "db": 1
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 94,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_170",
+      "features": {
+        "db": 3,
+        "logic": 2,
+        "chinese": 1
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 84,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_171",
+      "features": {
+        "db": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 91,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_db_172",
+      "features": {
+        "db": 4,
+        "logic": 1
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 82,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_173",
+      "features": {
+        "db": 4,
+        "knowledge": 1,
+        "math": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 92,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_db_174",
+      "features": {
+        "db": 3,
+        "writing": 1
+      },
+      "best_model": "DS-V4+GLM-4+",
+      "accuracy_pct": 88,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_db_175",
+      "features": {
+        "db": 4
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 92,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_176",
+      "features": {
+        "db": 5,
+        "math": 2,
+        "writing": 2
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 100,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_177",
+      "features": {
+        "db": 5
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 99,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_178",
+      "features": {
+        "db": 5,
+        "knowledge": 1
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 90,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_179",
+      "features": {
+        "db": 2,
+        "math": 1,
+        "knowledge": 1
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 89,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_db_180",
+      "features": {
+        "db": 3
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 86,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_181",
+      "features": {
+        "db": 2,
+        "logic": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 87,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_182",
+      "features": {
+        "db": 5,
+        "knowledge": 2,
+        "code": 1
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 83,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_183",
+      "features": {
+        "db": 2
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 82,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_184",
+      "features": {
+        "db": 4
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 81,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_db_185",
+      "features": {
+        "db": 2,
+        "writing": 2,
+        "logic": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 83,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_db_186",
+      "features": {
+        "db": 5
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 100,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_187",
+      "features": {
+        "db": 5
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 97,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_db_188",
+      "features": {
+        "db": 2
+      },
+      "best_model": "Qwen3-235B",
+      "accuracy_pct": 92,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_189",
+      "features": {
+        "db": 5,
+        "math": 1
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 85,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_db_190",
+      "features": {
+        "db": 3
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 97,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_191",
+      "features": {
+        "db": 3,
+        "logic": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 87,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_db_192",
+      "features": {
+        "db": 2
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 94,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "synth_db_193",
+      "features": {
+        "db": 5,
+        "writing": 2
+      },
+      "best_model": "GLM-4+",
+      "accuracy_pct": 80,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "synth_db_194",
+      "features": {
+        "db": 5
+      },
+      "best_model": "DS-V4",
+      "accuracy_pct": 94,
+      "samples": 1,
+      "routing_rule": "single"
+    },
+    {
+      "id": "ban_math_195",
+      "features": {
+        "math": 5
+      },
+      "banned_models": [
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "math ban: ['Kimi']"
+    },
+    {
+      "id": "ban_math_196",
+      "features": {
+        "math": 4
+      },
+      "banned_models": [
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "math ban: ['Kimi']"
+    },
+    {
+      "id": "ban_math_197",
+      "features": {
+        "math": 5
+      },
+      "banned_models": [
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "math ban: ['Kimi']"
+    },
+    {
+      "id": "ban_math_198",
+      "features": {
+        "math": 5
+      },
+      "banned_models": [
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "math ban: ['Kimi']"
+    },
+    {
+      "id": "ban_math_199",
+      "features": {
+        "math": 3
+      },
+      "banned_models": [
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "math ban: ['Kimi']"
+    },
+    {
+      "id": "ban_code_200",
+      "features": {
+        "code": 4
+      },
+      "banned_models": [
+        "GLM-4",
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "code ban: ['GLM-4', 'Kimi']"
+    },
+    {
+      "id": "ban_code_201",
+      "features": {
+        "code": 5
+      },
+      "banned_models": [
+        "GLM-4",
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "code ban: ['GLM-4', 'Kimi']"
+    },
+    {
+      "id": "ban_code_202",
+      "features": {
+        "code": 3
+      },
+      "banned_models": [
+        "GLM-4",
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "code ban: ['GLM-4', 'Kimi']"
+    },
+    {
+      "id": "ban_code_203",
+      "features": {
+        "code": 3
+      },
+      "banned_models": [
+        "GLM-4",
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "code ban: ['GLM-4', 'Kimi']"
+    },
+    {
+      "id": "ban_code_204",
+      "features": {
+        "code": 3
+      },
+      "banned_models": [
+        "GLM-4",
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "code ban: ['GLM-4', 'Kimi']"
+    },
+    {
+      "id": "ban_logic_205",
+      "features": {
+        "logic": 5
+      },
+      "banned_models": [
+        "DS-V4",
+        "Qwen3-235B",
+        "GLM-4+",
+        "GLM-4",
+        "QWEN"
+      ],
+      "routing_rule": "ban",
+      "reason": "logic ban: ['DS-V4', 'Qwen3-235B', 'GLM-4+', 'GLM-4', 'QWEN']"
+    },
+    {
+      "id": "ban_logic_206",
+      "features": {
+        "logic": 3
+      },
+      "banned_models": [
+        "DS-V4",
+        "Qwen3-235B",
+        "GLM-4+",
+        "GLM-4",
+        "QWEN"
+      ],
+      "routing_rule": "ban",
+      "reason": "logic ban: ['DS-V4', 'Qwen3-235B', 'GLM-4+', 'GLM-4', 'QWEN']"
+    },
+    {
+      "id": "ban_logic_207",
+      "features": {
+        "logic": 3
+      },
+      "banned_models": [
+        "DS-V4",
+        "Qwen3-235B",
+        "GLM-4+",
+        "GLM-4",
+        "QWEN"
+      ],
+      "routing_rule": "ban",
+      "reason": "logic ban: ['DS-V4', 'Qwen3-235B', 'GLM-4+', 'GLM-4', 'QWEN']"
+    },
+    {
+      "id": "ban_logic_208",
+      "features": {
+        "logic": 5
+      },
+      "banned_models": [
+        "DS-V4",
+        "Qwen3-235B",
+        "GLM-4+",
+        "GLM-4",
+        "QWEN"
+      ],
+      "routing_rule": "ban",
+      "reason": "logic ban: ['DS-V4', 'Qwen3-235B', 'GLM-4+', 'GLM-4', 'QWEN']"
+    },
+    {
+      "id": "ban_logic_209",
+      "features": {
+        "logic": 4
+      },
+      "banned_models": [
+        "DS-V4",
+        "Qwen3-235B",
+        "GLM-4+",
+        "GLM-4",
+        "QWEN"
+      ],
+      "routing_rule": "ban",
+      "reason": "logic ban: ['DS-V4', 'Qwen3-235B', 'GLM-4+', 'GLM-4', 'QWEN']"
+    },
+    {
+      "id": "ban_knowledge_210",
+      "features": {
+        "knowledge": 3
+      },
+      "banned_models": [
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "knowledge ban: ['Kimi']"
+    },
+    {
+      "id": "ban_knowledge_211",
+      "features": {
+        "knowledge": 4
+      },
+      "banned_models": [
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "knowledge ban: ['Kimi']"
+    },
+    {
+      "id": "ban_knowledge_212",
+      "features": {
+        "knowledge": 3
+      },
+      "banned_models": [
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "knowledge ban: ['Kimi']"
+    },
+    {
+      "id": "ban_knowledge_213",
+      "features": {
+        "knowledge": 4
+      },
+      "banned_models": [
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "knowledge ban: ['Kimi']"
+    },
+    {
+      "id": "ban_knowledge_214",
+      "features": {
+        "knowledge": 3
+      },
+      "banned_models": [
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "knowledge ban: ['Kimi']"
+    },
+    {
+      "id": "ban_chinese_215",
+      "features": {
+        "chinese": 3
+      },
+      "banned_models": [
+        "Groq-Llama",
+        "DS-Think"
+      ],
+      "routing_rule": "ban",
+      "reason": "chinese ban: ['Groq-Llama', 'DS-Think']"
+    },
+    {
+      "id": "ban_chinese_216",
+      "features": {
+        "chinese": 5
+      },
+      "banned_models": [
+        "Groq-Llama",
+        "DS-Think"
+      ],
+      "routing_rule": "ban",
+      "reason": "chinese ban: ['Groq-Llama', 'DS-Think']"
+    },
+    {
+      "id": "ban_chinese_217",
+      "features": {
+        "chinese": 4
+      },
+      "banned_models": [
+        "Groq-Llama",
+        "DS-Think"
+      ],
+      "routing_rule": "ban",
+      "reason": "chinese ban: ['Groq-Llama', 'DS-Think']"
+    },
+    {
+      "id": "ban_chinese_218",
+      "features": {
+        "chinese": 4
+      },
+      "banned_models": [
+        "Groq-Llama",
+        "DS-Think"
+      ],
+      "routing_rule": "ban",
+      "reason": "chinese ban: ['Groq-Llama', 'DS-Think']"
+    },
+    {
+      "id": "ban_chinese_219",
+      "features": {
+        "chinese": 3
+      },
+      "banned_models": [
+        "Groq-Llama",
+        "DS-Think"
+      ],
+      "routing_rule": "ban",
+      "reason": "chinese ban: ['Groq-Llama', 'DS-Think']"
+    },
+    {
+      "id": "ban_db_220",
+      "features": {
+        "db": 3
+      },
+      "banned_models": [
+        "Kimi",
+        "Groq-Llama"
+      ],
+      "routing_rule": "ban",
+      "reason": "db ban: ['Kimi', 'Groq-Llama']"
+    },
+    {
+      "id": "ban_db_221",
+      "features": {
+        "db": 5
+      },
+      "banned_models": [
+        "Kimi",
+        "Groq-Llama"
+      ],
+      "routing_rule": "ban",
+      "reason": "db ban: ['Kimi', 'Groq-Llama']"
+    },
+    {
+      "id": "ban_db_222",
+      "features": {
+        "db": 4
+      },
+      "banned_models": [
+        "Kimi",
+        "Groq-Llama"
+      ],
+      "routing_rule": "ban",
+      "reason": "db ban: ['Kimi', 'Groq-Llama']"
+    },
+    {
+      "id": "ban_db_223",
+      "features": {
+        "db": 5
+      },
+      "banned_models": [
+        "Kimi",
+        "Groq-Llama"
+      ],
+      "routing_rule": "ban",
+      "reason": "db ban: ['Kimi', 'Groq-Llama']"
+    },
+    {
+      "id": "ban_db_224",
+      "features": {
+        "db": 4
+      },
+      "banned_models": [
+        "Kimi",
+        "Groq-Llama"
+      ],
+      "routing_rule": "ban",
+      "reason": "db ban: ['Kimi', 'Groq-Llama']"
     }
   ]
 }
