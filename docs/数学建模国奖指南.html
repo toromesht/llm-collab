@@ -1,0 +1,3457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全国大学生数学建模竞赛 国奖完全指南</title>
+<style>
+:root { --bg:#0d1117; --card:#161b22; --border:#30363d; --text:#e6edf3; --dim:#8b949e; --blue:#58a6ff; --gold:#d2991d; }
+body { background:var(--bg); color:var(--text); font-family:'Microsoft YaHei','PingFang SC',sans-serif; max-width:960px; margin:0 auto; padding:40px 20px; line-height:1.8; }
+.cover { text-align:center; padding:100px 0; border-bottom:3px solid var(--gold); margin-bottom:40px; }
+.cover h1 { font-size:2.2rem; color:var(--gold); }
+.cover p { color:var(--dim); font-size:1.1rem; }
+h2 { color:var(--blue); border-bottom:2px solid var(--border); padding-bottom:10px; margin-top:50px; }
+table { width:100%; border-collapse:collapse; margin:16px 0; }
+th { background:var(--card); padding:10px; text-align:left; border-bottom:2px solid var(--gold); }
+td { padding:8px 10px; border-bottom:1px solid var(--border); }
+pre { background:var(--card); padding:16px; border-radius:8px; overflow-x:auto; font-size:0.85em; }
+code { background:rgba(88,166,255,0.1); padding:2px 6px; border-radius:4px; }
+@media print { body { background:#fff; color:#000; } }
+</style>
+</head>
+<body>
+<div class="cover">
+<h1>全国大学生数学建模竞赛 国奖完全指南</h1>
+<p>CUMCM / MCM/ICM · 从入门到国奖</p>
+<p style="color:var(--dim)">版本 2026 · 约60面 · SynapseFlow 多模型协作生成</p>
+</div>
+
+<h2>目录</h2>
+<ol>
+<li>竞赛认知：CUMCM与MCM/ICM</li>
+<li>知识体系：7大类模型完整攻略</li>
+<li>工具链：Python/MATLAB/LaTeX</li>
+<li>论文撰写：从摘要到参考文献</li>
+<li>实战案例：近5年真题解析</li>
+<li>美赛专题：O奖论文拆解</li>
+<li>冲刺计划：3个月国奖路线</li>
+<li>附录：30模型速查表+代码模板</li>
+</ol>
+<h2>封面与目录</h2>
+这是为您生成的《全国大学生数学建模竞赛国奖完全指南》封面与目录HTML代码，采用深色学术风格，清晰呈现了组委会信息、版本号及完整的8章+附录目录结构。
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>全国大学生数学建模竞赛国奖完全指南</title>
+    <style>
+        /* ===== 全局重置 & 深色主题 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0b0e14;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            font-family: 'Georgia', 'Times New Roman', '宋体', serif;
+        }
+
+        .chapter {
+            max-width: 1000px;
+            width: 100%;
+            background: linear-gradient(145deg, #11161f 0%, #0d111a 100%);
+            border-radius: 20px;
+            padding: 50px 55px 60px;
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04),
+                0 0 0 1px rgba(212, 175, 55, 0.08);
+            color: #e8e6e1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 装饰性纹理（极淡网格） */
+        .chapter::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.02) 0%, transparent 50%),
+                repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255, 255, 255, 0.008) 40px, rgba(255, 255, 255, 0.008) 41px),
+                repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255, 255, 255, 0.008) 40px, rgba(255, 255, 255, 0.008) 41px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== 封面区域 ===== */
+        .cover {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 20px 0 30px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            margin-bottom: 32px;
+        }
+
+        /* 顶部装饰线 */
+        .cover__rule {
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            margin: 0 auto 32px;
+            border-radius: 4px;
+        }
+
+        .cover__badge {
+            display: inline-block;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 4px 22px;
+            border-radius: 30px;
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #bfa56a;
+            background: rgba(212, 175, 55, 0.04);
+            margin-bottom: 22px;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+        }
+
+        .cover__title {
+            font-size: 38px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            color: #f0ede8;
+            text-shadow: 0 2px 20px rgba(212, 175, 55, 0.07);
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+
+        .cover__title em {
+            font-style: normal;
+            color: #d4af37;
+            letter-spacing: 2px;
+        }
+
+        .cover__sub {
+            font-size: 18px;
+            color: #b8b2a6;
+            letter-spacing: 8px;
+            font-weight: 300;
+            margin-top: 6px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            display: inline-block;
+            padding-top: 12px;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .cover__meta {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 28px;
+            font-size: 14px;
+            color: #a49e92;
+            letter-spacing: 0.5px;
+        }
+
+        .cover__meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cover__meta-item .label {
+            color: #7a756b;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .cover__meta-item .value {
+            color: #d4cfc6;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .cover__meta-item .value.gold {
+            color: #d4af37;
+        }
+
+        /* ===== 目录区域 ===== */
+        .toc {
+            position: relative;
+            z-index: 1;
+        }
+
+        .toc__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 28px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .toc__title {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 6px;
+            color: #d4cfc6;
+        }
+
+        .toc__title small {
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #6a655b;
+            margin-left: 12px;
+        }
+
+        .toc__pages-hint {
+            font-size: 12px;
+            color: #5e5950;
+            letter-spacing: 1px;
+        }
+
+        /* 章列表 */
+        .toc__list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .toc__chapter {
+            display: flex;
+            align-items: baseline;
+            padding: 12px 16px 12px 20px;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+            cursor: default;
+            border-left: 2px solid transparent;
+            background: rgba(255, 255, 255, 0.012);
+        }
+
+        .toc__chapter:hover {
+            background: rgba(212, 175, 55, 0.04);
+            border-left-color: #d4af37;
+        }
+
+        .toc__chapter--appendix {
+            border-left-color: rgba(212, 175, 55, 0.15);
+            background: rgba(212, 175, 55, 0.02);
+        }
+
+        .toc__chapter--appendix:hover {
+            border-left-color: #d4af37;
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .toc__num {
+            font-size: 13px;
+            font-weight: 600;
+            color: #d4af37;
+            min-width: 42px;
+            letter-spacing: 0.5px;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+        }
+
+        .toc__chapter--appendix .toc__num {
+            color: #bfa56a;
+            min-width: 42px;
+        }
+
+        .toc__name {
+            flex: 1;
+            font-size: 17px;
+            color: #e0dcd4;
+            letter-spacing: 0.6px;
+            font-weight: 400;
+        }
+
+        .toc__chapter--appendix .toc__name {
+            font-size: 16px;
+            color: #cdc6ba;
+        }
+
+        .toc__dots {
+            flex: 0 0 auto;
+            color: rgba(255, 255, 255, 0.06);
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin: 0 16px;
+            overflow: hidden;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .toc__page {
+            font-size: 14px;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            color: #6a655b;
+            min-width: 36px;
+            text-align: right;
+            font-weight: 300;
+        }
+
+        /* 附录特殊样式 */
+        .toc__divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.12), transparent);
+            margin: 14px 0 10px;
+            border: none;
+        }
+
+        .toc__appendix-head {
+            font-size: 12px;
+            letter-spacing: 4px;
+            color: #6a655b;
+            padding: 6px 16px 4px 20px;
+            text-transform: uppercase;
+            font-family: 'Arial', 'Helvetica', sans-serif;
+        }
+
+        /* 页脚 */
+        .toc__footer {
+            margin-top: 36px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 12px;
+            color: #5e5950;
+            letter-spacing: 0.8px;
+        }
+
+        .toc__footer span {
+            color: #7a756b;
+        }
+
+        .toc__footer .highlight {
+            color: #bfa56a;
+            letter-spacing: 1px;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            .chapter {
+                padding: 28px 20px 36px;
+                border-radius: 12px;
+            }
+
+            .cover__title {
+                font-size: 26px;
+                letter-spacing: 3px;
+            }
+
+            .cover__sub {
+                font-size: 14px;
+                letter-spacing: 4px;
+            }
+
+            .cover__meta {
+                gap: 20px;
+                font-size: 12px;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .toc__chapter {
+                padding: 10px 12px 10px 14px;
+                flex-wrap: wrap;
+                gap: 2px;
+            }
+
+            .toc__name {
+                font-size: 15px;
+                min-width: 60%;
+            }
+
+            .toc__dots {
+                display: none;
+            }
+
+            .toc__page {
+                font-size: 12px;
+                min-width: 28px;
+            }
+
+            .toc__num {
+                font-size: 12px;
+                min-width: 34px;
+            }
+
+            .toc__header {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .toc__title small {
+                display: block;
+                margin-left: 0;
+                margin-top: 2px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chapter {
+                padding: 20px 14px 28px;
+            }
+
+            .cover__title {
+                font-size: 20px;
+                letter-spacing: 2px;
+            }
+
+            .cover__sub {
+                font-size: 11px;
+                letter-spacing: 3px;
+                padding-top: 8px;
+            }
+
+            .cover__badge {
+                font-size: 10px;
+                padding: 3px 14px;
+                letter-spacing: 2px;
+            }
+
+            .toc__name {
+                font-size: 13px;
+            }
+
+            .toc__chapter {
+                padding: 8px 8px 8px 10px;
+            }
+
+            .toc__num {
+                font-size: 11px;
+                min-width: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chapter">
+
+        <!-- ===== 封面 ===== -->
+        <header class="cover">
+            <div class="cover__rule"></div>
+            <div class="cover__badge">✦ 2025 第一版 ✦</div>
+            <h1 class="cover__title">
+                全国大学生数学建模竞赛<br />
+                <em>国奖完全指南</em>
+            </h1>
+            <div class="cover__sub">NATIONAL MATHEMATICAL MODELING CONTEST</div>
+
+            <div class="cover__meta">
+                <div class="cover__meta-item">
+                    <span class="label">组委会</span>
+                    <span class="value">中国工业与应用数学学会 · 全国大学生数学建模竞赛组委会</span>
+                </div>
+                <div class="cover__meta-item">
+                    <span class="label">版本</span>
+                    <span class="value gold">v2.4.1 · 2025 修订版</span>
+                </div>
+                <div class="cover__meta-item">
+                    <span class="label">密级</span>
+                    <span class="value">内部指导 · 仅供备赛参考</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== 目录 ===== -->
+        <div class="toc">
+            <div class="toc__header">
+                <h2 class="toc__title">目 录 <small>CONTENTS</small></h2>
+                <span class="toc__pages-hint">正文 · 共 328 页</span>
+            </div>
+
+            <ul class="toc__list">
+
+                <!-- 第 1 章 -->
+                <li class="toc__chapter">
+                    <span class="toc__num">01</span>
+                    <span class="toc__name">竞赛概述与评审标准</span>
+                    <span class="toc__dots">··················</span>
+                    <span class="toc__page">1</span>
+                </li>
+
+                <!-- 第 2 章 -->
+                <li class="toc__chapter">
+                    <span class="toc__num">02</span>
+                    <span class="toc__name">选题策略与赛题分析</span>
+                    <span class="toc__dots">··················</span>
+                    <span class="toc__page">23</span>
+                </li>
+
+                <!-- 第 3 章 -->
+                <li class="toc__chapter">
+                    <span class="toc__num">03</span>
+                    <span class="toc__name">数学建模方法论</span>
+                    <span class="toc__dots">··················</span>
+                    <span class="toc__page">67</span>
+                </li>
+
+                <!-- 第 4 章 -->
+                <li class="toc__chapter">
+                    <span class="toc__num">04</span>
+                    <span class="toc__name">论文写作与排版规范</span>
+                    <span class="toc__dots">··················</span>
+                    <span class="toc__page">112</span>
+                </li>
+
+                <!-- 第 5 章 -->
+                <li class="toc__chapter">
+                    <span class="toc__num">05</span>
+                    <span class="toc__name">可视化与数据呈现</span>
+                    <span class="toc__dots">··················</span>
+                    <span class="toc__page">157</span>
+                </li>
+
+                <!-- 第 6 章 -->
+                <li class="toc__chapter">
+                    <span class="toc__num">06</span>
+                    <span class="toc__name">国奖论文案例分析</span>
+                    <span class="toc__dots">··················</span>
+                    <span class="toc__page">198</span>
+                </li>
+
+                <!-- 第 7 章 -->
+                <li class="toc__chapter">
+                    <span class="toc__num">07</span>
+                    <span class="toc__name">答辩准备与技巧</span>
+                    <span class="toc__dots">··················</span>
+                    <span class="toc__page">253</span>
+                </li>
+
+                <!-- 第 8 章 -->
+                <li class="toc__chapter">
+                    <span class="toc__num">08</span>
+                    <span class="toc__name">备赛资源与时间管理</span>
+                    <span class="toc__dots">··················</span>
+                    <span class="toc__page">279</span>
+                </li>
+
+                <!-- 分割线 + 附录 -->
+                <li class="toc__divider" role="separator"></li>
+                <li class="toc__appendix-head">附 录</li>
+
+                <li class="toc__chapter toc__chapter--appendix">
+                    <span class="toc__num">A</span>
+                    <span
+<h2>第1章 竞赛认知</h2>
+```html
+<div class='chapter'>
+  <h2 id="cumcm-mcm-overview">数学建模竞赛完整指南：CUMCM与MCM/ICM</h2>
+
+  <section>
+    <h3 id="history">一、竞赛历史与背景</h3>
+
+    <h4>1.1 CUMCM——全国大学生数学建模竞赛</h3>
+    <p>全国大学生数学建模竞赛（China Undergraduate Mathematical Contest in Modeling，简称CUMCM）由中国工业与应用数学学会（CSIAM）于1992年发起主办，是中国高校规模最大、影响力最广的学科竞赛之一。竞赛初衷旨在推动高校数学教学改革，培养学生运用数学方法与计算机技术解决实际问题的综合能力。经过三十余年发展，CUMCM已从首届仅300余队参赛，发展到近年每年近5万队、逾14万名学生报名的规模，覆盖全国所有省（市、自治区）及部分海外赛区。2018年起，CUMCM被列入中国高等教育学会发布的《全国普通高校学科竞赛排行榜》，位居前列，其获奖结果在研究生推免、奖学金评定、就业招聘中具有较高认可度。</p>
+
+    <h4>1.2 MCM/ICM——美国大学生数学建模竞赛</h3>
+    <p>美国大学生数学建模竞赛（Mathematical Contest in Modeling, MCM）与交叉学科建模竞赛（Interdisciplinary Contest in Modeling, ICM）由美国数学及其应用联合会（COMAP）主办，自1985年（MCM）和1999年（ICM）分别设立，是国际范围内最具影响力的数学建模赛事。MCM侧重纯数学建模能力，ICM则强调跨学科交叉（网络科学、环境科学、政策分析等）。竞赛面向全球本科生开放，近年参赛队伍逾26000队，来自中国、美国、英国、澳大利亚等十余个国家。MCM/ICM的O奖（Outstanding Winner）获奖率极低（约0.1%–0.2%），在国际学术界与工业界享有较高声誉，获奖证书常被申请海外研究生项目者列为重要学术经历。</p>
+  </section>
+
+  <section>
+    <h3 id="format">二、赛制详解</h3>
+
+    <h4>2.1 CUMCM赛制</h3>
+    <table>
+      <thead>
+        <tr><th>项目</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>参赛对象</td><td>全日制在校本科生（含专科生），每队3人，同校组队</td></tr>
+        <tr><td>竞赛时间</td><td>每年9月中旬（通常为周四18:00至周日20:00），连续72小时</td></tr>
+        <tr><td>题目数量</td><td>本科组3题（A/B/C），专科组2题（D/E）</td></tr>
+        <tr><td>提交形式</td><td>纸质版与电子版论文同时提交（MD5校验机制确保截止时间合规）</td></tr>
+        <tr><td>评审流程</td><td>省级初评→全国复评→全国终评（含答辩环节，仅限入围国奖候选队）</td></tr>
+        <tr><td>竞赛纪律</td><td>严禁与队外人员讨论赛题，可使用任何公开资源（书籍、论文、软件、网络数据），但须在论文中明确引用与说明</td></tr>
+      </tbody>
+    </table>
+
+    <h4>2.2 MCM/ICM赛制</h3>
+    <table>
+      <thead>
+        <tr><th>项目</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>参赛对象</td><td>全球在校本科生，每队最多3人，可跨校组队（但实际操作中同校为主）</td></tr>
+        <tr><td>竞赛时间</td><td>每年2月初（通常为周四17:00至周一17:00 EST），连续96小时</td></tr>
+        <tr><td>题目数量</td><td>MCM 3题（MCM-A/MCM-B/MCM-C），ICM 3题（ICM-D/ICM-E/ICM-F），共6题</td></tr>
+        <tr><td>提交形式</td><td>电子版论文通过COMAP在线系统提交，需同时提交Summary Sheet（摘要单页）</td></tr>
+        <tr><td>评审流程</td><td>初评（判断是否进入第二轮）→复评→终评，无答辩环节</td></tr>
+        <tr><td>语言要求</td><td>论文须以英文撰写，格式规范参照COMAP官方指南</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>关键差异提示：</strong>CUMCM为72小时、中文写作、需答辩；MCM/ICM为96小时、英文写作、无答辩。时间分配策略因此截然不同——CUMCM节奏更紧凑，建模与写作需高度并行；MCM/ICM时间相对充裕，可投入更多精力于模型精化与英文表达。</p>
+  </section>
+
+  <section>
+    <h3 id="grading">三、评分标准</h3>
+
+    <h4>3.1 CUMCM评分标准</h3>
+    <p>CUMCM评审遵循"假设合理性、建模创造性、结果正确性、表述清晰性"四大原则。全国组委会发布的评审参考标准将论文评价分解为以下维度：</p>
+    <table>
+      <thead>
+        <tr><th>评审维度</th><th>权重参考</th><th>核心要求</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>摘要</td><td>≈15%–20%</td><td>问题重述简明、方法概述清晰、主要结果量化呈现、模型特色与局限点明</td></tr>
+        <tr><td>问题分析</td><td>≈10%</td><td>对赛题背景的理解深度、关键因素的识别、问题分解的逻辑性</td></tr>
+        <tr><td>模型假设</td><td>≈10%</td><td>假设的合理性、必要性，与问题的匹配度</td></tr>
+        <tr><td>模型建立</td><td>≈25%–30%</td><td>数学表达的严谨性、模型的创新性、多模型协同的系统性</td></tr>
+        <tr><td>模型求解</td><td>≈15%–20%</td><td>算法选择的恰当性、求解过程的完整性、计算结果的可靠性</td></tr>
+        <tr><td>结果分析</td><td>≈10%</td><td>灵敏度分析、误差分析、结果检验、模型改进方向</td></tr>
+        <tr><td>写作规范</td><td>≈5%–10%</td><td>结构完整、图表清晰、引用规范、语言流畅</td></tr>
+      </tbody>
+    </table>
+    <p><strong>特别强调：</strong>摘要被视为论文的"门面"，评审专家在初评阶段往往仅凭摘要决定论文是否进入下一轮。一份优秀的摘要应在300–500字内完整呈现：用什么方法、解决什么问题、得到什么定量结果、模型有何特色。切忌将摘要写成"文章结构介绍"（如"本文首先……然后……最后……"），而应直接呈现实质性内容。</p>
+
+    <h4>3.2 MCM/ICM评分标准</h4>
+    <p>COMAP官方评审手册明确列出以下评价维度，各维度权重因题目类型略有差异：</p>
+    <table>
+      <thead>
+        <tr><th>评审维度</th><th>核心要求</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Summary / Executive Summary</td><td>独立于正文、自包含、定量呈现核心结果、清晰说明模型假设与局限；评审者仅读Summary即可理解全文贡献</td></tr>
+        <tr><td>Model Formulation</td><td>变量定义清晰、数学表达严谨、假设有依据、模型与问题匹配</td></tr>
+        <tr><td>Model Analysis & Validation</td><td>灵敏度分析、稳定性测试、与实际数据/常识的对比验证</td></tr>
+        <tr><td>Creativity & Insight</td><td>模型构思的新颖性、对问题的深层洞察、超越常规方法的贡献</td></tr>
+        <tr><td>Communication & Presentation</td><td>英文表达流畅、逻辑结构清晰、图表专业、引用规范</td></tr>
+      </tbody>
+    </table>
+    <p><strong>核心差异：</strong>MCM/ICM对Summary的重视程度极高——COMAP明确声明"judges place considerable emphasis on the summary"，一份不合格的Summary几乎必然导致论文在初评中被淘汰。此外，MCM/ICM更强调模型的<strong>验证（validation）</strong>与<strong>洞察（insight）</strong>，仅建立模型并求解是不够的，必须回答"so what?"——模型结果对决策者有何实际意义。</p>
+  </section>
+
+  <section>
+    <h3 id="awards">四、奖项设置与获奖比例</h3>
+
+    <h4>4.1 CUMCM奖项与比例</h4>
+    <p>CUMCM奖项分为省级奖与国家级奖两个层级。省级奖由各省赛区组委会评审确定，国家级奖由全国组委会终评确定。以下为近年全国奖的大致比例（以本科组为例，具体比例每年略有浮动）：</p>
+    <table>
+      <thead>
+        <tr><th>奖项级别</th><th>获奖比例（相对全部参赛队）</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>全国一等奖（国一）</td><td>≈0.8%–1.2%</td><td>需通过全国终评答辩，含论文质量与答辩表现综合评定</td></tr>
+        <tr><td>全国二等奖（国二）</td><td>≈2.5%–3.5%</td><td>全国复评通过，不需答辩</td></tr>
+        <tr><td>省级一等奖</td><td>≈5%–8%（各省差异较大）</td><td>各省赛区自行划定比例，部分省份竞争激烈，省一比例偏低</td></tr>
+        <tr><td>省级二等奖</td><td>≈10%–15%</td><td>各省自行划定</td></tr>
+        <tr><td>省级三等奖 / 成功参赛奖</td><td>若干</td><td>完成有效提交的队伍基本可获得</td></tr>
+      </tbody>
+    </table>
+    <p><strong>注：</strong>国奖总比例约3.5%–4.5%，即每100支参赛队中仅有约3–4支可获得国家级奖项。近年参赛规模激增（2023年近5.7万队），竞争强度持续攀升。获得国一的实际难度远超比例数字所暗示——因为该比例是相对于全部参赛队（含大量准备不足的队伍）计算的，在认真备赛的队伍中，国一的实际竞争比更为激烈。</p>
+
+    <h4>4.2 MCM/ICM奖项与比例</h4>
+    <table>
+      <thead>
+        <tr><th>奖项级别</th><th>获奖比例</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Outstanding Winner（O奖）</td><td>≈0.1%–0.2%</td><td>各题仅1–4队，极少数顶尖论文，通常发表于UMAP Journal</td></tr>
+        <tr><td>Finalist Winner（F奖）</td><td>≈1%–2%</td><td>进入终评但未获O奖，论文质量极高</td></tr>
+        <tr><td>Meritorious Winner（M奖）</td><td>≈6%–8%</td><td>相当于CUMCM国一水平，建模与写作均表现优秀</td></tr>
+        <tr><td>Honorable Mention（H奖）</td><td>≈15%–20%</td><td>相当于CUMCM省一至国二水平，论文有亮点但存在明显不足</td></tr>
+        <tr><td>Successful Participant（S奖）</td><td>≈60%–70%</td><td>完成有效提交但未进入较高等级，相当于CUMCM成功参赛</td></tr>
+        <tr><td>Unsuccessful</td><td>少量</td><td>未完成有效提交（严重违规、抄袭、未按时提交等）</td></tr>
+      </tbody>
+    </table>
+    <p><strong>实用参考：</strong>对中国参赛者而言，H奖是较为现实的优秀目标，M奖属于高水准成果，F奖与O奖则需论文在建模创新、验证深度、英文表达三个维度均达到极高水平。近年COMAP对抄袭与AI辅助写作的审查日趋严格，违规队伍将被直接取消成绩。</p>
+  </section>
+
+  <section>
+    <h3 id="problem-types">五、A/B/C题差异分析（CUMCM本科组）</h3>
+
+    <p>CUMCM本科组每年设置A、B、C三道题目，其题型特征与能力要求存在系统性差异：</p>
+
+    <table>
+      <thead>
+        <tr><th>维度</th><th>A题（连续型）</th><th>B题（离散型）</th><th>C题（数据型）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>问题类型</td><td>物理/工程/力学等连续系统问题</td><td>运筹/优化/网络等离散系统问题</td><td>大数据/统计/机器学习类问题</td></tr>
+        <tr><td>典型领域</td><td>热传导、流体力学、结构力学、信号处理、微分方程建模</td><td>路径规划、资源分配、调度优化、图论、排队论</td><td>预测、分类、评价、因果推断、文本挖掘</td></tr>
+        <tr><td>核心方法</td><td>微分方程（ODE/PDE）、数值求解（有限元/有限差分）、稳定性分析</td><td>整数规划、启发式算法（遗传/模拟退火/蚁群）、图论算法、博弈论</td><td>回归分析、时间序列、随机森林/神经网络、PCA/聚类、综合评价法</td></tr>
+        <tr><td>数据特征</td><td>数据量小或无数据，需从物理定律推导模型</td><td>数据量中等，问题结构可抽象为离散模型</td><td>数据量大，需数据清洗、特征工程、模型训练与验证</td></tr>
+        <tr><td>建模侧重</td><td>机理建模——从第一性原理出发构建数学模型</td><td>逻辑建模——将问题抽象为离散结构并设计算法</td><td>数据建模——从数据中提取规律并验证</td></tr>
+        <tr><td>写作侧重</td><td>模型推导的严密性、数值求解的精度、物理意义的解释</td><td>算法设计的创新性、复杂度分析、结果对比与最优性论证</td><td>数据处理的规范性、模型验证的充分性、结果的可解释性</td></tr>
+        <tr><td>适合队伍</td><td>数学/物理/工程专业背景强，微分方程与数值计算功底扎实</td><td>计算机/运筹专业背景强，算法设计与编程能力突出</td><td>统计/数据科学背景强，数据处理与机器学习经验丰富</td></tr>
+        <tr><td>近年趋势</td><td>题目逐渐融入工程实际背景（如炉温曲线、高温热防护），对数值求解精度要求提高</td><td>题目趋向多目标优化与复杂约束，对算法效率与鲁棒性要求提高</td><td>题目数据量持续增大，对数据质量评估与模型泛化能力要求提高</td></tr>
+      </tbody>
+    </table>
+
+    <h4>MCM/ICM题目分类对照</h4>
+    <table>
+      <thead>
+        <tr><th>题目代号</th><th>类型</th><th>典型领域</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>MCM-A（Problem A）</td><td>连续型</td><td>物理/工程机理建模，微分方程、数值模拟</td></tr>
+        <tr><td>MCM-B（Problem B）</td><td>离散型</td><td>运筹优化、网络分析、离散算法设计</td></tr>
+        <tr><td>MCM-C（Problem C）</td><td>数据型</td><td>数据驱动建模、统计推断、机器学习</td></tr>
+        <tr><td>ICM-D（Problem D）</td><td>运筹学/网络科学</td><td>复杂网络、信息传播、系统优化</td></tr>
+        <tr><td>ICM-E（Problem E）</td><td>环境科学/可持续发展</td><td>生态建模、气候政策、资源管理</td></tr>
+        <tr><td>ICM-F（Problem F）</td><td>政策/社会科学</td><td>公共政策评估、社会系统建模、决策支持</td></tr>
+      </tbody>
+    </table>
+    <p><strong>ICM题目特色：</strong>D/E/F题均要求跨学科视角，不仅需要数学建模，还需结合领域专业知识（社会学、环境科学、公共政策等），并在论文中体现
+<h2>第2章 知识体系</h2>
+这是为您生成的一个可直接运行的HTML文档，它系统梳理了数学建模的六大核心知识体系（优化、预测、评价、方程、图论、统计），并集成了LaTeX公式与Python代码示例。
+```html
+<div class='chapter'>
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-light: #5a6c7d;
+            --border: #e2e8f0;
+            --accent1: #3b6fb6;
+            --accent2: #1a8a7d;
+            --accent3: #c0392b;
+            --accent4: #8e44ad;
+            --accent5: #d97904;
+            --accent6: #2c7873;
+            --tag-bg: #eef2f7;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chapter {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            padding: 32px 28px;
+            border-radius: 20px;
+            max-width: 1300px;
+            margin: 0 auto;
+            line-height: 1.7;
+            color: var(--text);
+            box-sizing: border-box;
+        }
+
+        .chapter *,
+        .chapter *::before,
+        .chapter *::after {
+            box-sizing: border-box;
+        }
+
+        /* 主标题 */
+        .chapter .main-title {
+            text-align: center;
+            font-size: 2.4em;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            margin: 0 0 8px 0;
+            background: linear-gradient(135deg, #1a3c5e, #2c5f8a, #1a6b5a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .chapter .main-subtitle {
+            text-align: center;
+            font-size: 1.05em;
+            color: #7b8ea0;
+            margin: 0 0 36px 0;
+            letter-spacing: 0.06em;
+            font-weight: 500;
+        }
+
+        /* 网格布局 */
+        .chapter .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 22px;
+        }
+
+        @media (max-width: 860px) {
+            .chapter .knowledge-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 领域卡片 */
+        .chapter .domain-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px 22px 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter .domain-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .chapter .domain-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .chapter .domain-card.d-optimize::before {
+            background: linear-gradient(90deg, #3b6fb6, #5b9bd5);
+        }
+        .chapter .domain-card.d-predict::before {
+            background: linear-gradient(90deg, #1a8a7d, #3db8a0);
+        }
+        .chapter .domain-card.d-evaluate::before {
+            background: linear-gradient(90deg, #8e44ad, #b07cd8);
+        }
+        .chapter .domain-card.d-equation::before {
+            background: linear-gradient(90deg, #c0392b, #e0675a);
+        }
+        .chapter .domain-card.d-graph::before {
+            background: linear-gradient(90deg, #d97904, #f0a840);
+        }
+        .chapter .domain-card.d-statistics::before {
+            background: linear-gradient(90deg, #2c7873, #4da8a2);
+        }
+
+        .chapter .domain-icon {
+            font-size: 2em;
+            margin-bottom: 2px;
+        }
+
+        .chapter .domain-title {
+            font-size: 1.35em;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            margin: 0;
+            color: #1a2e3f;
+        }
+
+        .chapter .domain-desc {
+            font-size: 0.88em;
+            color: var(--text-light);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* 子类别标签 */
+        .chapter .sub-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .chapter .sub-tag {
+            display: inline-block;
+            background: var(--tag-bg);
+            color: #3d5568;
+            padding: 5px 13px;
+            border-radius: 20px;
+            font-size: 0.82em;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            transition: var(--transition);
+            cursor: default;
+            border: 1px solid transparent;
+        }
+
+        .chapter .sub-tag:hover {
+            border-color: #c0cdd8;
+            background: #e8edf4;
+        }
+
+        /* 公式区域 */
+        .chapter .formula-block {
+            background: #fafbfc;
+            border-left: 3px solid #cdd9e6;
+            padding: 14px 18px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin: 0;
+            overflow-x: auto;
+            font-size: 0.95em;
+            line-height: 1.8;
+            color: #2c3e50;
+            letter-spacing: 0.02em;
+        }
+
+        .chapter .formula-label {
+            font-size: 0.75em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #8899aa;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        /* 代码块 */
+        .chapter .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            border-radius: var(--radius-sm);
+            padding: 16px 18px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', 'Consolas', 'Monaco', monospace;
+            font-size: 0.83em;
+            line-height: 1.65;
+            letter-spacing: 0.01em;
+            position: relative;
+            white-space: pre;
+            tab-size: 4;
+        }
+
+        .chapter .code-block .code-lang {
+            position: absolute;
+            top: 8px;
+            right: 14px;
+            font-size: 0.7em;
+            color: #8899aa;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+
+        .chapter .code-block code {
+            color: #e2e8f0;
+            font-family: inherit;
+        }
+
+        /* 语法高亮模拟 */
+        .chapter .code-block .kw {
+            color: #c792ea;
+        }
+        .chapter .code-block .fn {
+            color: #82aaff;
+        }
+        .chapter .code-block .str {
+            color: #c3e88d;
+        }
+        .chapter .code-block .num {
+            color: #f78c6c;
+        }
+        .chapter .code-block .cm {
+            color: #6a7d8e;
+            font-style: italic;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 500px) {
+            .chapter {
+                padding: 18px 12px;
+            }
+            .chapter .main-title {
+                font-size: 1.6em;
+            }
+            .chapter .domain-card {
+                padding: 16px 14px;
+            }
+            .chapter .code-block {
+                font-size: 0.72em;
+                padding: 12px 10px;
+            }
+            .chapter .formula-block {
+                font-size: 0.82em;
+                padding: 10px 12px;
+            }
+        }
+    </style>
+
+    <!-- MathJax 配置与加载 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ],
+                displayMath: [
+                    ['$$', '$$'],
+                    ['\\[', '\\]']
+                ],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            },
+            startup: {
+                pageReady() {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        console.log('MathJax 渲染完成');
+                    });
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async>
+    </script>
+
+    <!-- 标题区 -->
+    <h1 class="main-title">📐 数学建模必备知识体系</h1>
+    <p class="main-subtitle">Mathematical Modeling Knowledge Framework — 公式推导 · 代码实践 · 方法精要</p>
+
+    <!-- 知识网格 -->
+    <div class="knowledge-grid">
+
+        <!-- ==================== 1. 优化 ==================== -->
+        <div class="domain-card d-optimize">
+            <div class="domain-icon">🎯</div>
+            <h2 class="domain-title">优化理论</h2>
+            <p class="domain-desc">在约束条件下寻求目标函数的最优解，是数学建模中最核心的方法论之一。</p>
+            <div class="sub-topics">
+                <span class="sub-tag">线性规划 LP</span>
+                <span class="sub-tag">整数规划 IP</span>
+                <span class="sub-tag">动态规划 DP</span>
+            </div>
+
+            <!-- 线性规划 -->
+            <div>
+                <span class="formula-label">📝 线性规划标准形式</span>
+                <div class="formula-block">
+                    $$\begin{aligned}
+                    \min \quad & \mathbf{c}^\top \mathbf{x} \\
+                    \text{s.t.} \quad & A\mathbf{x} \leq \mathbf{b}, \\
+                    & \mathbf{x} \geq \mathbf{0}
+                    \end{aligned}$$
+                    其中 $\mathbf{x}\in\mathbb{R}^n$ 为决策变量，$\mathbf{c}$ 为目标系数，$A\in\mathbb{R}^{m\times n}$ 为约束矩阵。
+                </div>
+            </div>
+            <div>
+                <span class="formula-label">💻 Python — SciPy 线性规划</span>
+                <div class="code-block">
+                    <span class="code-lang">Python</span>
+                    <code><span class="kw">from</span> scipy.optimize <span class="kw">import</span> linprog
+                        <span class="kw">import</span> numpy <span class="kw">as</span> np
+
+                        <span class="cm"># min c^T x s.t. A_ub x &lt;= b_ub</span>
+                        c = np.array
+<h2>第3章 工具链</h2>
+这是为您生成的数学建模工具链完整指南的HTML代码。它构建了一个信息型章节页面，系统介绍了从Python科学计算库（NumPy、SciPy等）、MATLAB到LaTeX论文排版和各类绘图工具的核心用法，并包含丰富的代码示例，适合作为学习或参考文档直接嵌入项目。
+```html
+<div class='chapter'>
+    <style>
+        .chapter {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            color: #1a1a2e;
+            line-height: 1.7;
+            background: #fafbfc;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+        .chapter h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #0d1b2a;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.02em;
+            border-bottom: 3px solid #3a6ea5;
+            padding-bottom: 1rem;
+            display: inline-block;
+        }
+        .chapter .title-wrap {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .chapter h2 {
+            font-size: 1.5rem;
+            color: #1b3a5c;
+            margin-top: 2.2rem;
+            margin-bottom: 0.8rem;
+            padding-left: 0.6rem;
+            border-left: 4px solid #3a6ea5;
+            background: linear-gradient(90deg, #e8f0f8 0%, transparent 100%);
+            padding: 0.5rem 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .chapter h3 {
+            font-size: 1.15rem;
+            color: #2c4a6e;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .chapter p {
+            margin: 0.6rem 0;
+            text-align: justify;
+            color: #2d3748;
+        }
+        .chapter .code-block {
+            background: #1e2a3a;
+            color: #e2e8f0;
+            border-radius: 10px;
+            padding: 1.2rem 1.4rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', 'Monaco', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            position: relative;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 2px 12px rgba(0, 0, 0, 0.15);
+        }
+        .chapter .code-block::before {
+            content: attr(data-lang);
+            position: absolute;
+            top: 0;
+            right: 1rem;
+            background: #3a6ea5;
+            color: #fff;
+            padding: 0.2rem 0.7rem;
+            font-size: 0.7rem;
+            border-radius: 0 0 6px 6px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+        .chapter code {
+            font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', monospace;
+            background: #edf2f7;
+            padding: 0.15em 0.4em;
+            border-radius: 4px;
+            font-size: 0.875em;
+            color: #c7254e;
+        }
+        .chapter .code-block code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        .chapter .highlight {
+            color: #f0c060;
+        }
+        .chapter .comment {
+            color: #8fa8c0;
+            font-style: italic;
+        }
+        .chapter .keyword {
+            color: #79c0ff;
+        }
+        .chapter .string {
+            color: #a5d6a7;
+        }
+        .chapter .number {
+            color: #f78c6c;
+        }
+        .chapter .func {
+            color: #ffd580;
+        }
+        .chapter table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.07);
+        }
+        .chapter th {
+            background: #2c4a6e;
+            color: #fff;
+            padding: 0.7rem 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        .chapter td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: #fff;
+            font-size: 0.875rem;
+        }
+        .chapter tr:last-child td {
+            border-bottom: none;
+        }
+        .chapter .tag {
+            display: inline-block;
+            background: #e8f0f8;
+            color: #2c4a6e;
+            padding: 0.2em 0.6em;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            margin: 0.15rem 0.2rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+        .chapter .tag.green {
+            background: #e6f4ea;
+            color: #1a5c2a;
+        }
+        .chapter .tag.orange {
+            background: #fef3e0;
+            color: #8a4f1c;
+        }
+        .chapter .tag.red {
+            background: #fde8e8;
+            color: #8b1a1a;
+        }
+        .chapter ul,
+        .chapter ol {
+            padding-left: 1.5rem;
+            margin: 0.8rem 0;
+        }
+        .chapter li {
+            margin: 0.35rem 0;
+            color: #2d3748;
+        }
+        .chapter .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin: 1.2rem 0;
+        }
+        .chapter .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e8ecf1;
+            transition: box-shadow 0.2s;
+        }
+        .chapter .card:hover {
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+        }
+        .chapter .card h4 {
+            margin: 0 0 0.5rem 0;
+            color: #1b3a5c;
+            font-size: 1rem;
+        }
+        .chapter .card p {
+            font-size: 0.85rem;
+            margin: 0;
+            color: #4a5568;
+        }
+        .chapter .note {
+            background: #fffdf0;
+            border-left: 4px solid #e6b422;
+            padding: 1rem 1.2rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.2rem 0;
+            font-size: 0.9rem;
+            color: #5c4a1a;
+        }
+        .chapter .note strong {
+            color: #8a6d1c;
+        }
+    </style>
+
+    <div class="title-wrap">
+        <h1>🧰 数学建模工具链完整指南</h1>
+        <p style="text-align:center;color:#4a5568;margin-top:0.5rem;">Python 数据科学栈 · MATLAB · LaTeX 论文排版 · 绘图与数据处理实战</p>
+        <p style="text-align:center;margin-top:0.2rem;">
+            <span class="tag">NumPy</span><span class="tag">SciPy</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span><span class="tag green">Scikit-learn</span><span class="tag orange">MATLAB</span><span class="tag red">LaTeX</span>
+        </p>
+    </div>
+
+    <!-- ============ 第一部分：Python 数据科学栈 ============ -->
+    <h2>1. Python 数据科学核心栈</h2>
+    <p>Python 是数学建模领域最灵活的语言之一。以下五大库构成了从<strong>数值计算→数据处理→可视化→机器学习</strong>的完整链路。</p>
+
+    <div class="card-grid">
+        <div class="card">
+            <h4>📐 NumPy</h4>
+            <p>多维数组运算、线性代数、随机数生成，数值计算基石。</p>
+        </div>
+        <div class="card">
+            <h4>🔬 SciPy</h4>
+            <p>优化、积分、插值、统计分布、信号处理等高级科学计算。</p>
+        </div>
+        <div class="card">
+            <h4>📊 Pandas</h4>
+            <p>结构化数据清洗、转换、聚合，DataFrame 操作。</p>
+        </div>
+        <div class="card">
+            <h4>🎨 Matplotlib</h4>
+            <p>出版级静态/动态图表，论文插图首选。</p>
+        </div>
+        <div class="card">
+            <h4>🤖 Scikit-learn</h4>
+            <p>分类、回归、聚类、降维，经典机器学习算法库。</p>
+        </div>
+    </div>
+
+    <!-- NumPy -->
+    <h3>1.1 NumPy — 数值计算引擎</h3>
+    <p>NumPy 提供 <code>ndarray</code> 对象，支持向量化操作，避免低效的 Python 循环。在数学建模中常用于矩阵运算、蒙特卡洛模拟、微分方程离散化等。</p>
+    <div class="code-block" data-lang="Python | NumPy">
+        <code>
+            <span class="keyword">import</span> numpy <span class="keyword">as</span> np<br><br>
+            <span class="comment"># 创建矩阵与向量化运算</span><br>
+            A = np.array([[3, 1], [1, 2]])<br>
+            b = np.array([9, 8])<br>
+            x = np.linalg.solve(A, b)  <span class="comment"># 解线性方程组 Ax = b</span><br>
+            <span class="func">print</span>(<span class="string">f"解: x = {x}"</span>)  <span class="comment"># 输出: [2. 3.]</span><br><br>
+            <span class="comment"># 蒙特卡洛估算 π</span><br>
+            N = <span class="number">1_000_000</span><br>
+            pts = np.random.rand(N, <span class="number">2</span>)<br>
+            inside = np.sum(pts[:, <span class="number">0</span>]**<span class="number">2</span> + pts[:, <span class="number">1</span>]**<span class="number">2</span> &lt;= <span class="number">1</span>)<br>
+            pi_est = <span class="number">4</span> * inside / N<br>
+            <span class="func">print</span>(<span class="string">f"π ≈ {pi_est:.6f}"</span>)
+        </code>
+    </div>
+
+    <!-- SciPy -->
+    <h3>1.2 SciPy — 科学计算工具箱</h3>
+    <p>SciPy 建立在 NumPy 之上，提供优化、积分、插值、统计等模块。建模中常用 <code>scipy.optimize</code> 求解最优化问题，<code>scipy.integrate</code> 求解微分方程。</p>
+    <div class="code-block" data-lang="Python | SciPy">
+        <code>
+            <span class="keyword">from</span> scipy.optimize <span class="keyword">import</span> minimize_scalar<br>
+            <span class="keyword">from</span> scipy.integrate <span class="keyword">import</span> solve_ivp<br>
+            <span class="keyword">import</span> numpy <span class="keyword">as</span> np<br><br>
+            <span class="comment"># 一元函数最小值</span><br>
+            f = <span class="keyword">lambda</span> x: (x - <span class="number">3</span>)**<span class="number">2</span> + np.sin(x) * <span class="number">5</span><br>
+            res = minimize_scalar(f, bounds=(<span class="number">-10</span>, <span class="number">10</span>), method=<span class="string">'bounded'</span>)<br>
+            <span class="func">print</span>(<span class="string">f"最小值点: x={res.x:.4f}, f(x)={res.fun:.4f}"</span>)<br><br>
+            <span class="comment"># 求解 ODE: dy/dt = -2y, y(0)=1</span><br>
+            ode = <span class="keyword">lambda</span> t, y: -<span class="number">2</span> * y<br>
+            sol = solve_ivp(ode, [<span class="number">0</span>, <span class="number">5</span>], [<span class="number">1</span>], max_step=<span class="number">0.1</span>)<br>
+            <span class="func">print</span>(<span class="string">f"y(5) = {sol.y[0][-1]:.6f}"</span>)  <span class="comment"># 解析解: e^{-10} ≈ 0.000045</span>
+        </code>
+    </div>
+
+    <!-- Pandas -->
+    <h3>1.3 Pandas — 数据处理中枢</h3>
+    <p>Pandas 的 <code>DataFrame</code> 是建模数据预处理的核心数据结构，支持数据清洗、透视表、时间序列操作，无缝衔接 CSV/Excel/SQL 数据源。</p>
+    <div class="code-block" data-lang="Python | Pandas">
+        <code>
+            <span class="keyword">import</span> pandas <span class="keyword">as</span> pd<br>
+            <span class="keyword">import</span> numpy <span class="keyword">as</span> np<br><br>
+            <span class="comment"># 创建建模数据集</span><br>
+            df = pd.DataFrame({<br>
+            &nbsp;&nbsp;<span class="string">'温度(°C)'</span>: np.random.normal(<span class="number">25</span>, <span class="number">5</span>, <span class="number">1000</span>),<br>
+            &nbsp;&nbsp;<span class="string">'湿度(%)'</span>:  np.random.uniform(<span class="number">40</span>, <span class="number">90</span>, <span class="number">1000</span>),<br>
+            &nbsp;&nbsp;<span class="string">'能耗(kWh)'</span>: <span class="keyword">lambda</span> d: <span class="number">2.3</span>*d[<span class="string">'温度(°C)'</span>] + <span class="number">0.15</span>*d[<span class="string">'湿度(%)'</span>] + np.random.randn(<span class="number">1000</span>)<br>
+            })<br>
+            df[<span class="string">'能耗(kWh)'</span>] = df.apply(<span class="keyword">lambda</span> r: <span class="number">2.3</span>*r[<span class="string">'温度(°C)'</span>]+<span class="number">0.15</span>*r[<span class
+<h2>第4章 论文撰写</h2>
+我将为您生成一份可直接运行的HTML文档，它是一份结构清晰的“数学建模论文撰写完整指南”，包含摘要模板、假设写法等核心模块，并融入了O奖论文拆解内容。
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学建模论文撰写完整指南</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f4f8;
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .chapter {
+            max-width: 1100px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 50px 55px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.12);
+            transition: all 0.2s ease;
+        }
+
+        /* 全局标题体系 */
+        .chapter h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #0b2b40;
+            letter-spacing: 1px;
+            border-left: 6px solid #2a7faa;
+            padding-left: 22px;
+            margin-bottom: 48px;
+            line-height: 1.3;
+        }
+
+        .chapter h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #5a7a8a;
+            margin-left: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .chapter h2 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #144a66;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #d8e6ed;
+            position: relative;
+        }
+
+        .chapter h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 70px;
+            height: 3px;
+            background: #2a7faa;
+            border-radius: 3px;
+        }
+
+        .chapter h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1d5a78;
+            margin-top: 28px;
+            margin-bottom: 12px;
+            padding-left: 6px;
+        }
+
+        .chapter h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #216585;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        /* 段落与文本 */
+        .chapter p {
+            font-size: 1.02rem;
+            line-height: 1.8;
+            color: #1f2e3a;
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .chapter p.lead {
+            font-size: 1.1rem;
+            color: #0b2b40;
+            font-weight: 500;
+            background: #f6fafd;
+            padding: 16px 22px;
+            border-radius: 12px;
+            border-left: 4px solid #2a7faa;
+        }
+
+        /* 列表 */
+        .chapter ul,
+        .chapter ol {
+            margin: 12px 0 22px 26px;
+            font-size: 1.02rem;
+            line-height: 1.8;
+            color: #1f2e3a;
+        }
+
+        .chapter li {
+            margin-bottom: 6px;
+        }
+
+        .chapter li strong {
+            color: #0b4b66;
+        }
+
+        /* 卡片 / 提示框 / 模板 */
+        .template-box {
+            background: #f8fbfe;
+            border: 1px solid #dce8f0;
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin: 20px 0 28px 0;
+            box-shadow: 0 4px 12px rgba(0, 32, 64, 0.04);
+            position: relative;
+        }
+
+        .template-box .label {
+            display: inline-block;
+            background: #2a7faa;
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            padding: 3px 16px;
+            border-radius: 40px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .template-box .label.gold {
+            background: #c8962e;
+        }
+
+        .template-box .label.green {
+            background: #27806a;
+        }
+
+        .template-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .template-box code {
+            background: #e9f0f5;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            font-size: 0.92rem;
+            color: #195577;
+        }
+
+        /* 符号表 */
+        .symbol-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0 28px 0;
+            font-size: 0.98rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .symbol-table thead {
+            background: #1d5a78;
+            color: #ffffff;
+        }
+
+        .symbol-table th {
+            padding: 12px 18px;
+            text-align: left;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+        }
+
+        .symbol-table td {
+            padding: 11px 18px;
+            border-bottom: 1px solid #e2ecf3;
+            background: #fafcfe;
+        }
+
+        .symbol-table tbody tr:hover td {
+            background: #f0f7fc;
+        }
+
+        .symbol-table .sym {
+            font-family: 'Times New Roman', 'Georgia', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        /* 引用 / 高亮 */
+        .highlight {
+            background: #fcf8e7;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: #7a6a1a;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e6f0f7;
+            color: #1d5a78;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 2px 14px;
+            border-radius: 40px;
+            margin-right: 6px;
+        }
+
+        .badge.o奖 {
+            background: #c8962e;
+            color: #fff;
+        }
+
+        /* 拆解卡片（O奖） */
+        .拆解-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin: 20px 0 28px 0;
+        }
+
+        .拆解-card {
+            background: #f9fcff;
+            border: 1px solid #dce8f0;
+            border-radius: 16px;
+            padding: 20px 24px;
+            transition: box-shadow 0.2s;
+        }
+
+        .拆解-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 32, 64, 0.08);
+        }
+
+        .拆解-card .card-title {
+            font-weight: 700;
+            font-size: 1.08rem;
+            color: #0b2b40;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .拆解-card .card-title .tag {
+            background: #c8962e;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 40px;
+            letter-spacing: 0.5px;
+        }
+
+        .拆解-card p {
+            font-size: 0.96rem;
+            margin-bottom: 8px;
+        }
+
+        .拆解-card ul {
+            margin: 6px 0 4px 18px;
+            font-size: 0.94rem;
+        }
+
+        .拆解-card ul li {
+            margin-bottom: 3px;
+        }
+
+        /* 参考文献 */
+        .ref-list {
+            padding-left: 0;
+            list-style: none;
+            counter-reset: ref-counter;
+        }
+
+        .ref-list li {
+            counter-increment: ref-counter;
+            padding: 8px 0 8px 44px;
+            position: relative;
+            font-size: 0.98rem;
+            border-bottom: 1px dashed #e2ecf3;
+        }
+
+        .ref-list li::before {
+            content: '[' counter(ref-counter) ']';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            font-weight: 600;
+            color: #2a7faa;
+            font-size: 0.92rem;
+        }
+
+        .ref-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* 响应式 */
+        @media (max-width: 780px) {
+            .chapter {
+                padding: 30px 22px;
+            }
+            .chapter h1 {
+                font-size: 1.8rem;
+                padding-left: 16px;
+            }
+            .chapter h1 small {
+                display: block;
+                margin-left: 0;
+                margin-top: 6px;
+                font-size: 0.9rem;
+            }
+            .chapter h2 {
+                font-size: 1.4rem;
+            }
+            .拆解-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .symbol-table {
+                font-size: 0.88rem;
+            }
+            .symbol-table th,
+            .symbol-table td {
+                padding: 8px 12px;
+            }
+            .template-box {
+                padding: 18px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chapter {
+                padding: 20px 14px;
+            }
+            .chapter h1 {
+                font-size: 1.5rem;
+            }
+            body {
+                padding: 16px 8px;
+            }
+        }
+
+        /* 额外工具类 */
+        .mt-0 {
+            margin-top: 0;
+        }
+        .mb-0 {
+            margin-bottom: 0;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, #d8e6ed, transparent);
+            margin: 36px 0 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="chapter">
+
+        <!-- ===== 主标题 ===== -->
+        <h1>
+            📐 数学建模论文撰写完整指南
+            <small>从摘要到O奖 · 系统方法论与实战拆解</small>
+        </h1>
+
+        <p class="lead">
+            一份面向数学建模竞赛（MCM/ICM、国赛等）的论文写作深度手册。涵盖 <strong>摘要黄金模板</strong>、
+            <strong>假设写法</strong>、<strong>符号说明</strong>、<strong>模型建立</strong>、
+            <strong>求解分析</strong>、<strong>灵敏度分析</strong>、<strong>优缺点评价</strong>、
+            <strong>参考文献</strong> 八大核心模块，并附 <span class="badge o奖">O奖</span> 优秀论文拆解。
+        </p>
+
+        <!-- ========================================================= -->
+        <!-- 1. 摘要黄金模板 -->
+        <!-- ========================================================= -->
+        <h2>1. 摘要黄金模板</h2>
+        <p>
+            摘要是论文的 <strong>灵魂</strong>，审稿人往往在 2 分钟内决定论文档次。一篇优秀的摘要必须独立成文，
+            涵盖 <span class="highlight">问题背景、建模思路、核心方法、关键结果、结论与创新</span>。
+            以下为经过 O 奖验证的「四段式黄金模板」。
+        </p>
+
+        <div class="template-box">
+            <span class="label gold">📌 黄金模板结构</span>
+            <p style="font-weight:500; color:#0b2b40;">
+                【第一段】<strong>问题重述与背景</strong> —— 1~2 句，简明扼要。
+                <br>
+                【第二段】<strong>模型建立与求解</strong> —— 针对每个子问题，说明用了什么模型、怎么求解。
+                <br>
+                【第三段】<strong>关键结果</strong> —— 定量结果（数值、误差、最优值）必须清晰。
+                <br>
+                【第四段】<strong>评价与亮点</strong> —— 灵敏度分析、稳定性、创新点（算法改进、可视化等）。
+            </p>
+            <p>
+                <em>💡 示例开头：</em>“本文针对城市应急资源调度问题，构建了基于多目标整数规划与动态优先级的混合模型。
+                首先…… 其次…… 最终得到最优调度方案，资源覆盖率达 98.7%，较传统方法提升 12.3%。”
+            </p>
+        </div>
+
+        <h3>摘要写作四原则</h3>
+        <ul>
+            <li><strong>独立完整</strong>：不依赖正文，读者只看摘要就能理解全部工作。</li>
+            <li><strong>定量具体</strong>：避免“效果较好”“效率很高”，改用“提升 23.5%”“误差 &lt; 3.2%”。</li>
+            <li><strong>逻辑连贯</strong>：问题→模型→求解→结果→评价，环环相扣。</li>
+            <li><strong>关键词准确</strong>：3~5 个核心术语，体现模型类别与创新点。</li>
+        </ul>
+
+        <!-- ========================================================= -->
+        <!-- 2. 假设写法 -->
+        <!-- ========================================================= -->
+        <h2>2. 假设写法</h2>
+        <p>
+            合理假设是数学模型的前提。假设太多脱离实际，太少模型无解。优秀论文的假设具备
+            <span class="highlight">必要性、合理性、可解释性</span>。
+        </p>
+
+        <div class="template-box">
+            <span class="label green">✍️ 假设撰写规范</span>
+            <p>
+                <strong>① 分类列出</strong>：一般 5~8 条，按重要性排序。<br>
+                <strong>② 每个假设附理由</strong>：为什么做这个假设？对模型有何简化？<br>
+                <strong>③ 避免隐含假设</strong>：如“数据无噪声”需明确说明。<br>
+                <strong>④ 可放宽性</strong>：在灵敏度分析中讨论假设放宽后的影响。
+            </p>
+        </div>
+
+        <h3>典型假设示例（以交通流建模为例）</h3>
+        <ul>
+            <li><strong>H1</strong>：路段通行能力在时间窗内为常数，忽略天气等随机扰动。</li>
+            <li><strong>H2</strong>：驾驶员完全理性，始终选择最短路径（可在扩展中引入有限理性）。</li>
+            <li><strong>H3</strong>：OD 需求矩阵已知且对称，不考虑动态变化。</li>
+            <li><strong>H4</strong>：交叉口信号配时固定，无自适应控制（后续可优化）。</li>
+        </ul>
+
+        <!-- ========================================================= -->
+        <!-- 3. 符号说明 -->
+        <!-- ========================================================= -->
+        <h2>3. 符号说明</h2>
+        <p>
+            符号表是论文的 <strong>快速索引</strong>。采用三线表或简洁表格，按字母顺序或模块分组。
+            变量命名遵循 <span class="highlight">清晰、一致、无歧义</span> 原则。
+        </p>
+
+        <table class="symbol-table">
+            <thead>
+                <tr>
+                    <th>符号</th>
+                    <th>含义</th>
+                    <th>单位 / 说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="sym">N</td>
+                    <td>节点集合（如城市、交叉口）</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td class="sym">E</td>
+                    <td>边集合（路段）</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td class="sym">d<sub>ij</sub></td>
+                    <td>节点 i 到 j 的最短距离</td>
+                    <td>km</td>
+                </tr>
+                <tr>
+                    <td class="sym">x<sub>ijk</sub></td>
+                    <td>决策变量：若车辆 k 从 i 到 j 则为 1</td>
+                    <td>0-1 变量</td>
+<h2>第5章 实战案例</h2>
+这是为您生成的一份可直接运行的HTML文档，它按照“问题分析→模型建立→算法实现→结果分析→论文要点”的严谨结构，完整解析了近五年国赛A/B/C三类各一道经典赛题（2020A炉温曲线、2021B乙醇偶合制备C4烯烃、2022C古代玻璃成分分析）。页面采用学术论文式的Typora风格排版，清晰展示了热传导方程有限差分、多元非线性回归、K-Means聚类等核心模型的推导过程与Python代码实现，适合作为数学建模备赛的参考模板。
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>近5年国赛A/B/C题完整解析</title>
+    <style>
+        :root {
+            --bg: #fdfbf7;
+            --card-bg: #ffffff;
+            --text: #2c2416;
+            --text-secondary: #5c5347;
+            --accent-a: #c0392b;
+            --accent-b: #2471a3;
+            --accent-c: #1e8449;
+            --border: #e5ddd0;
+            --code-bg: #f8f5f0;
+            --highlight: #fef9e7;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+            --radius: 10px;
+            --radius-sm: 6px;
+            --transition: 0.2s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Segoe UI', 'Noto Serif SC', 'STSong', 'SimSun', 'PingFang SC', 'Microsoft YaHei', 'Georgia', serif;
+            color: var(--text);
+            line-height: 1.75;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .chapter {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            padding: 10px 0 60px;
+        }
+
+        /* 总标题 */
+        .chapter>.main-title {
+            text-align: center;
+            padding: 40px 30px 20px;
+            border-bottom: 3px double var(--border);
+            margin-bottom: 10px;
+        }
+        .chapter>.main-title h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #1a1a1a;
+            margin: 0 0 8px;
+        }
+        .chapter>.main-title .subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+        }
+
+        /* 题目卡片 */
+        .problem-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: box-shadow var(--transition);
+            position: relative;
+        }
+        .problem-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .problem-card.a-card {
+            border-left: 5px solid var(--accent-a);
+        }
+        .problem-card.b-card {
+            border-left: 5px solid var(--accent-b);
+        }
+        .problem-card.c-card {
+            border-left: 5px solid var(--accent-c);
+        }
+
+        /* 题目标题栏 */
+        .card-header {
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .card-header .badge {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            color: #fff;
+            white-space: nowrap;
+        }
+        .badge-a {
+            background: var(--accent-a);
+        }
+        .badge-b {
+            background: var(--accent-b);
+        }
+        .badge-c {
+            background: var(--accent-c);
+        }
+        .card-header h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            flex: 1;
+            min-width: 200px;
+            margin: 0;
+        }
+        .card-header .year-tag {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: #f5f1eb;
+            padding: 4px 12px;
+            border-radius: 14px;
+            white-space: nowrap;
+        }
+
+        /* 内容区 */
+        .card-body {
+            padding: 24px 28px;
+        }
+        .card-body h3 {
+            font-size: 1.1rem;
+            margin: 22px 0 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #f0ebe0;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+        .card-body h3:first-child {
+            margin-top: 0;
+        }
+        .card-body h3 .icon-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+            position: relative;
+            top: -1px;
+        }
+        .a-card .icon-dot {
+            background: var(--accent-a);
+        }
+        .b-card .icon-dot {
+            background: var(--accent-b);
+        }
+        .c-card .icon-dot {
+            background: var(--accent-c);
+        }
+
+        .card-body p {
+            margin: 8px 0 14px;
+            text-indent: 2em;
+            color: #3a342c;
+        }
+        .card-body ul,
+        .card-body ol {
+            margin: 6px 0 14px 1.5em;
+            color: #3a342c;
+        }
+        .card-body li {
+            margin: 3px 0;
+        }
+
+        /* 公式块 */
+        .formula-box {
+            background: var(--highlight);
+            border: 1px dashed #e0d5b8;
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            margin: 12px 0;
+            font-family: 'Courier New', 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            letter-spacing: 0.3px;
+            line-height: 1.8;
+        }
+
+        /* 代码块 */
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: var(--radius-sm);
+            padding: 0;
+            margin: 14px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .code-block .lang-label {
+            display: block;
+            background: #2d2d2d;
+            color: #ccc;
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #3a3a3a;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .code-block pre {
+            margin: 0;
+            padding: 16px 18px;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            tab-size: 4;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .code-block code {
+            background: transparent;
+            color: #e0e0e0;
+        }
+
+        /* 亮点标签 */
+        .highlight-tag {
+            display: inline-block;
+            background: #fef3cd;
+            color: #856404;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin: 2px 4px;
+            font-weight: 500;
+        }
+        .highlight-tag.green {
+            background: #d4edda;
+            color: #155724;
+        }
+        .highlight-tag.blue {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* 结果表格 */
+        .result-table-wrap {
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        table.result-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 500px;
+        }
+        table.result-table th,
+        table.result-table td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        table.result-table th {
+            background: #f7f3ec;
+            font-weight: 700;
+        }
+        table.result-table tr:nth-child(even) {
+            background: #fdfcf9;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .card-header {
+                padding: 14px 16px;
+                gap: 8px;
+            }
+            .card-body {
+                padding: 14px 16px;
+            }
+            .card-header h2 {
+                font-size: 1.1rem;
+            }
+            .chapter>.main-title h1 {
+                font-size: 1.5rem;
+            }
+            .chapter {
+                gap: 20px;
+            }
+            .code-block pre {
+                font-size: 0.75rem;
+                padding: 10px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='chapter'>
+
+        <!-- ==================== 总标题 ==================== -->
+        <div class="main-title">
+            <h1>📐 全国大学生数学建模竞赛 · 近五年A/B/C题精选解析</h1>
+            <p class="subtitle">2020-2024年｜每题含：问题分析 → 模型建立 → 算法实现 → 结果分析 → 论文要点</p>
+        </div>
+
+        <!-- ==================== A题：2020年炉温曲线 ==================== -->
+        <div class="problem-card a-card">
+            <div class="card-header">
+                <span class="badge badge-a">A 题</span>
+                <h2>2020年 · 炉温曲线优化设计</h2>
+                <span class="year-tag">2020 全国赛</span>
+            </div>
+            <div class="card-body">
+
+                <h3><span class="icon-dot"></span>一、问题分析</h3>
+                <p>回流焊炉是电子制造中的关键设备，电路板在炉内经历预热、恒温、回流、冷却四个温区。核心问题是：<strong>建立焊接区域温度随时间变化的热传导模型</strong>，并根据工艺要求优化炉温设定值及传送带速度。工艺要求包括：温度上升斜率不超过3°C/s、下降斜率不超过-3°C/s、焊接区域在150°C~190°C的时间在60~120秒之间、峰值温度在210°C~230°C等。</p>
+                <p>该问题本质上是一个<strong>一维非稳态热传导问题</strong>，由于电路板很薄（厚度约1.6mm），可简化为沿厚度方向的一维模型。边界条件为牛顿冷却定律（对流换热），热源来自上下两侧的炉腔内热空气。通过有限差分法离散偏微分方程，可数值求解温度分布随时间的变化。</p>
+                <ul>
+                    <li><strong>核心难点：</strong>偏微分方程的数值求解、多约束条件下的参数优化</li>
+                    <li><strong>关键方法：</strong>有限差分法（Crank-Nicolson格式）、网格搜索优化</li>
+                    <li><strong>优化目标：</strong>在满足所有工艺约束的前提下，最大化传送带速度（提高产能）</li>
+                </ul>
+
+                <h3><span class="icon-dot"></span>二、模型建立</h3>
+                <p><strong>1. 一维热传导方程：</strong></p>
+                <div class="formula-box">
+                    ρ·C<sub>p</sub> · ∂T/∂t = k · ∂²T/∂z² &nbsp;&nbsp;(0 &lt; z &lt; H, t &gt; 0)
+                </div>
+                <p>其中ρ为密度，C<sub>p</
+<h2>第6章 美赛专题</h2>
+```html
+<div class='chapter'>
+  <h2>MCM/ICM 美赛完整攻略</h2>
+  <p>从选题到O奖，一份指南覆盖所有关键决策点。</p>
+
+  <!-- 六题差异 -->
+  <section>
+    <h3>01 六题差异：选对题目是第一步</h3>
+    <div class="grid-card">
+      <div class="card">
+        <div class="card-tag mcm">MCM · 数学建模</div>
+        <h4>Problem A — 连续型</h4>
+        <p>偏微分方程、微分方程组、物理过程建模。典型场景：热传导、流体力学、力学系统。需要扎实的微积分与ODE/PDE基础，结果常以相图、轨迹图呈现。</p>
+        <div class="skill-bar"><span class="skill calculus">微积分/ODE</span><span class="skill physics">物理直觉</span></div>
+      </div>
+      <div class="card">
+        <div class="card-tag mcm">MCM · 数学建模</div>
+        <h4>Problem B — 离散型</h4>
+        <p>组合优化、图论、网络流、调度问题。典型场景：路径规划、资源分配、排队系统。需要算法设计能力（启发式、DP、贪心），结果常以流程图、对比表呈现。</p>
+        <div class="skill-bar"><span class="skill algo">算法设计</span><span class="skill graph">图论/优化</span></div>
+      </div>
+      <div class="card">
+        <div class="card-tag mcm">MCM · 数学建模</div>
+        <h4>Problem C — 数据型</h4>
+        <p>统计建模、机器学习、数据挖掘。典型场景：分类预测、聚类分析、时间序列。题目必给数据集，需EDA→特征工程→建模→验证全流程，可视化是加分重点。</p>
+        <div class="skill-bar"><span class="skill stat">统计/ML</span><span class="skill dataviz">数据可视化</span></div>
+      </div>
+      <div class="card">
+        <div class="card-tag icm">ICM · 交叉建模</div>
+        <h4>Problem D — 运筹/网络科学</div>
+        <p>复杂网络、博弈论、多Agent仿真。典型场景：社交网络传播、供应链韧性、政策干预模拟。需要从结构视角看问题，网络指标+仿真双线并进。</p>
+        <div class="skill-bar"><span class="skill network">网络科学</span><span class="skill game">博弈/仿真</span></div>
+      </div>
+      <div class="card">
+        <div class="card-tag icm">ICM · 交叉建模</div>
+        <h4>Problem E — 环境科学</div>
+        <p>生态模型、环境政策评估、可持续发展指标。典型场景：碳排放、水资源、生物多样性。需要环境领域知识+系统动力学/指标体系构建，政策建议要具体可执行。</p>
+        <div class="skill-bar"><span class="skill env">环境知识</span><span class="skill sd">系统动力学</span></div>
+      </div>
+      <div class="card">
+        <div class="card-tag icm">ICM · 交叉建模</div>
+        <h4>Problem F — 政策/社会科学</div>
+        <p>公共政策评估、社会公平量化、制度设计。典型场景：住房政策、教育公平、健康干预。最偏"软科学"，模型需服务于政策结论，定性+定量结合是核心要求。</p>
+        <div class="skill-bar"><span class="skill policy">政策分析</span><span class="skill qual">定性+定量</span></div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <strong>选题策略：</strong>不要只看"哪个简单"——看团队技能树与题目匹配度。A/B需硬数学，C需数据功夫，D/E/F需领域阅读量。开题前2小时务必六题全扫，切忌只看一题就锁死。
+    </div>
+  </section>
+
+  <!-- 英文写作 -->
+  <section>
+    <h3>02 英文写作：论文是你的唯一交付物</h3>
+    <div class="writing-framework">
+      <div class="framework-row">
+        <div class="fw-block abstract">
+          <h4>Summary Sheet</h4>
+          <p>决定评委是否继续读的生死线。必须包含：问题重述→方法概述→核心结果（带数字）→结论与意义。1页以内，绝不超页。</p>
+          <span class="fw-weight">权重 ★★★★★</span>
+        </div>
+        <div class="fw-block intro">
+          <h4>Introduction</h4>
+          <p>讲清背景→问题→工作目标。用1-2段铺垫现实意义，再明确列出你要解决的sub-problems。避免大段抄原题。</p>
+          <span class="fw-weight">权重 ★★★</span>
+        </div>
+        <div class="fw-block model">
+          <h4>Models & Methods</h4>
+          <p>假设→变量定义→模型推导→求解算法。公式必须编号，变量必须定义。每写一个公式，下一句就解释物理/逻辑含义。</p>
+          <span class="fw-weight">权重 ★★★★</span>
+        </div>
+      </div>
+      <div class="framework-row">
+        <div class="fw-block result">
+          <h4>Results & Validation</h4>
+          <p>数值结果→图表呈现→敏感性分析→模型检验。图表要有标题、坐标标签、图例。敏感性分析不是可选，是必做。</p>
+          <span class="fw-weight">权重 ★★★★</span>
+        </div>
+        <div class="fw-block discuss">
+          <h4>Discussion</h4>
+          <p>优势→局限→改进方向→扩展应用。诚实承认局限比吹嘘完美更受评委尊重。这一节体现学术成熟度。</p>
+          <span class="fw-weight">权重 ★★★</span>
+        </div>
+        <div class="fw-block conclusion">
+          <h4>Conclusions</h4>
+          <p>逐条回答每个sub-problem，给出明确结论。不要写"我们做了很多工作"式的废话总结。每条结论对应一个结果数字。</p>
+          <span class="fw-weight">权重 ★★★★</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lang-tips">
+      <h4>语言红线与绿线</h4>
+      <div class="red-green">
+        <div class="red-list">
+          <h5>🚫 绝对避免</h5>
+          <ul>
+            <li>中式英语直译："We first first first consider..."</li>
+            <li>空洞动词："We make a model" → "We develop/construct/propose"</li>
+            <li>无定义变量：公式里出现未解释的符号</li>
+            <li>口语缩写：can't, won't, gonna — 全部展开</li>
+            <li>抄袭原题大段文字作为Introduction</li>
+          </ul>
+        </div>
+        <div class="green-list">
+          <h5>✅ 努力做到</h5>
+          <ul>
+            <li>每段有明确主题句（Topic Sentence）</li>
+            <li>过渡句衔接逻辑："Building upon..., we further..."</li>
+            <li>结果用具体数字："reduces cost by 23.7%"</li>
+            <li>图表自解释：标题+标注让读者不看正文也能懂</li>
+            <li>用LaTeX排版公式，编号+引用</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- O奖论文特征 -->
+  <section>
+    <h3>03 O奖论文特征：评委在找什么</h3>
+    <div class="o-features">
+      <div class="o-item">
+        <div class="o-icon">🎯</div>
+        <h4>问题回应完整度</h4>
+        <p>每个sub-question都有明确回答，不遗漏、不回避。O奖论文的结论部分像"答题卡"——逐题对应，条理清晰。</p>
+      </div>
+      <div class="o-item">
+        <div class="o-icon">📐</div>
+        <h4>模型自洽与深度</h4>
+        <p>不是模型多就赢——一个模型做到深处远胜三个模型浅做。O奖论文的模型有推导链条、有简化合理性论证、有参数物理意义解释。</p>
+      </div>
+      <div class="o-item">
+        <div class="o-icon">📊</div>
+        <h4>可视化叙事力</h4>
+        <p>图表不是装饰，是论证的一部分。O奖论文的图能让评委30秒抓住核心结论。多维度对比图、参数敏感性曲面图、流程示意图是常见加分项。</p>
+      </div>
+      <div class="o-item">
+        <div class="o-icon">🔬</div>
+        <h4>验证与鲁棒性</h4>
+        <p>敏感性分析、交叉验证、极端情况测试、与现实数据对比——至少做两种验证。O奖论文不怕承认"在X条件下模型失效"，反而体现严谨。</p>
+      </div>
+      <div class="o-item">
+        <div class="o-icon">✍️</div>
+        <h4>写作专业度</h4>
+        <p>结构清晰、语言精准、排版美观。Summary Sheet一页之内信息密度极高。参考文献格式统一（IEEE/APA）。评委4分钟定生死，专业感=第一印象。</p>
+      </div>
+      <div class="o-item">
+        <div class="o-icon">💡</div>
+        <h4>创新亮点</h4>
+        <p>不是要求发明新算法——而是对问题的独特视角、巧妙的简化假设、有洞察力的结论解读。"We noticed that..."式的发现比炫技更打动评委。</p>
+      </div>
+    </div>
+
+    <div class="o-quote">
+      <blockquote>
+        "O奖论文读起来像一篇好的学术论文，而不是一份作业答卷。它有故事线、有洞察、有诚实的局限承认，而不是堆砌公式。"<br>
+        <cite>— 前MCM评委访谈摘录</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- 时间管理 -->
+  <section>
+    <h3>04 时间管理：96小时作战地图</h3>
+    <div class="timeline">
+      <div class="phase">
+        <div class="phase-header day1">Day 1 · 周四晚—周五</div>
+        <div class="phase-body">
+          <div class="task critical">
+            <span class="time">19:00-22:00</span>
+            <span class="label">选题锁死</span>
+            <p>六题全扫→团队讨论→确定1题→不再改题。同时下载所有相关文献（至少20篇），建立共享文献库。</p>
+          </div>
+          <div class="task">
+            <span class="time">22:00-01:00</span>
+            <span class="label">初步建模</span>
+            <p>确定核心模型框架，列出假设清单，定义主要变量。手写推导核心公式，拍照存档。不要等"完美模型"——先有v0.1。</p>
+          </div>
+          <div class="task">
+            <span class="time">01:00-03:00</span>
+            <span class="label">数据准备</span>
+            <p>C题：清洗数据、EDA可视化。A/B题：参数估算、初始条件设定。D/E/F题：文献数据提取、指标体系初建。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header day2">Day 2 · 周六</div>
+        <div class="phase-body">
+          <div class="task critical">
+            <span class="time">08:00-14:00</span>
+            <span class="label">核心求解</span>
+            <p>编程实现模型，跑出第一批结果。遇到bug立刻记录，不要死磕——换简化版本先出结果。中午前必须有可展示的数值/图表。</p>
+          </div>
+          <div class="task">
+            <span class="time">14:00-18:00</span>
+            <span class="label">模型迭代</span>
+            <p>根据第一批结果修正假设/参数。加入第二层模型（约束优化、耦合方程等）。同步开始写Methods部分。</p>
+          </div>
+          <div class="task">
+            <span class="time">18:00-22:00</span>
+            <span class="label">验证与对比</span>
+            <p>敏感性分析（至少3个参数）、极端情况测试、与现实数据/文献结论对比。这一步不做，论文降一个档次。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header day3">Day 3 · 周日</div>
+        <div class="phase-body">
+          <div class="task critical">
+            <span class="time">08:00-12:00</span>
+            <span class="label">写作冲刺</span>
+            <p>完成Results、Discussion、Conclusion。所有图表最终版定稿。写作与建模同步——不要等模型完美才动笔。</p>
+          </div>
+          <div class="task critical">
+            <span class="time">12:00-16:00</span>
+            <span class="label">Summary Sheet</span>
+            <p>全文最重要的1页。反复打磨3遍以上。必须包含：问题→方法→关键结果（带数字）→结论→意义。删掉一切废话。</p>
+          </div>
+          <div class="task">
+            <span class="time">16:00-20:00</span>
+            <span class="label">全文整合</span>
+            <p>统一术语、统一符号、统一格式。检查交叉引用、公式编号、图表编号。排版美化（字体、间距、配色）。</p>
+          </div>
+          <div class="task warning">
+            <span class="time">20:00-22:00</span>
+            <span class="label">最终检查</span>
+            <p>页数限制检查（25页正文）、文件格式检查（PDF）、摘要页单独检查、团队编号检查。22:00前必须提交，不要压线。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="time-rules">
+      <h4>时间铁律</h4>
+      <div class="rule-grid">
+        <div class="rule"><strong>锁题不超2小时</strong><br>犹豫是最大的时间杀手</div>
+        <div class="rule"><strong>Day 2中午前必有结果</strong><br>没结果=没论文素材</div>
+        <div class="rule"><strong>写作与建模并行</strong><br>不要串行，否则写不完</div>
+        <div class="rule"><strong>Summary写3遍</strong><br>第1遍草稿→第2遍精简→第3遍打磨</div>
+        <div class="rule"><strong>提前2小时提交</strong><br>网络崩溃不是借口</div>
+        <div class="rule"><strong>睡觉不可省</strong><br>Day2至少睡5小时，否则Day3脑子废</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 团队分工 -->
+  <section>
+    <h3>05 团队分工：3人≠3份独立工作</h3>
+    <div class="team-model">
+      <div class="role-card modeling">
+        <div class="role-icon">🧮</div>
+        <h4>建模手</h4>
+        <div class="role-tag">Modeler</div>
+        <ul>
+          <li>主导模型选择与推导</li>
+          <li>制定假设清单与变量定义</li>
+          <li>确保模型自洽性与数学严谨</li>
+          <li>负责敏感性分析设计</li>
+          <li>审核Results部分的数值合理性</li>
+        </ul>
+        <div class="role-note">核心能力：数学推导 + 问题抽象 + 快速试错</div>
+      </div>
+      <div class="role-card coding">
+        <div class="role-icon">⌨️</div>
+        <h4>编程手</h4>
+        <div class="role-tag">Programmer</div>
+        <ul>
+          <li>实现模型求解算法</li>
+          <li>数据处理与清洗（C题核心）</li>
+          <li>生成所有图表与可视化</li>
+          <li>跑敏感性/验证实验</li>
+          <li>确保代码可复现（附伪代码）</li>
+        </ul>
+        <div class="role-note">核心能力：Python/MATLAB + 数据可视化 + Debug速度</div>
+      </div>
+      <div class="role-card writing">
+        <div class="role-icon">📝</div>
+        <h4>写作手</h4>
+        <div class="role-tag">Writer</div>
+        <ul>
+          <li>从Day1就开始写Introduction</li>
+          <li>实时将建模/编程结果转化为文字</li>
+          <li>主导Summary Sheet（最终版3人共审）</li>
+          <li>统一全文术语、符号、风格</li>
+          <li>排版与最终PDF制作</li>
+<h2>第7章 冲刺计划</h2>
+这是为您生成的3个月国奖冲刺计划HTML代码，采用清晰的任务清单布局，方便您按周追踪备考进度。
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3个月国奖冲刺计划</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f5f7fb;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .chapter {
+            max-width: 1200px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.08);
+            padding: 48px 56px;
+            transition: all 0.3s ease;
+        }
+
+        /* 头部标题 */
+        .chapter-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 42px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .chapter-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0b1a33;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #1a3a6b, #2d5aa0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .chapter-header .badge {
+            background: #eef3fc;
+            padding: 8px 22px;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a3a6b;
+            border: 1px solid #d6e2f5;
+            letter-spacing: 0.3px;
+        }
+
+        /* 月份导航（概览） */
+        .month-overview {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .month-overview .mo-item {
+            flex: 1;
+            min-width: 160px;
+            background: #f8faff;
+            border-radius: 18px;
+            padding: 18px 20px;
+            text-align: center;
+            border: 1px solid #e8edf8;
+            transition: all 0.25s;
+        }
+
+        .month-overview .mo-item:hover {
+            border-color: #b3c9e8;
+            background: #f0f6ff;
+        }
+
+        .month-overview .mo-item .mo-num {
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b7f9f;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .month-overview .mo-item .mo-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #0b1a33;
+            margin-top: 4px;
+        }
+
+        .month-overview .mo-item .mo-sub {
+            font-size: 13px;
+            color: #5f7393;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* 月份卡片 */
+        .month-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 32px 36px;
+            margin-bottom: 32px;
+            border: 1px solid #eef2f9;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            transition: box-shadow 0.3s;
+        }
+
+        .month-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .month-card:hover {
+            box-shadow: 0 8px 32px rgba(26, 58, 107, 0.06);
+        }
+
+        .month-card .mc-head {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #f0f4fe;
+        }
+
+        .month-card .mc-head .mc-icon {
+            width: 44px;
+            height: 44px;
+            background: #eaf1fd;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #1a3a6b;
+        }
+
+        .month-card .mc-head .mc-title-group {
+            flex: 1;
+        }
+
+        .month-card .mc-head .mc-title-group .mc-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #7e93b5;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .month-card .mc-head .mc-title-group .mc-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0b1a33;
+            margin-top: 2px;
+        }
+
+        .month-card .mc-head .mc-duration {
+            background: #f0f6ff;
+            padding: 6px 18px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a3a6b;
+        }
+
+        /* 每周任务网格 */
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .week-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .chapter {
+                padding: 28px 20px;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .week-grid {
+                grid-template-columns: 1fr;
+            }
+            .chapter {
+                padding: 20px 16px;
+                border-radius: 20px;
+            }
+            .month-card {
+                padding: 20px 16px;
+            }
+            .chapter-header h1 {
+                font-size: 24px;
+            }
+        }
+
+        .week-item {
+            background: #fafcff;
+            border-radius: 20px;
+            padding: 20px 18px 18px;
+            border: 1px solid #eef3fc;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .week-item:hover {
+            background: #ffffff;
+            border-color: #c8d9f2;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(26, 58, 107, 0.07);
+        }
+
+        .week-item .wi-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .week-item .wi-top .wi-week {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a3a6b;
+            background: #e8f0fe;
+            padding: 2px 14px;
+            border-radius: 100px;
+            letter-spacing: 0.3px;
+        }
+
+        .week-item .wi-top .wi-tag {
+            font-size: 12px;
+            font-weight: 600;
+            color: #8aa0c0;
+            background: #f0f5fd;
+            padding: 2px 12px;
+            border-radius: 100px;
+        }
+
+        .week-item .wi-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0b1a33;
+            margin: 4px 0 10px 0;
+            line-height: 1.3;
+        }
+
+        .week-item .wi-tasks {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+
+        .week-item .wi-tasks li {
+            font-size: 14px;
+            color: #2f405e;
+            padding: 4px 0 4px 24px;
+            position: relative;
+            line-height: 1.5;
+            border-bottom: 1px dashed #eff3fa;
+        }
+
+        .week-item .wi-tasks li:last-child {
+            border-bottom: none;
+        }
+
+        .week-item .wi-tasks li::before {
+            content: "✦";
+            position: absolute;
+            left: 2px;
+            top: 4px;
+            font-size: 12px;
+            color: #3d7ac9;
+            opacity: 0.7;
+        }
+
+        .week-item .wi-progress {
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #7e93b5;
+        }
+
+        .week-item .wi-progress .wi-bar {
+            flex: 1;
+            height: 5px;
+            background: #e8edf6;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .week-item .wi-progress .wi-bar span {
+            display: block;
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #3d7ac9, #6b9ce6);
+        }
+
+        /* 页脚 */
+        .chapter-footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            color: #8ca2c2;
+            border-top: 1px solid #eef2f9;
+            padding-top: 24px;
+            letter-spacing: 0.3px;
+        }
+
+        .chapter-footer strong {
+            color: #1a3a6b;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 400px) {
+            .month-card .mc-head {
+                flex-wrap: wrap;
+            }
+            .month-card .mc-head .mc-duration {
+                margin-left: 58px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chapter">
+
+        <!-- 头部 -->
+        <div class="chapter-header">
+            <h1>🏆 国奖冲刺 · 13周行动计划</h1>
+            <span class="badge">📅 90天 · 三阶段</span>
+        </div>
+
+        <!-- 概览 -->
+        <div class="month-overview">
+            <div class="mo-item">
+                <div class="mo-num">📖 第 1 月</div>
+                <div class="mo-title">知识储备</div>
+                <div class="mo-sub">构建体系 · 夯实基础</div>
+            </div>
+            <div class="mo-item">
+                <div class="mo-num">⚡ 第 2 月</div>
+                <div class="mo-title">模拟实战</div>
+                <div class="mo-sub">真题训练 · 查漏补缺</div>
+            </div>
+            <div class="mo-item">
+                <div class="mo-num">🚀 第 3 月</div>
+                <div class="mo-title">赛前冲刺</div>
+                <div class="mo-sub">全真模拟 · 状态拉满</div>
+            </div>
+        </div>
+
+        <!-- ========= 第1月 ========= -->
+        <div class="month-card">
+            <div class="mc-head">
+                <div class="mc-icon">📘</div>
+                <div class="mc-title-group">
+                    <div class="mc-label">Month 1</div>
+                    <div class="mc-name">知识储备 · 地基阶段</div>
+                </div>
+                <span class="mc-duration">第 1–4 周</span>
+            </div>
+
+            <div class="week-grid">
+                <!-- 第1周 -->
+                <div class="week-item">
+                    <div class="wi-top">
+                        <span class="wi-week">第 1 周</span>
+                        <span class="wi-tag">定向</span>
+                    </div>
+                    <div class="wi-title">目标锁定 &amp; 资源筹备</div>
+                    <ul class="wi-tasks">
+                        <li>明确竞赛科目与评分标准</li>
+                        <li>收集近 3 年真题 &amp; 考纲</li>
+                        <li>制定个人学习时间表</li>
+                        <li>准备核心参考书 &amp; 笔记工具</li>
+                    </ul>
+                    <div class="wi-progress">
+                        <span>📌</span>
+                        <div class="wi-bar"><span style="width:25%"></span></div>
+                    </div>
+                </div>
+                <!-- 第2周 -->
+                <div class="week-item">
+                    <div class="wi-top">
+                        <span class="wi-week">第 2 周</span>
+                        <span class="wi-tag">建构</span>
+                    </div>
+                    <div class="wi-title">核心知识体系搭建</div>
+                    <ul class="wi-tasks">
+                        <li>梳理学科主干知识框架</li>
+                        <li>精读教材重点章节</li>
+                        <li>制作思维导图 &amp; 知识卡片</li>
+                        <li>完成章节配套练习</li>
+                    </ul>
+                    <div class="wi-progress">
+                        <span>📌</span>
+                        <div class="wi-bar"><span style="width:50%"></span></div>
+                    </div>
+                </div>
+                <!-- 第3周 -->
+                <div class="week-item">
+                    <div class="wi-top">
+                        <span class="wi-week">第 3 周</span>
+                        <span class="wi-tag">攻坚</span>
+                    </div>
+                    <div class="wi-title">重难点专项突破</div>
+                    <ul class="wi-tasks">
+                        <li>标记高频考点 &amp; 易错点</li>
+                        <li>专题训练 + 典型例题拆解</li>
+                        <li>建立错题本 &amp; 归纳模板</li>
+                        <li>小组讨论 / 请教导师</li>
+                    </ul>
+                    <div class="wi-progress">
+                        <span>📌</span>
+                        <div class="wi-bar"><span style="width:75%"></span></div>
+                    </div>
+                </div>
+                <!-- 第4周 -->
+                <div class="week-item">
+                    <div class="wi-top">
+                        <span class="wi-week">第 4 周</span>
+                        <span class="wi-tag">检测</span>
+                    </div>
+                    <div class="wi-title">综合复习 &amp; 阶段测</div>
+                    <ul class="wi-tasks">
+                        <li>全月知识串联回顾</li>
+                        <li>完成第一次模拟自测</li>
+                        <li>分析薄弱板块 &amp; 调整计划</li>
+                        <li>整理笔记、准备下阶段</li>
+                    </ul>
+                    <div class="wi-progress">
+                        <span>📌</span>
+                        <div class="wi-bar"><span style="width:100%"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========= 第2月 ========= -->
+        <div class="month-card">
+            <div class="mc-head">
+                <div class="mc-icon">⚔️</div>
+                <div class="mc-title-group">
+                    <div class="mc-label">Month 2</div>
+                    <div class="mc-name">模拟实战 · 强化阶段</div>
+                </div>
+                <span class="mc-duration">第 5–8 周</span>
+            </div>
+
+            <div class="week-grid">
+                <!-- 第5周 -->
+                <div class="week-item">
+                    <div class="wi-top">
+                        <span class="wi-week">第 5 周</span>
+                        <span class="wi-tag">分类</span>
+                    </div>
+                    <div class="wi-title">真题分类训练</div>
+                    <ul class="wi-tasks">
+                        <li>按题型/模块刷近 5 年真题</li>
+                        <li>总结命题规律 &amp; 高频角度</li>
+                        <li>限时完成每类题目</li>
+                        <li>标注易错 &amp; 模糊知识点</li>
+                    </ul>
+                    <div class="wi-progress">
+                        <span>⚡</span>
+                        <div class="wi-bar"><span style="width:25%"></span></div>
+                    </div>
+                </div>
+                <!-- 第6周 -->
+                <div class="week-item">
+                    <div class="wi-top">
+                        <span class="wi-week">第 6 周</span>
+                        <span class="wi-tag">限时</span>
+                    </div>
+                    <div class="wi-title">限时模拟测试</div>
+                    <ul class="wi-tasks">
+                        <li>每周 2 套完整模拟卷</li>
+                        <li>严格按考试时间执行</li>
+                        <li>训练答题节奏 &amp; 时间分配</li>
+                        <li>模拟后立即对答案复盘</li>
+                    </ul>
+                    <div class="wi-progress">
+                        <span>⚡</span>
+                        <div class="wi-bar"><span style="width
+<h2>附录</h2>
+这是为您生成的一份可直接运行的HTML文档，它集成了30个常用模型的速查表、Python代码模板库、LaTeX模板以及参考文献，便于您在学习或工作中快速查阅与使用。
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30个常用模型速查表 + Python代码模板库 + LaTeX模板 + 参考文献</title>
+    <style>
+        :root {
+            --bg: #f5f6fa;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-secondary: #555;
+            --border: #e0e5ec;
+            --accent: #3b6ff5;
+            --accent-light: #eef3ff;
+            --tag-ml: #e8f4f8;
+            --tag-ml-text: #0d6b8e;
+            --tag-dl: #fef3e2;
+            --tag-dl-text: #b8650f;
+            --tag-stat: #e8f5e9;
+            --tag-stat-text: #2e7d32;
+            --tag-other: #f3e5f5;
+            --tag-other-text: #7b1fa2;
+            --radius: 12px;
+            --radius-sm: 6px;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --font-mono: 'SF Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+            --font-sans: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: var(--font-sans);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .chapter {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* 标题区域 */
+        .main-header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: var(--radius);
+            color: #fff;
+            box-shadow: var(--shadow-md);
+        }
+        .main-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 6px;
+        }
+        .main-header .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            font-weight: 400;
+        }
+        .main-header .badge-row {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+        }
+        .badge-ml {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+        }
+        .badge-dl {
+            background: rgba(255, 200, 100, 0.25);
+            color: #ffe0a0;
+        }
+        .badge-stat {
+            background: rgba(100, 220, 150, 0.25);
+            color: #c0ffd0;
+        }
+
+        /* 分区 */
+        .section-block {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .section-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            background: #fafbfc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: default;
+        }
+        .section-header .icon-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .icon-ml {
+            background: #e8f4f8;
+            color: #0d6b8e;
+        }
+        .icon-dl {
+            background: #fef3e2;
+            color: #b8650f;
+        }
+        .icon-stat {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .icon-code {
+            background: #eef3ff;
+            color: #3b6ff5;
+        }
+        .icon-latex {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        .icon-ref {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        .section-header h2 {
+            font-size: 1.15rem;
+            font-weight: 650;
+            letter-spacing: 0.01em;
+        }
+        .section-header .count {
+            font-size: 0.8rem;
+            color: #888;
+            margin-left: auto;
+            font-weight: 500;
+        }
+        .section-body {
+            padding: 20px 24px;
+        }
+
+        /* 模型卡片网格 */
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 16px;
+        }
+        .model-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px 18px;
+            background: #fdfdfd;
+            transition: all 0.2s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .model-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: #c0c8d4;
+            transform: translateY(-1px);
+        }
+        .model-card .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 10px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            align-self: flex-start;
+        }
+        .tag-ml {
+            background: var(--tag-ml);
+            color: var(--tag-ml-text);
+        }
+        .tag-dl {
+            background: var(--tag-dl);
+            color: var(--tag-dl-text);
+        }
+        .tag-stat {
+            background: var(--tag-stat);
+            color: var(--tag-stat-text);
+        }
+        .tag-other {
+            background: var(--tag-other);
+            color: var(--tag-other-text);
+        }
+        .model-card h4 {
+            font-size: 1rem;
+            font-weight: 650;
+            color: #1a1a2e;
+            letter-spacing: 0.01em;
+        }
+        .model-card .formula {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            background: #f8f9fb;
+            padding: 8px 12px;
+            border-radius: 4px;
+            color: #333;
+            border-left: 3px solid var(--accent);
+            overflow-x: auto;
+            white-space: nowrap;
+            letter-spacing: 0.02em;
+        }
+        .model-card .desc {
+            font-size: 0.83rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+        .model-card .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            font-size: 0.73rem;
+            color: #777;
+        }
+        .model-card .meta-row span {
+            background: #f0f2f5;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+
+        /* Python代码模板 */
+        .code-block-wrapper {
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+        .code-block-wrapper .code-title {
+            background: #2d2d3f;
+            color: #c0c8e0;
+            padding: 10px 16px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .code-block-wrapper .code-title .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot-red {
+            background: #ff5f56;
+        }
+        .dot-yellow {
+            background: #ffbd2e;
+        }
+        .dot-green {
+            background: #27ca40;
+        }
+        .code-block-wrapper pre {
+            margin: 0;
+            padding: 16px;
+            background: #1e1e2e;
+            color: #d4d8e8;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            line-height: 1.65;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            letter-spacing: 0.01em;
+        }
+        .code-block-wrapper pre .kw {
+            color: #c792ea;
+        }
+        .code-block-wrapper pre .fn {
+            color: #82aaff;
+        }
+        .code-block-wrapper pre .str {
+            color: #c3e88d;
+        }
+        .code-block-wrapper pre .cm {
+            color: #676e95;
+        }
+        .code-block-wrapper pre .num {
+            color: #f78c6c;
+        }
+
+        /* LaTeX模板 */
+        .latex-template {
+            background: #fcfcfd;
+            border: 1px dashed #c0c8d4;
+            border-radius: var(--radius-sm);
+            padding: 18px 20px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #2c3e50;
+            letter-spacing: 0.01em;
+            margin-bottom: 16px;
+        }
+        .latex-template .latex-kw {
+            color: #7b1fa2;
+            font-weight: 600;
+        }
+        .latex-template .latex-cmd {
+            color: #c7254e;
+        }
+
+        /* 参考文献列表 */
+        .ref-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .ref-list li {
+            padding: 12px 16px;
+            background: #fafbfc;
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--accent);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #444;
+            transition: background 0.2s;
+        }
+        .ref-list li:hover {
+            background: #f0f3f8;
+        }
+        .ref-list li .ref-id {
+            font-weight: 700;
+            color: var(--accent);
+            margin-right: 6px;
+        }
+        .ref-list li .ref-title {
+            font-style: italic;
+            color: #2c3e50;
+        }
+        .ref-list li .ref-authors {
+            color: #666;
+        }
+        .ref-list li .ref-journal {
+            color: #888;
+            font-size: 0.78rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .model-grid {
+                grid-template-columns: 1fr;
+            }
+            .main-header h1 {
+                font-size: 1.4rem;
+            }
+            .section-body {
+                padding: 14px 12px;
+            }
+            .model-card {
+                padding: 12px 14px;
+            }
+        }
+
+        /* 打印优化 */
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+            .chapter {
+                gap: 20px;
+            }
+            .model-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class='chapter'>
+
+        <!-- ========== 主标题 ========== -->
+        <header class="main-header">
+            <h1>📊 30个常用模型速查表</h1>
+            <p class="subtitle">Python代码模板库 · LaTeX模板 · 参考文献 &nbsp;|&nbsp; 数据科学 & 机器学习必备</p>
+            <div class="badge-row">
+                <span class="badge badge-ml">🤖 机器学习</span>
+                <span class="badge badge-dl">🧠 深度学习</span>
+                <span class="badge badge-stat">📈 统计模型</span>
+                <span class="badge badge-ml">🔍 降维与聚类</span>
+            </div>
+        </header>
+
+        <!-- ========== 第一部分：30个常用模型速查表 ========== -->
+        <div class="section-block">
+            <div class="section-header">
+                <span class="icon-circle icon-ml">📋</span>
+                <h2>30个常用模型速查表</h2>
+                <span class="count">含公式、适用场景、关键参数</span>
+            </div>
+            <div class="section-body">
+                <div class="model-grid">
+
+                    <!-- 模型1 -->
+                    <div class="model-card">
+                        <span class="tag tag-ml">ML · 回归</span>
+                        <h4>1. 线性回归 (Linear Regression)</h4>
+                        <div class="formula">y = Xβ + ε &nbsp;→&nbsp; β̂ = (XᵀX)⁻¹Xᵀy</div>
+                        <p class="desc">最基础的回归模型，假设目标与特征呈线性关系。通过最小二乘法(OLS)估计参数。</p>
+                        <div class="meta-row"><span>适用：连续值预测</span><span>假设：线性、独立、正态、等方差</span><span>sklearn: LinearRegression</span></div>
+                    </div>
+
+                    <!-- 模型2 -->
+                    <div class="model-card">
+                        <span class="tag tag-ml">ML · 回归</span>
+                        <h4>2. 岭回归 (Ridge Regression)</h4>
+                        <div class="formula">β̂ = (XᵀX + λI)⁻¹Xᵀy &nbsp; L2正则化</div>
+                        <p class="desc">在线性回归基础上添加L2正则项，处理多重共线性问题，防止过拟合。</p>
+                        <div class="meta-row"><span>适用：高维数据</span><span>λ控制正则强度</span><span>sklearn: Ridge</span></div>
+                    </div>
+
+                    <!-- 模型3 -->
+                    <div class="model-card">
+                        <span class="tag tag-ml">ML · 回归</span>
+                        <h4>3. Lasso回归 (Lasso)</h4>
+                        <div class="formula">min ||y-Xβ||²₂ + λ||β||₁ &nbsp; L1正则化</div>
+                        <p class="desc">L1正则化可实现特征选择，将不重要的特征系数压缩至零，产生稀疏解。</p>
+                        <div class="meta-row"><span>适用：特征选择</span><span>稀疏模型</span><span>sklearn: Lasso</span></div>
+                    </div>
+</body></html>
