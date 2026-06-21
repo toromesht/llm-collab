@@ -28,7 +28,7 @@ POOL = {
     "Kimi":     (OpenAI(api_key=CFG["kimi"]["api_key"], base_url=CFG["kimi"]["base_url"]), CFG["kimi"]["model"]),
     "GLM-4":    (OpenAI(api_key=CFG["sjtu_zhiyuan"]["api_key"], base_url=CFG["sjtu_zhiyuan"]["base_url"]), "glm"),  # GLM-4 (SJTU)
     "QWEN":     (OpenAI(api_key=CFG["sjtu_zhiyuan"]["api_key"], base_url=CFG["sjtu_zhiyuan"]["base_url"]), "qwen"),
-    "DS-Think": (OpenAI(api_key=CFG["sjtu_zhiyuan"]["api_key"], base_url=CFG["sjtu_zhiyuan"]["base_url"]), "deepseek-reasoner"),
+    "SJTU-DS-Think": (OpenAI(api_key=CFG["sjtu_zhiyuan"]["api_key"], base_url=CFG["sjtu_zhiyuan"]["base_url"]), "deepseek-reasoner"),
 }
 
 D = "\033[2m"; G = "\033[1;32m"; B = "\033[1;34m"; M = "\033[1;35m"; Y = "\033[1;33m"
@@ -64,13 +64,13 @@ def classify(q):
 
 # ─── Model Affinity (from 98q eval + 3 rounds) ───────
 AFFINITY = {
-    "math":      {"DS-PRO":0.7, "DS-Think":0.7, "GLM":1.0, "QWEN":0.7, "Kimi":0.7},
-    "code":      {"DS-PRO":0.7, "DS-Think":0.7, "GLM":0.7, "QWEN":0.4, "Kimi":1.0},
-    "logic":     {"DS-PRO":-1, "DS-Think":-1, "GLM":-1, "QWEN":-1, "Kimi":0.1},  # ALL banned
-    "knowledge": {"DS-PRO":0.4, "DS-Think":1.0, "GLM":1.0, "QWEN":0.7, "Kimi":0.1},
-    "writing":   {"DS-PRO":0.5, "DS-Think":0.5, "GLM":0.7, "QWEN":0.5, "Kimi":0.5},
-    "arch":      {"DS-PRO":0.5, "DS-Think":0.5, "GLM":0.7, "QWEN":0.5, "Kimi":0.3},
-    "general":   {"DS-PRO":0.5, "DS-Think":0.5, "GLM":0.6, "QWEN":0.4, "Kimi":0.4},
+    "math":      {"DS-PRO":0.7, "SJTU-DS-Think":0.7, "GLM":1.0, "QWEN":0.7, "Kimi":0.7},
+    "code":      {"DS-PRO":0.7, "SJTU-DS-Think":0.7, "GLM":0.7, "QWEN":0.4, "Kimi":1.0},
+    "logic":     {"DS-PRO":-1, "SJTU-DS-Think":-1, "GLM":-1, "QWEN":-1, "Kimi":0.1},  # ALL banned
+    "knowledge": {"DS-PRO":0.4, "SJTU-DS-Think":1.0, "GLM":1.0, "QWEN":0.7, "Kimi":0.1},
+    "writing":   {"DS-PRO":0.5, "SJTU-DS-Think":0.5, "GLM":0.7, "QWEN":0.5, "Kimi":0.5},
+    "arch":      {"DS-PRO":0.5, "SJTU-DS-Think":0.5, "GLM":0.7, "QWEN":0.5, "Kimi":0.3},
+    "general":   {"DS-PRO":0.5, "SJTU-DS-Think":0.5, "GLM":0.6, "QWEN":0.4, "Kimi":0.4},
 }
 
 # ─── Router: pick best model(s) ──────────────────────
