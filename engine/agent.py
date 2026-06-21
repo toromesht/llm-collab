@@ -136,8 +136,58 @@ def execute_collab(q, models):
     combined = "\n\n".join(f"[{m}]: {r[:800]}" for m, r in results.items())
     return ask("DS-PRO", f"综合以下专家回答，保留所有技术细节:\n\n{q}\n\n{combined}", 3000)
 
+# ─── Math Modeling Mode (classify -> model -> evaluate) ──
+def solve_math_modeling(question):
+    """Full pipeline: classify -> model -> evaluate -> SELF-CORRECT"""
+    prompt = f"""你是数学建模专家。请对以下问题进行完整的三段式回答：
+
+【分类】判断问题类型（优化/预测/评价/方程/图论/统计/混合），说明理由。
+
+【建模】（必须包含）：
+1. 模型假设（至少3条）
+2. 变量定义与符号说明
+3. 数学模型（公式，LaTeX格式 $$...$$）
+4. 求解方法与关键代码（Python）
+5. 数值结果
+
+【评价】：
+1. 与至少一个替代模型对比
+2. 优缺点分析（表格）
+3. 灵敏度分析
+4. 改进方向
+
+问题：{question}"""
+    features, diff, primary = classify(question)
+    if diff > 0.6 or primary == "math":
+        ans = ask("DS-V4", prompt, max_tok=4000)
+    else:
+        ans = ask("QWEN", prompt, max_tok=3000)
+
+    # ─── SELF-CORRECTION: external AI review ───
+    review_prompt = f"""你是数学建模评审专家。请审查以下回答，指出：
+1. 公式推导错误（如有）
+2. 计算数值错误（如有）
+3. 逻辑漏洞（如有）
+4. 缺失的关键步骤（如有）
+
+如果有错误，给出修正后的正确内容。如果无错误，回复"无错误"。
+
+原问题：{question}
+回答：{ans[:3000]}"""
+    try:
+        review = ask("SJTU-DS-Think", review_prompt, max_tok=1000)
+        if "无错误" not in review and len(review) > 10:
+            ans += f"\n\n---\n【AI自修正】（SJTU-DS-Think审查）：\n{review}"
+    except:
+        pass  # Review failed, keep original answer
+    return ans
+
 # ─── Main ────────────────────────────────────────────
 def solve(question):
+    # Auto-detect math modeling requests
+    math_kw = ["建模","模型","预测","优化","评价","方程","图论","微分","求解","拟合"]
+    if any(kw in question for kw in math_kw):
+        return solve_math_modeling(question)
     feats, diff, primary = classify(question)
     strategy, models = route(feats, diff, primary)
 
