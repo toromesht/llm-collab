@@ -95,10 +95,22 @@ def route(feats, diff, primary):
         return "collab", ranked
 
 # ─── Execute ─────────────────────────────────────────
-def ask(model_name, prompt, max_tok=2000, temp=0.3):
+def ask(model_name, prompt, max_tok=2000, temp=0.3, image_path=None):
     client, model = POOL[model_name]
+    if image_path and model_name == "Kimi":
+        import base64
+        with open(image_path, "rb") as f:
+            img_b64 = base64.b64encode(f.read()).decode()
+        ext = os.path.splitext(image_path)[1].lower()
+        mime = {".png":"image/png",".jpg":"image/jpeg",".jpeg":"image/jpeg"}.get(ext,"image/png")
+        content = [
+            {"type":"image_url","image_url":{"url":f"data:{mime};base64,{img_b64}"}},
+            {"type":"text","text":prompt}
+        ]
+    else:
+        content = prompt
     r = client.chat.completions.create(model=model,
-        messages=[{"role":"user","content":prompt}], temperature=temp, max_tokens=max_tok)
+        messages=[{"role":"user","content":content}], temperature=temp, max_tokens=max_tok)
     return r.choices[0].message.content.strip()
 
 def execute_single(q, model):
