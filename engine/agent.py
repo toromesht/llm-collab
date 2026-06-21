@@ -26,6 +26,8 @@ POOL = {
     "DS-V4":    (OpenAI(api_key=CFG["deepseek_pro"]["api_key"], base_url=CFG["deepseek_pro"]["base_url"]), CFG["deepseek_pro"]["model"]),  # DeepSeek V4 Pro 1.6T
     "Kimi":     (OpenAI(api_key=CFG["kimi"]["api_key"], base_url=CFG["kimi"]["base_url"]), CFG["kimi"]["model"]),
     "GLM-4":    (OpenAI(api_key=CFG["sjtu_zhiyuan"]["api_key"], base_url=CFG["sjtu_zhiyuan"]["base_url"]), "glm"),  # GLM-4 (SJTU)
+    "GLM":      (OpenAI(api_key=CFG["sjtu_zhiyuan"]["api_key"], base_url=CFG["sjtu_zhiyuan"]["base_url"]), "glm"),  # alias
+    "DS-PRO":   (OpenAI(api_key=CFG["deepseek_pro"]["api_key"], base_url=CFG["deepseek_pro"]["base_url"]), CFG["deepseek_pro"]["model"]),  # alias
     "QWEN":     (OpenAI(api_key=CFG["sjtu_zhiyuan"]["api_key"], base_url=CFG["sjtu_zhiyuan"]["base_url"]), "qwen"),
     "SJTU-DS-Think": (OpenAI(api_key=CFG["sjtu_zhiyuan"]["api_key"], base_url=CFG["sjtu_zhiyuan"]["base_url"]), "deepseek-reasoner"),
 }

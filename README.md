@@ -82,6 +82,34 @@ eval/                     Evaluation suite (3 rounds, 98 questions)
 
 Built on: MasRouter(ACL 2025) · Dynamic MoE(ACL 2024) · Router-R1(NeurIPS 2025) · RACER(2025) · STDP(NatNeuro 2000) · BCM(JNeuro 1982) · Nature SciRep 2025
 
+## Use Inside Claude Code (在Claude Code里使用)
+
+You can run SynapseFlow directly from within Claude Code:
+
+```bash
+# Tell Claude to use your system:
+"用 SynapseFlow 回答 量子纠缠是什么"
+
+# Claude Code will execute:
+python engine/agent.py "量子纠缠是什么"
+```
+
+### Auto-enable on any terminal
+Add to `~/.bashrc` or PowerShell Profile:
+
+```bash
+# Linux/macOS
+alias synapse='python ~/collab-cloud/engine/agent.py'
+
+# Windows PowerShell
+function synapse { python "$env:USERPROFILE/Desktop/collab-cloud/engine/agent.py" @args }
+```
+
+Then just type `synapse "your question"` in any terminal.
+
+### Continuous mode (Claude Code session)
+Say `"用 SynapseFlow 回答"` once, then every question routes through your multi-model system. Say `"退出"` to stop.
+
 ## License
 
 MIT — use it, modify it, build on it.
