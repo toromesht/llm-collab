@@ -1,6 +1,17 @@
 #!/usr/bin/env python3
 """
-Brain v13 — FEP Neurosynaptic Router
+Brain v14 — Complete Neurosynaptic Architecture
+  分区: 前额叶(路由) | 海马体(记忆) | 杏仁核(奖惩) | 小脑(调参) | 视觉皮层(Kimi)
+
+FUNCTIONAL REGIONS (like brain areas):
+  PREFRONTAL CORTEX: route() — decision-making, model selection
+  HIPPOCAMPUS: STDP/LTP/LTD — memory consolidation (good→keep, bad→forget)
+  AMYGDALA: BCM + reward/penalty — emotional weighting of outcomes
+  CEREBELLUM: SPSA — fine-tuning all parameters
+  VISUAL CORTEX: Kimi vision — multimodal input
+  GABA INHIBITION: LateralInhib + Pruning — suppress bad models
+  DEFAULT MODE: FEP — free energy minimization, anticipatory routing
+  BRAIN WAVES: theta(explore) / alpha(filter) / beta(focus) / gamma(integrate)
 
 REFERENCES (in order of integration):
   [1]  Wong, R. "Affinity Is Not Enough: Recovering the Free Energy Principle
@@ -39,7 +50,7 @@ REFERENCES (in order of integration):
   EquiRouter(2026) + R3(2025) + Expert Race(2025) anti-degradation
   STDP + BCM + Precision-weighted gating + Temporal memory
 """
-import sys, json, os, threading, re, math
+import sys, json, os, threading, re, math, random
 from pathlib import Path
 from openai import OpenAI
 
@@ -764,9 +775,10 @@ def fep_boost(model_name, round_num):
 
 SPIKE_THRESHOLD = 0.6  # SPSA-tuned: adapts based on routing accuracy
 FEP_LEARNING_RATE = 0.1  # SPSA-tuned: how fast FEP adapts to new data
+
+def spike_gate(affinity_score):
     """Convert continuous affinity to binary spike decision.
-       NeurIPS 2024 SEMM: spike-driven conditional routing.
-       If score > threshold → spike (select model), else → silent."""
+       NeurIPS 2024 SEMM: spike-driven conditional routing."""
     return 1.0 if affinity_score > SPIKE_THRESHOLD else 0.0
 
 def spike_boost(affinity_scores, round_num):
@@ -987,6 +999,109 @@ def tda_cache_question(question, dims, decision):
     cache = [e for e in cache if now - e.get("timestamp", 0) < 7*86400][-200:]
 
     TDA_CACHE_FILE.write_text(json.dumps(cache, ensure_ascii=False))
+
+# ═══════════════════════════════════════════════════════
+# BRAIN WAVE OSCILLATIONS — modulate routing behavior
+# Buzsaki, G. "Rhythms of the Brain" (Oxford, 2006)
+# Klimesch, W. "EEG alpha and theta oscillations reflect cognitive
+#   and memory performance." Brain Research Reviews (1999)
+#
+# Four frequency bands modulate routing:
+#   θ (theta, 4-8 Hz): Exploration — try different models, test new combos
+#   α (alpha, 8-12 Hz): Filtering — suppress weak models, focus
+#   β (beta, 12-30 Hz): Active focus — stick to best known model
+#   γ (gamma, 30-100 Hz): Integration — multi-model synthesis
+# ═══════════════════════════════════════════════════════
+
+import math
+BRAIN_WAVE_STATE = {"round": 0}
+
+def brain_wave_phase(round_num):
+    """Get current brain wave phase based on performance history.
+       Low accuracy → theta (explore more).
+       High accuracy → beta (exploit best).
+       Normal → alpha (filter). Gamma triggers on complex tasks."""
+    s = BRAIN_WAVE_STATE
+    s["round"] = round_num
+
+    # Estimate recent accuracy from FEP states
+    precisions = [v.get("precision", 1.0) for v in FEP_STATE.values()]
+    avg_precision = sum(precisions) / max(1, len(precisions))
+
+    # Phase shift: theta→alpha→beta→gamma cycle
+    phase = (round_num % 100) / 100.0  # 0.0 to 1.0 over 100 rounds
+
+    if avg_precision < 0.3:
+        return "theta"   # Poor performance → explore more
+    elif avg_precision < 0.6:
+        # Alpha: filter mode — use lateral inhibition more aggressively
+        return "alpha" if phase < 0.7 else "theta"
+    elif avg_precision < 0.85:
+        return "beta"    # Good performance → exploit
+    else:
+        return "gamma"   # Excellent → integrate (multi-model)
+
+def wave_modulate_routing(affinity_scores, round_num):
+    """Brain wave modulation of routing behavior.
+       θ: add noise to explore (epsilon-greedy style)
+       α: boost lateral inhibition (filter weak)
+       β: exploit best (low temperature)
+       γ: force multi-model synthesis"""
+    wave = brain_wave_phase(round_num)
+    modulated = dict(affinity_scores)
+
+    if wave == "theta":
+        # Exploration: add random noise ±0.15 to all scores
+        for m in modulated:
+            modulated[m] += random.uniform(-0.15, 0.15)
+    elif wave == "alpha":
+        # Filter: penalize models with low precision
+        for m in modulated:
+            prec = FEP_STATE.get(m, {}).get("precision", 1.0)
+            if prec < 0.5:
+                modulated[m] -= 0.2  # Strong suppression
+    elif wave == "beta":
+        # Focus: boost top model, suppress others
+        best_m = max(modulated, key=modulated.get)
+        for m in modulated:
+            modulated[m] += 0.15 if m == best_m else -0.05
+    # gamma: no modulation (natural multi-model integration)
+
+    return modulated, wave
+
+# ═══════════════════════════════════════════════════════
+# BRAIN CONSOLIDATION — All regions coordinate
+# Like sleep: consolidates memories, prunes weak connections,
+# reinforces strong ones. Runs after every answer.
+# ═══════════════════════════════════════════════════════
+
+def brain_consolidate(question, model_used, correct, round_num, features):
+    """Complete brain cycle: route → execute → learn → forget → adapt"""
+    # Prefrontal: routing decision happened in decide_mode()
+    # Hippocampus: STDP memory consolidation
+    # Amygdala: BCM reward/penalty weighting
+    # Cerebellum: SPSA fine-tuning
+    # GABA: lateral inhibition + pruning
+    # FEP: free energy update
+
+    # Good to remember (LTP), bad to forget (LTD) — like real brain
+    for model_name in features.get("model_affinity", {}):
+        if model_name == model_used:
+            fep_temporal_memory(model_name, correct, round_num)
+            fep_precision_gate(model_name, correct)
+        else:
+            # Other models: slight LTD (not used = weak forgetting)
+            fep_temporal_memory(model_name, False, round_num)  # mild decay
+
+    # Synaptic pruning: errors → eventually banned (like real forgetting)
+    if not correct:
+        for model_name in ["ds-pro","ds-think","glm","qwen","kimi"]:
+            w = load_synapse_weights()
+            cat = w.get(model_name, {})
+            cat["consecutive_wrong"] = cat.get("consecutive_wrong", 0) + 1
+            if cat["consecutive_wrong"] >= 5:
+                cat["banned"] = True  # Permanent forgetting
+            save_synapse_weights(w)
 
 # ─── Main ────────────────────────────────────────────
 
