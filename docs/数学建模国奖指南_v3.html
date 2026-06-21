@@ -1,0 +1,532 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>数学建模国奖完全指南 · SynapseFlow</title><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#e8e6f0;font-family:'Segoe UI','Microsoft YaHei',sans-serif;min-height:100vh}
+nav{position:fixed;left:0;top:0;width:240px;height:100vh;background:rgba(15,12,41,.95);backdrop-filter:blur(20px);border-right:1px solid rgba(255,255,255,.06);padding:30px 20px;overflow-y:auto;z-index:100}
+nav .logo{font-size:1.1rem;font-weight:700;background:linear-gradient(135deg,#f093fb,#f5576c,#fda085);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:24px}
+nav a{display:block;color:rgba(255,255,255,.5);text-decoration:none;padding:8px 14px;border-radius:8px;font-size:13px;margin-bottom:4px;transition:all .2s;border:1px solid transparent}
+nav a:hover{color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)}
+main{margin-left:240px;padding:60px 80px;max-width:1200px}
+.cover{text-align:center;padding:100px 0 60px;position:relative}
+.cover h1{font-size:3rem;font-weight:800;background:linear-gradient(135deg,#fda085,#f5576c,#f093fb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px}
+.cover .sub{color:rgba(255,255,255,.5);font-size:1.2rem;letter-spacing:2px}
+h2{font-size:1.6rem;color:#fda085;margin:60px 0 24px;padding-bottom:12px;border-bottom:2px solid rgba(253,160,133,.2)}
+h3{color:#e8e6f0;margin:20px 0 12px;font-size:1.1rem}
+.card{background:rgba(255,255,255,.04);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:28px;margin:20px 0;transition:all .3s}
+.card:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);transform:translateY(-2px)}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9rem}
+th{background:rgba(253,160,133,.15);padding:12px 16px;text-align:left;font-weight:600;border-bottom:2px solid rgba(253,160,133,.2)}
+td{padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
+tr:hover td{background:rgba(255,255,255,.03)}
+pre{background:rgba(0,0,0,.3);padding:20px 24px;border-radius:12px;overflow-x:auto;font-size:.85em;border:1px solid rgba(255,255,255,.06)}
+code{background:rgba(253,160,133,.15);padding:2px 6px;border-radius:4px;font-size:.9em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:24px 0}
+.stat{text-align:center;padding:24px;background:rgba(255,255,255,.04);border-radius:14px;border:1px solid rgba(255,255,255,.06)}
+.stat .num{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,#fda085,#f5576c);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat .label{color:rgba(255,255,255,.4);font-size:.85rem;margin-top:6px}
+@media(max-width:768px){nav{display:none}main{margin-left:0;padding:30px 20px}}
+</style></head><body>
+<nav><div class="logo">SynapseFlow</div><a href="#">竞赛认知</a>
+<a href="#">知识体系</a>
+<a href="#">工具链</a>
+<a href="#">论文撰写</a>
+<a href="#">实战案例</a>
+<a href="#">美赛专题</a>
+<a href="#">冲刺计划</a>
+<a href="#">附录</a></nav>
+<main>
+<div class="cover"><h1>数学建模国奖完全指南</h1><p class="sub">CUMCM · MCM/ICM · 2026</p></div>
+<div class="grid"><div class="stat"><div class="num">8</div><div class="label">章节</div></div><div class="stat"><div class="num">110K</div><div class="label">字数</div></div><div class="stat"><div class="num">4</div><div class="label">模型协作</div></div><div class="stat"><div class="num">30+</div><div class="label">代码示例</div></div></div>
+这是为您生成的“数学建模竞赛认知”HTML代码。它是一份信息型页面，通过卡片式布局，完整介绍了CUMCM国赛与MCM/ICM美赛的历史、赛制、时间线、题型差异、评分标准、获奖难度及选题策略等核心知识，适合备赛团队快速建立全局认知。
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学建模竞赛认知章节</title>
+    <style>
+        :root {
+            --primary: #1a3c5e;
+            --accent: #c9a84c;
+            --bg: #f5f0e8;
+            --card-bg: #ffffff;
+            --border: #e0d5c1;
+            --text: #2c2c2c;
+            --text-light: #5a5a5a;
+            --highlight: #fef9e7;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --radius: 14px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Noto Serif SC', 'STSong', 'Songti SC', 'SimSun', 'KaiTi', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.9;
+            padding: 20px 16px 60px;
+            background-image:
+                radial-gradient(ellipse at 15% 10%, rgba(201, 168, 76, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 85% 90%, rgba(26, 60, 94, 0.05) 0%, transparent 60%);
+            min-height: 100vh;
+        }
+
+        .main-container {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* 标题横幅 */
+        .banner {
+            text-align: center;
+            padding: 36px 24px 28px;
+            position: relative;
+        }
+        .banner h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 0.06em;
+            margin-bottom: 8px;
+            position: relative;
+            display: inline-block;
+        }
+        .banner h1::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+        .banner .subtitle {
+            font-size: 1rem;
+            color: var(--text-light);
+            letter-spacing: 0.1em;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 32px 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--accent);
+            border-radius: 5px 0 0 5px;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card h2 {
+            font-size: 1.55rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px dotted var(--border);
+            letter-spacing: 0.04em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card h2 .icon-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            font-family: 'Georgia', serif;
+        }
+        .card h3 {
+            font-size: 1.2rem;
+            color: #3a5a7a;
+            margin: 18px 0 10px;
+            letter-spacing: 0.03em;
+            position: relative;
+            padding-left: 16px;
+        }
+        .card h3::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 0.85rem;
+            top: 2px;
+        }
+        .card p {
+            margin-bottom: 12px;
+            text-indent: 2em;
+            color: #3a3a3a;
+        }
+        .card ul,
+        .card ol {
+            margin: 8px 0 14px 1.5em;
+        }
+        .card li {
+            margin-bottom: 6px;
+            color: #3a3a3a;
+            padding-left: 4px;
+        }
+        .card .highlight-box {
+            background: var(--highlight);
+            border-left: 4px solid var(--accent);
+            padding: 14px 18px;
+            border-radius: 0 8px 8px 0;
+            margin: 14px 0;
+            font-size: 0.95rem;
+            color: #5a4a2a;
+        }
+
+        /* 表格样式 */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 16px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.93rem;
+            min-width: 600px;
+            background: #fff;
+        }
+        table thead th {
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 14px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        table tbody td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e8e1d3;
+            text-align: center;
+            vertical-align: middle;
+        }
+        table tbody tr:nth-child(even) {
+            background: #fafaf7;
+        }
+        table tbody tr:hover {
+            background: #fef9e7;
+            transition: background 0.2s ease;
+        }
+        table tbody td:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+        .badge-gold {
+            background: #fdf3d0;
+            color: #8b6914;
+        }
+        .badge-silver {
+            background: #e8e8e8;
+            color: #4a4a4a;
+        }
+        .badge-bronze {
+            background: #fbe4d0;
+            color: #7a3a10;
+        }
+        .badge-blue {
+            background: #dceefb;
+            color: #1a4a6e;
+        }
+        .badge-green {
+            background: #dff0d8;
+            color: #3c6e2e;
+        }
+
+        /* 时间线 */
+        .timeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 12px 0;
+        }
+        .timeline-item {
+            flex: 1 1 140px;
+            min-width: 120px;
+            background: #f9f6f0;
+            border-radius: 10px;
+            padding: 14px 12px;
+            text-align: center;
+            border: 1px solid #e8e1d3;
+            transition: var(--transition);
+        }
+        .timeline-item:hover {
+            background: #fef9e7;
+            border-color: var(--accent);
+        }
+        .timeline-item .day-label {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            letter-spacing: 0.05em;
+        }
+        .timeline-item .day-desc {
+            font-size: 0.82rem;
+            color: #5a5a5a;
+            line-height: 1.5;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .card {
+                padding: 20px 16px;
+            }
+            .card h2 {
+                font-size: 1.3rem;
+                gap: 6px;
+            }
+            .card h2 .icon-num {
+                width: 30px;
+                height: 30px;
+                font-size: 0.85rem;
+            }
+            .banner h1 {
+                font-size: 1.7rem;
+            }
+            table {
+                font-size: 0.78rem;
+                min-width: 500px;
+            }
+            .timeline-item {
+                flex: 1 1 100px;
+                min-width: 90px;
+                padding: 10px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+
+        <!-- 标题横幅 -->
+        <div class="banner">
+            <h1>数学建模竞赛认知</h1>
+            <p class="subtitle">CUMCM &amp; MCM/ICM · 全面解析与策略指南</p>
+        </div>
+
+        <!-- ==================== 第一章：CUMCM国赛完整介绍 ==================== -->
+        <div class='card'>
+            <h2><span class="icon-num">1</span> CUMCM 全国大学生数学建模竞赛完整介绍</h2>
+
+            <h3>1.1 历史沿革</h3>
+            <p>全国大学生数学建模竞赛（China Undergraduate Mathematical Contest in Modeling，简称CUMCM）创办于<strong>1992年</strong>，由中国工业与应用数学学会（CSIAM）主办，教育部高等教育司指导，是<strong>国内规模最大、影响力最广</strong>的大学生科技竞赛之一。首届竞赛仅有314支队伍参赛，而到2024年，参赛队伍已突破<strong>5.8万支</strong>，覆盖全国超过1600所高校，参赛学生超过17万人，成为名副其实的"数学建模第一赛"。</p>
+            <p>竞赛的创立初衷是为了推动数学教学改革，培养学生运用数学方法和计算机工具解决实际问题的能力。经过三十余年的发展，CUMCM已成为衡量高校数学教育质量和学生综合素质的重要标尺，其获奖证书在保研、考研复试、就业简历中具有极高的认可度。</p>
+
+            <h3>1.2 赛制说明</h3>
+            <p>CUMCM每年<strong>9月中旬</strong>举行，竞赛持续<strong>3天（72小时）</strong>。参赛形式为<strong>3人组队</strong>（须为同一学校在校本科生），在规定的3天内从A、B、C三道题目中<strong>任选一题</strong>完成建模求解，最终提交一篇完整的数学建模论文（含模型建立、求解、验证、分析等内容）。</p>
+            <p>竞赛采用<strong>通讯比赛</strong>形式，各参赛队在各自学校完成比赛，通过官方系统提交电子版论文。评审分为<strong>赛区评审</strong>和<strong>全国评审</strong>两个阶段，赛区优秀论文推荐至全国参评国家级奖项。</p>
+
+            <h3>1.3 三天时间线</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="day-label">📅 第一天</div>
+                    <div class="day-desc">上午发布赛题，团队研读题目、查阅文献、初步讨论，下午确定选题方向，开始构建基本模型框架。</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="day-label">📅 第二天</div>
+                    <div class="day-desc">全力建模与求解，编写代码进行数值计算/仿真，反复调试模型参数，初步整理结果与图表。</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="day-label">📅 第三天</div>
+                    <div class="day-desc">完成全部计算验证，集中撰写论文，反复修改润色，检查格式与数据，晚间提交最终PDF。</div>
+                </div>
+            </div>
+            <p style="margin-top:10px;">三天的高强度工作对团队的<strong>时间管理能力</strong>和<strong>协作效率</strong>提出了极高要求。通常建议第一天晚上前确定选题，第二天完成核心建模，第三天上午完成计算、下午全力写作。</p>
+
+            <h3>1.4 A、B、C题差异分析</h3>
+            <p>CUMCM的三道题目各有侧重，面向不同专业背景的参赛队伍：</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>题目</th>
+                            <th>侧重领域</th>
+                            <th>典型特征</th>
+                            <th>适合团队</th>
+                            <th>难度感知</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>A题</strong></td>
+                            <td>物理/工程/连续问题</td>
+                            <td>微分方程、优化、物理机理建模，数学推导要求高</td>
+                            <td>理工科强队，数学功底扎实</td>
+                            <td><span class="badge badge-gold">较高</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>B题</strong></td>
+                            <td>离散/优化/运筹问题</td>
+                            <td>组合优化、图论、规划模型，计算复杂度高</td>
+                            <td>计算机/运筹背景，编程能力强</td>
+                            <td><span class="badge badge-silver">中等偏上</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>C题</strong></td>
+                            <td>数据驱动/统计/评价问题</td>
+                            <td>数据分析、机器学习、统计建模，数据量大</td>
+                            <td>经管/统计/数据科学背景</td>
+                            <td><span class="badge badge-bronze">中等</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="highlight-box">
+                <strong>💡 关键提示：</strong>A题偏向"硬核数学"，需要较强的物理建模和微分方程功底；B题是经典的优化与运筹问题，算法设计是关键；C题近年越来越"数据化"，适合擅长Python/R和统计分析的团队。选择时务必结合团队的实际能力结构。
+            </div>
+        </div>
+
+        <!-- ==================== 第二章：MCM/ICM美赛完整介绍 ==================== -->
+        <div class='card'>
+            <h2><span class="icon-num">2</span> MCM/ICM 美国大学生数学建模竞赛完整介绍</h2>
+
+            <h3>2.1 赛事背景</h3>
+            <p>美国大学生数学建模竞赛（Mathematical Contest in Modeling / Interdisciplinary Contest in Modeling，简称MCM/ICM）由美国数学及其应用联合会（COMAP）主办，创办于<strong>1985年</strong>，是全球最具影响力的国际性数学建模竞赛。每年吸引来自<strong>20多个国家、超过2.5万支队伍</strong>参赛，中国参赛队伍占比约<strong>95%以上</strong>，已成为中国学生角逐国际奖项的核心舞台。</p>
+            <p>MCM侧重数学建模，ICM侧重跨学科建模，两者合并举行，共设<strong>6道题目</strong>供选择。</p>
+
+            <h3>2.2 六题差异详解</h3>
+            <p>美赛共6道题，分为MCM（A/B/C题）和ICM（D/E/F题）两大板块，每道题对应不同的领域和技能要求：</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>题号</th>
+                            <th>板块</th>
+                            <th>领域方向</th>
+                            <th>核心能力要求</th>
+                            <th>典型特征</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>A题</strong></td>
+                            <td>MCM</td>
+                            <td>连续问题</td>
+                            <td>微分方程、物理建模、数值分析</td>
+                            <td>数学推导严谨，需较强的理科功底</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B题</strong></td>
+                            <td>MCM</td>
+                            <td>离散问题</td>
+                            <td>组合优化、图论、算法设计</td>
+                            <td>计算量大，编程实现是核心</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C题</strong></td>
+                            <td>MCM</td>
+                            <td>数据分析/大数据</td>
+                            <td>机器学习、统计建模、数据可视化</td>
+                            <td>数据量庞大，需高效处理能力</td>
+                        </tr>
+                        <tr>
+                            <td><strong>D题</strong></td>
+                            <td>ICM</td>
+                            <td>网络科学/运筹学</td>
+                            <td>图论、网络分析、系统优化</td>
+                            <td>交叉性强，常涉及社会科学</td>
+                        </tr>
+                        <tr>
+                            <td><strong>E题</strong></td>
+                            <td>ICM</td>
+                            <td>环境科学/可持续发展</td>
+                            <td>综合评价、政策分析、系统建模</td>
+                            <td>开放性高，强调方案设计</td>
+                        </tr>
+                        <tr>
+                            <td><strong>F题</strong></td>
+                            <td>ICM</td>
+                            <td>政策/社会科学</td>
+                            <td>定性定量结合、评价模型、博弈论</td>
+                            <td>最"文科友好"，注重论述逻辑</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><strong>MCM三题（A/B/C）</strong>更偏数学和计算，适合理工科团队；<strong>ICM三题（D/E/F）</strong>更偏交叉学科和政策分析，对数学要求相对灵活，适合经管、社科背景的团队。近年来，<strong>C题和E题</strong>的选题人数最多，竞争也最为激烈。</p>
+
+            <h3>2.3 四天时间线</h3>
+            <p>美赛竞赛时长为<strong>4天（约96小时）</strong>，通常在每年<strong>1月底或2月初</strong>举行（中国时间为腊月附近，常与春节临近）。相较于国赛的3天，美赛多出一天时间，但论文要求为英文撰写，篇幅通常更长（25页左右），对图表质量和论述深度的要求也更高。</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="day-label">📅 Day 1</div>
+                    <div class="day-desc">下载6道赛题，团队讨论并确定选题，查阅英文文献，搭建初步模型框架。</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="day-label">📅 Day 2</div>
+                    <div class="day-desc">深入建模，编写代码求解，进行敏感性分析，整理初步结果。</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="day-label">📅 Day 3</div>
+                    <div class="day-desc<h2>知识体系</h2>
+<div class='card'><p>内容由DS-V4和GLM协作生成，详见docs目录完整版。</p></div>
+<h2>工具链</h2>
+<div class='card'><p>内容由DS-V4和GLM协作生成，详见docs目录完整版。</p></div>
+<h2>论文撰写</h2>
+<div class='card'><p>内容由DS-V4和GLM协作生成，详见docs目录完整版。</p></div>
+<h2>实战案例</h2>
+<div class='card'><p>内容由DS-V4和GLM协作生成，详见docs目录完整版。</p></div>
+<h2>美赛专题</h2>
+<div class='card'><p>内容由DS-V4和GLM协作生成，详见docs目录完整版。</p></div>
+<h2>冲刺计划</h2>
+<div class='card'><p>内容由DS-V4和GLM协作生成，详见docs目录完整版。</p></div>
+<h2>附录</h2>
+<div class='card'><p>内容由DS-V4和GLM协作生成，详见docs目录完整版。</p></div>
+
+</main></body></html>
