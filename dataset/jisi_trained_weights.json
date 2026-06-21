@@ -1,0 +1,26 @@
+{
+  "SJTU-DS-Think": {
+    "avg_score": 0.611,
+    "samples": 500
+  },
+  "DS-V4": {
+    "avg_score": 0.595,
+    "samples": 2000
+  },
+  "GLM-4+": {
+    "avg_score": 0.639,
+    "samples": 500
+  },
+  "QWEN": {
+    "avg_score": 0.642,
+    "samples": 500
+  },
+  "Kimi": {
+    "avg_score": 0.677,
+    "samples": 500
+  },
+  "Qwen3-235B": {
+    "avg_score": 0.709,
+    "samples": 1000
+  }
+}
