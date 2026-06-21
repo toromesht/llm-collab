@@ -1,0 +1,20 @@
+{
+  "method": "LMSYS-style estimation",
+  "gsm8k_0shot_pct": 95.0,
+  "estimated_elo_code_math": 1294,
+  "estimated_elo_logic": 1044,
+  "estimated_elo_simulated": 1398,
+  "baselines": {
+    "GPT-4o": 1287,
+    "Claude 3.5": 1270,
+    "Gemini 1.5 Pro": 1252,
+    "Llama 3.1 405B": 1285
+  },
+  "note": "Estimate only. Not officially submitted to LMSYS.",
+  "limitations": [
+    "Sample size: 20 questions for GSM8K, 8 for code, 5 for DB",
+    "Logic score (67%) significantly below GPT-5.5 estimated 95%",
+    "Elo estimated from accuracy-to-Elo mapping, not direct pair comparison",
+    "For official score: deploy API endpoint and submit to LMSYS"
+  ]
+}
