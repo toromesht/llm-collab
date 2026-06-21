@@ -1,0 +1,41 @@
+{
+  "weights": {
+    "DS-PRO": {
+      "count": 7,
+      "total": 648,
+      "cats": {
+        "math": 2,
+        "code": 3,
+        "writing": 1,
+        "arch": 1
+      }
+    },
+    "GLM": {
+      "count": 6,
+      "total": 525,
+      "cats": {
+        "math": 2,
+        "knowledge": 1,
+        "chinese": 1,
+        "arch": 1,
+        "logic": 1
+      }
+    },
+    "Kimi": {
+      "count": 5,
+      "total": 345,
+      "cats": {
+        "code": 2,
+        "logic": 3
+      }
+    },
+    "DS-Think": {
+      "count": 2,
+      "total": 167,
+      "cats": {
+        "knowledge": 1,
+        "logic": 1
+      }
+    }
+  }
+}
