@@ -1,0 +1,163 @@
+{
+  "timestamp": "2026-06-21T16:11:17.357759",
+  "models_tested": [
+    "DS-PRO",
+    "Kimi",
+    "GLM",
+    "QWEN",
+    "DS-Think"
+  ],
+  "total_questions": 19,
+  "results": {
+    "DS-PRO": {
+      "overall_pct": 84.2,
+      "categories": {
+        "math": {
+          "score": 6.0,
+          "total": 6,
+          "pct": 100.0
+        },
+        "code": {
+          "score": 4.0,
+          "total": 4,
+          "pct": 100.0
+        },
+        "reasoning": {
+          "score": 1.0,
+          "total": 3,
+          "pct": 33.3
+        },
+        "knowledge": {
+          "score": 2.0,
+          "total": 3,
+          "pct": 66.7
+        },
+        "safety": {
+          "score": 3.0,
+          "total": 3,
+          "pct": 100.0
+        }
+      }
+    },
+    "Kimi": {
+      "overall_pct": 73.7,
+      "categories": {
+        "math": {
+          "score": 4.0,
+          "total": 6,
+          "pct": 66.7
+        },
+        "code": {
+          "score": 4.0,
+          "total": 4,
+          "pct": 100.0
+        },
+        "reasoning": {
+          "score": 2.0,
+          "total": 3,
+          "pct": 66.7
+        },
+        "knowledge": {
+          "score": 1.0,
+          "total": 3,
+          "pct": 33.3
+        },
+        "safety": {
+          "score": 3.0,
+          "total": 3,
+          "pct": 100.0
+        }
+      }
+    },
+    "GLM": {
+      "overall_pct": 94.7,
+      "categories": {
+        "math": {
+          "score": 6.0,
+          "total": 6,
+          "pct": 100.0
+        },
+        "code": {
+          "score": 4.0,
+          "total": 4,
+          "pct": 100.0
+        },
+        "reasoning": {
+          "score": 3.0,
+          "total": 3,
+          "pct": 100.0
+        },
+        "knowledge": {
+          "score": 2.0,
+          "total": 3,
+          "pct": 66.7
+        },
+        "safety": {
+          "score": 3.0,
+          "total": 3,
+          "pct": 100.0
+        }
+      }
+    },
+    "QWEN": {
+      "overall_pct": 89.5,
+      "categories": {
+        "math": {
+          "score": 6.0,
+          "total": 6,
+          "pct": 100.0
+        },
+        "code": {
+          "score": 4.0,
+          "total": 4,
+          "pct": 100.0
+        },
+        "reasoning": {
+          "score": 2.0,
+          "total": 3,
+          "pct": 66.7
+        },
+        "knowledge": {
+          "score": 2.0,
+          "total": 3,
+          "pct": 66.7
+        },
+        "safety": {
+          "score": 3.0,
+          "total": 3,
+          "pct": 100.0
+        }
+      }
+    },
+    "DS-Think": {
+      "overall_pct": 100.0,
+      "categories": {
+        "math": {
+          "score": 6.0,
+          "total": 6,
+          "pct": 100.0
+        },
+        "code": {
+          "score": 4.0,
+          "total": 4,
+          "pct": 100.0
+        },
+        "reasoning": {
+          "score": 3.0,
+          "total": 3,
+          "pct": 100.0
+        },
+        "knowledge": {
+          "score": 3.0,
+          "total": 3,
+          "pct": 100.0
+        },
+        "safety": {
+          "score": 3.0,
+          "total": 3,
+          "pct": 100.0
+        }
+      }
+    }
+  }
+}

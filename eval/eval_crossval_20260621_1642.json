@@ -1,0 +1,131 @@
+{
+  "timestamp": "2026-06-21T16:42:10.513792",
+  "version": 2,
+  "questions": 33,
+  "models": [
+    "DS-Think",
+    "GLM",
+    "DS-PRO",
+    "QWEN",
+    "Kimi"
+  ],
+  "results": {
+    "DS-Think": {
+      "overall": 87.9,
+      "correct": 29.0,
+      "total": 33,
+      "categories": {
+        "math_hard": {
+          "pct": 87.5
+        },
+        "code": {
+          "pct": 100.0
+        },
+        "logic": {
+          "pct": 50.0
+        },
+        "knowledge_cn": {
+          "pct": 100.0
+        },
+        "safety": {
+          "pct": 100.0
+        }
+      }
+    },
+    "GLM": {
+      "overall": 90.9,
+      "correct": 30.0,
+      "total": 33,
+      "categories": {
+        "math_hard": {
+          "pct": 100.0
+        },
+        "code": {
+          "pct": 100.0
+        },
+        "logic": {
+          "pct": 50.0
+        },
+        "knowledge_cn": {
+          "pct": 100.0
+        },
+        "safety": {
+          "pct": 100.0
+        }
+      }
+    },
+    "DS-PRO": {
+      "overall": 75.8,
+      "correct": 25.0,
+      "total": 33,
+      "categories": {
+        "math_hard": {
+          "pct": 75.0
+        },
+        "code": {
+          "pct": 100.0
+        },
+        "logic": {
+          "pct": 33.3
+        },
+        "knowledge_cn": {
+          "pct": 66.7
+        },
+        "safety": {
+          "pct": 100.0
+        }
+      }
+    },
+    "QWEN": {
+      "overall": 81.8,
+      "correct": 27.0,
+      "total": 33,
+      "categories": {
+        "math_hard": {
+          "pct": 87.5
+        },
+        "code": {
+          "pct": 100.0
+        },
+        "logic": {
+          "pct": 33.3
+        },
+        "knowledge_cn": {
+          "pct": 83.3
+        },
+        "safety": {
+          "pct": 100.0
+        }
+      }
+    },
+    "Kimi": {
+      "overall": 72.7,
+      "correct": 24.0,
+      "total": 33,
+      "categories": {
+        "math_hard": {
+          "pct": 75.0
+        },
+        "code": {
+          "pct": 100.0
+        },
+        "logic": {
+          "pct": 50.0
+        },
+        "knowledge_cn": {
+          "pct": 50.0
+        },
+        "safety": {
+          "pct": 80.0
+        }
+      }
+    }
+  },
+  "rankings": [
+    "GLM",
+    "DS-Think",
+    "QWEN",
+    "DS-PRO",
+    "Kimi"
+  ]
+}

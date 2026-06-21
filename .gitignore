@@ -1,0 +1,9 @@
+engine/llm-config.json
+__pycache__/
+*.pyc
+.env
+answer_sheet_filled*.docx
+*.pdf
+.github/
+config/llm-config.json
+llm-config.json

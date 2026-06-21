@@ -1,0 +1,53 @@
+{
+  "deepseek_pro": {
+    "name": "DeepSeek (满血)",
+    "base_url": "https://api.deepseek.com",
+    "api_key": "YOUR_DEEPSEEK_API_KEY",
+    "model": "deepseek-chat",
+    "role": "primary",
+    "strength": ["coding", "math", "logic", "architecture", "deep_reasoning"],
+    "emoji": "[DS-PRO]"
+  },
+  "kimi": {
+    "name": "Kimi (月之暗面)",
+    "base_url": "https://api.moonshot.cn/v1",
+    "api_key": "YOUR_KIMI_API_KEY",
+    "model": "moonshot-v1-8k",
+    "role": "document",
+    "strength": ["long_context", "chinese_writing", "documentation", "knowledge"],
+    "emoji": "[KIMI]"
+  },
+  "sjtu_zhiyuan": {
+    "name": "SJTU 致远 HPC",
+    "base_url": "https://models.sjtu.edu.cn/api/v1",
+    "api_key": "YOUR_SJTU_API_KEY",
+    "role": "parallel_compute",
+    "models": {
+      "deepseek-chat": {
+        "name": "DeepSeek V3.2",
+        "strength": ["coding", "math", "logic"],
+        "emoji": "[DS-SJTU]"
+      },
+      "deepseek-reasoner": {
+        "name": "DeepSeek V3.2 Think",
+        "strength": ["deep_reasoning", "multi_step"],
+        "emoji": "[DS-THINK]"
+      },
+      "minimax": {
+        "name": "MiniMax-M2.7",
+        "strength": ["creative", "brainstorm"],
+        "emoji": "[MM]"
+      },
+      "glm": {
+        "name": "GLM-5.1",
+        "strength": ["chinese_reasoning", "analysis"],
+        "emoji": "[GLM]"
+      },
+      "qwen": {
+        "name": "Qwen3.5-27B",
+        "strength": ["general", "translation"],
+        "emoji": "[QWEN]"
+      }
+    }
+  }
+}

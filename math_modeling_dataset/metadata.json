@@ -1,0 +1,11 @@
+{
+  "name": "Math Modeling Training Dataset",
+  "version": "0.1.0",
+  "records": 0,
+  "domains": ["optimization", "statistics", "differential_equations", "game_theory", "simulation"],
+  "formats": ["jsonl"],
+  "languages": ["zh-CN", "en"],
+  "paper_templates": 7,
+  "contributors": ["toromesht"],
+  "created": "2026-06-21"
+}

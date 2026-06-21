@@ -1,0 +1,56 @@
+{
+  "partition": "chinese_knowledge",
+  "total_entries": 5,
+  "primary_models": [
+    "GLM-4+",
+    "Kimi"
+  ],
+  "secondary_models": [
+    "Qwen3-235B"
+  ],
+  "banned_models": [
+    "Groq-Llama"
+  ],
+  "data": [
+    {
+      "features": {
+        "写作": 3,
+        "中文": 2
+      },
+      "best": "GLM-4+",
+      "pct": 95
+    },
+    {
+      "features": {
+        "翻译": 3,
+        "中英": 2
+      },
+      "best": "Qwen3-235B",
+      "pct": 90
+    },
+    {
+      "features": {
+        "知识": 3,
+        "历史": 2
+      },
+      "best": "GLM-4+",
+      "pct": 100
+    },
+    {
+      "features": {
+        "论文": 3,
+        "学术": 2
+      },
+      "best": "Kimi",
+      "pct": 92
+    },
+    {
+      "features": {
+        "文言": 3,
+        "古典": 2
+      },
+      "best": "GLM-4+",
+      "pct": 88
+    }
+  ]
+}

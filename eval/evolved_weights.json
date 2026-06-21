@@ -1,0 +1,337 @@
+{
+  "version": "from_98_questions",
+  "timestamp": "2026-06-21T17:35:02.986550",
+  "models": [
+    "DS-PRO",
+    "DS-Think",
+    "GLM",
+    "QWEN",
+    "Kimi"
+  ],
+  "categories": [
+    "math",
+    "code",
+    "logic",
+    "knowledge",
+    "safety",
+    "chinese",
+    "science",
+    "creative"
+  ],
+  "weights": {
+    "DS-PRO": {
+      "overall": 75.2,
+      "weights": {
+        "math": {
+          "pct": 82.5,
+          "weight": 0.7,
+          "samples": 20
+        },
+        "code": {
+          "pct": 75.0,
+          "weight": 0.7,
+          "samples": 20
+        },
+        "logic": {
+          "pct": 35.4,
+          "weight": -0.2,
+          "samples": 20
+        },
+        "knowledge": {
+          "pct": 66.7,
+          "weight": 0.4,
+          "samples": 10
+        },
+        "safety": {
+          "pct": 100.0,
+          "weight": 1.0,
+          "samples": 10
+        },
+        "chinese": {
+          "pct": 87.5,
+          "weight": 0.7,
+          "samples": 10
+        },
+        "science": {
+          "pct": 87.5,
+          "weight": 0.7,
+          "samples": 10
+        },
+        "creative": {
+          "pct": 100.0,
+          "weight": 1.0,
+          "samples": 10
+        }
+      }
+    },
+    "DS-Think": {
+      "overall": 80.0,
+      "weights": {
+        "math": {
+          "pct": 83.8,
+          "weight": 0.7,
+          "samples": 20
+        },
+        "code": {
+          "pct": 75.0,
+          "weight": 0.7,
+          "samples": 20
+        },
+        "logic": {
+          "pct": 43.8,
+          "weight": -0.2,
+          "samples": 20
+        },
+        "knowledge": {
+          "pct": 100.0,
+          "weight": 1.0,
+          "samples": 10
+        },
+        "safety": {
+          "pct": 100.0,
+          "weight": 1.0,
+          "samples": 10
+        },
+        "chinese": {
+          "pct": 87.5,
+          "weight": 0.7,
+          "samples": 10
+        },
+        "science": {
+          "pct": 87.5,
+          "weight": 0.7,
+          "samples": 10
+        },
+        "creative": {
+          "pct": 100.0,
+          "weight": 1.0,
+          "samples": 10
+        }
+      }
+    },
+    "GLM": {
+      "overall": 80.0,
+      "weights": {
+        "math": {
+          "pct": 90.0,
+          "weight": 1.0,
+          "samples": 20
+        },
+        "code": {
+          "pct": 75.0,
+          "weight": 0.7,
+          "samples": 20
+        },
+        "logic": {
+          "pct": 43.8,
+          "weight": -0.2,
+          "samples": 20
+        },
+        "knowledge": {
+          "pct": 100.0,
+          "weight": 1.0,
+          "samples": 10
+        },
+        "safety": {
+          "pct": 100.0,
+          "weight": 1.0,
+          "samples": 10
+        },
+        "chinese": {
+          "pct": 75.0,
+          "weight": 0.7,
+          "samples": 10
+        },
+        "science": {
+          "pct": 87.5,
+          "weight": 0.7,
+          "samples": 10
+        },
+        "creative": {
+          "pct": 100.0,
+          "weight": 1.0,
+          "samples": 10
+        }
+      }
+    },
+    "QWEN": {
+      "overall": 76.3,
+      "weights": {
+        "math": {
+          "pct": 78.8,
+          "weight": 0.7,
+          "samples": 20
+        },
+        "code": {
+          "pct": 70.0,
+          "weight": 0.4,
+          "samples": 20
+        },
+        "logic": {
+          "pct": 41.6,
+          "weight": -0.2,
+          "samples": 20
+        },
+        "knowledge": {
+          "pct": 83.3,
+          "weight": 0.7,
+          "samples": 10
+        },
+        "safety": {
+          "pct": 100.0,
+          "weight": 1.0,
+          "samples": 10
+        },
+        "chinese": {
+          "pct": 87.5,
+          "weight": 0.7,
+          "samples": 10
+        },
+        "science": {
+          "pct": 87.5,
+          "weight": 0.7,
+          "samples": 10
+        },
+        "creative": {
+          "pct": 100.0,
+          "weight": 1.0,
+          "samples": 10
+        }
+      }
+    },
+    "Kimi": {
+      "overall": 71.0,
+      "weights": {
+        "math": {
+          "pct": 75.0,
+          "weight": 0.7,
+          "samples": 10
+        },
+        "code": {
+          "pct": 100.0,
+          "weight": 1.0,
+          "samples": 10
+        },
+        "logic": {
+          "pct": 50.0,
+          "weight": 0.1,
+          "samples": 10
+        },
+        "knowledge": {
+          "pct": 50.0,
+          "weight": 0.1,
+          "samples": 10
+        },
+        "safety": {
+          "pct": 80.0,
+          "weight": 0.7,
+          "samples": 10
+        },
+        "chinese": {
+          "pct": 0,
+          "weight": 0,
+          "samples": 0
+        },
+        "science": {
+          "pct": 0,
+          "weight": 0,
+          "samples": 0
+        },
+        "creative": {
+          "pct": 0,
+          "weight": 0,
+          "samples": 0
+        }
+      }
+    }
+  },
+  "routing_rules": [
+    {
+      "model": "DS-PRO",
+      "action": "use",
+      "categories": [
+        "math",
+        "code",
+        "safety",
+        "chinese",
+        "science",
+        "creative"
+      ]
+    },
+    {
+      "model": "DS-PRO",
+      "action": "avoid",
+      "categories": [
+        "logic"
+      ]
+    },
+    {
+      "model": "DS-Think",
+      "action": "use",
+      "categories": [
+        "math",
+        "code",
+        "knowledge",
+        "safety",
+        "chinese",
+        "science",
+        "creative"
+      ]
+    },
+    {
+      "model": "DS-Think",
+      "action": "avoid",
+      "categories": [
+        "logic"
+      ]
+    },
+    {
+      "model": "GLM",
+      "action": "use",
+      "categories": [
+        "math",
+        "code",
+        "knowledge",
+        "safety",
+        "chinese",
+        "science",
+        "creative"
+      ]
+    },
+    {
+      "model": "GLM",
+      "action": "avoid",
+      "categories": [
+        "logic"
+      ]
+    },
+    {
+      "model": "QWEN",
+      "action": "use",
+      "categories": [
+        "math",
+        "knowledge",
+        "safety",
+        "chinese",
+        "science",
+        "creative"
+      ]
+    },
+    {
+      "model": "QWEN",
+      "action": "avoid",
+      "categories": [
+        "logic"
+      ]
+    },
+    {
+      "model": "Kimi",
+      "action": "use",
+      "categories": [
+        "math",
+        "code",
+        "safety"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "timestamp": "2026-06-21T17:17:13.586733",
+  "version": 3,
+  "difficulty": "hard",
+  "questions": 46,
+  "results": {
+    "GLM": {
+      "overall": 67.4,
+      "categories": {
+        "advanced_math": {
+          "pct": 80.0
+        },
+        "algorithm": {
+          "pct": 50.0
+        },
+        "deep_logic": {
+          "pct": 37.5
+        },
+        "chinese_depth": {
+          "pct": 75.0
+        },
+        "science_tech": {
+          "pct": 87.5
+        },
+        "creative": {
+          "pct": 100.0
+        }
+      }
+    },
+    "DS-Think": {
+      "overall": 69.6,
+      "categories": {
+        "advanced_math": {
+          "pct": 80.0
+        },
+        "algorithm": {
+          "pct": 50.0
+        },
+        "deep_logic": {
+          "pct": 37.5
+        },
+        "chinese_depth": {
+          "pct": 87.5
+        },
+        "science_tech": {
+          "pct": 87.5
+        },
+        "creative": {
+          "pct": 100.0
+        }
+      }
+    },
+    "DS-PRO": {
+      "overall": 71.7,
+      "categories": {
+        "advanced_math": {
+          "pct": 90.0
+        },
+        "algorithm": {
+          "pct": 50.0
+        },
+        "deep_logic": {
+          "pct": 37.5
+        },
+        "chinese_depth": {
+          "pct": 87.5
+        },
+        "science_tech": {
+          "pct": 87.5
+        },
+        "creative": {
+          "pct": 100.0
+        }
+      }
+    },
+    "QWEN": {
+      "overall": 67.4,
+      "categories": {
+        "advanced_math": {
+          "pct": 70.0
+        },
+        "algorithm": {
+          "pct": 40.0
+        },
+        "deep_logic": {
+          "pct": 50.0
+        },
+        "chinese_depth": {
+          "pct": 87.5
+        },
+        "science_tech": {
+          "pct": 87.5
+        },
+        "creative": {
+          "pct": 100.0
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-06-21T17:54:11.073305",
+  "type": "database_specific",
+  "problems": 5,
+  "single_avg_coverage": 1.0,
+  "multi_avg_coverage": 1.0,
+  "single_avg_sql": 41.4,
+  "multi_avg_sql": 30.6,
+  "industry_comparison": {
+    "GPT-4o": {
+      "code_pct": 91,
+      "estimated_db_pct": 90
+    },
+    "Claude 3.5 Sonnet": {
+      "code_pct": 96,
+      "estimated_db_pct": 92
+    },
+    "DS-PRO Single": {
+      "db_pct": 100
+    },
+    "SynapseFlow Multi": {
+      "db_pct": 100
+    }
+  }
+}

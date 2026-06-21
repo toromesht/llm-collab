@@ -1,0 +1,35 @@
+{
+  "benchmark": "GSM8K",
+  "questions": 20,
+  "correct": 19,
+  "pct": 95.0,
+  "mode": "0-shot",
+  "details": [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "public_baselines": {
+    "GPT-4o": 93,
+    "Claude 3.5": 90,
+    "Gemini 1.5": 89,
+    "DeepSeek-V3": 87
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-06-21T17:34:28.352405",
+  "model": "Kimi",
+  "questions": 46,
+  "overall": 60.9,
+  "categories": {
+    "advanced_math": {
+      "pct": 50.0
+    },
+    "algorithm": {
+      "pct": 50.0
+    },
+    "deep_logic": {
+      "pct": 50.0
+    },
+    "chinese_depth": {
+      "pct": 75.0
+    },
+    "science_tech": {
+      "pct": 87.5
+    },
+    "creative": {
+      "pct": 50.0
+    }
+  }
+}

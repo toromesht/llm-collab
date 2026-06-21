@@ -1,0 +1,108 @@
+{
+  "research_direction": "Intelligent Multi-Model Orchestration Agent (智能多模型调度智能体)",
+  "sub_areas": [
+    {
+      "name": "Query-Adaptive Model Routing (查询自适应路由)",
+      "problem": "给定一个查询，自动选择最优模型（或模型组合）来处理",
+      "key_papers": [
+        {
+          "title": "RouteLLM",
+          "venue": "2024",
+          "method": "基于Chatbot Arena人类偏好训练二分类路由器，Matrix Factorization路由在成本效率上最优"
+        },
+        {
+          "title": "A Unified Approach to Routing and Cascading",
+          "venue": "arXiv 2410.10347",
+          "method": "首次严格证明路由+级联的最优性，提出cascade routing统一框架"
+        },
+        {
+          "title": "Towards Generalized Routing: MoMA",
+          "venue": "arXiv 2509.07571",
+          "method": "首个统一LLM路由+AI Agent路由的框架，Pareto最优性能-成本前沿"
+        },
+        {
+          "title": "Dynamic Model Routing Survey",
+          "venue": "arXiv 2603.04445",
+          "method": "系统综述，将方法分为6类：难度感知/偏好对齐/聚类/RL/不确定性/级联"
+        }
+      ]
+    },
+    {
+      "name": "Multi-Agent Collaboration (多智能体协作)",
+      "problem": "多个模型/智能体如何分工协作解决复杂问题",
+      "key_papers": [
+        {
+          "title": "MasRouter",
+          "venue": "ACL 2025",
+          "method": "级联控制器联合优化协作模式+角色分配+模型选择，RL训练，性能提升1.8-8.2%"
+        },
+        {
+          "title": "AgentRouter",
+          "venue": "arXiv 2510.05445",
+          "method": "知识图谱引导的多智能体路由，异质GNN学习任务感知路由分布"
+        },
+        {
+          "title": "EvolveRouter",
+          "venue": "arXiv 2604.05149",
+          "method": "路由策略+提示词协同进化，自适应协作规模"
+        },
+        {
+          "title": "STRMAC",
+          "venue": "arXiv 2511.02200",
+          "method": "状态感知路由，对比学习训练，性能提升23.8%"
+        }
+      ]
+    },
+    {
+      "name": "Confidence-Gated Cascading (置信度门控级联)",
+      "problem": "先用小模型，置信度不够再升级到大模型或多模型",
+      "key_papers": [
+        {
+          "title": "RACER",
+          "venue": "arXiv 2603.06616",
+          "method": "风险感知路由，选择模型集合而非单个模型，分布无关保证"
+        },
+        {
+          "title": "DeBERTa Confidence Gating",
+          "venue": "Nature Sci Rep 2025",
+          "method": "置信度门控路由器，切换不稳定性从0.44降至0.11"
+        },
+        {
+          "title": "Causal LLM Routing",
+          "venue": "NeurIPS 2025",
+          "method": "从观测数据学习路由，无需全反馈，因果推断+遗憾最小化"
+        }
+      ]
+    },
+    {
+      "name": "RL-Based Routing Policy (强化学习路由)",
+      "problem": "用强化学习训练路由器，使其学会何时调用哪个模型",
+      "key_papers": [
+        {
+          "title": "Router-R1",
+          "venue": "NeurIPS 2025",
+          "method": "LLM作为路由器，多轮路由+聚合的序列决策过程，规则奖励+成本奖励"
+        },
+        {
+          "title": "ORI (O Routing Intelligence)",
+          "venue": "arXiv 2502.10051",
+          "method": "动态多LLM框架，在MMLU上超越最强单模型2.7分"
+        },
+        {
+          "title": "Lookahead Routing",
+          "venue": "NeurIPS 2025",
+          "method": "预判模型潜在输出（非仅看查询文本），平均提升7.7%"
+        }
+      ]
+    }
+  ],
+  "what_user_has_already": [
+    "6个模型的算力池(DS-PRO满血+Kimi+GLM+Qwen+DS-Think+DS-SJTU)",
+    "三轮18题benchmark数据(简单/复杂/数据库建模)",
+    "基于规则+连续难度评分的路由引擎(brain v6)",
+    "27条真实竞赛模型使用记录",
+    "Nature/NeurIPS论文方法论已入库",
+    "协作过程透明的可视化输出"
+  ],
+  "contribution_gap": "可以对标Router-R1和MasRouter，将用户已有的benchmark数据作为训练信号，用RL训练一个专用路由器（而非通用路由器），专注中国高校场景(数学建模竞赛/形势与政策/数据库设计)的模型调度优化。这是目前论文的空白——现有路由器都是通用场景，没有针对学术/竞赛场景的专用路由策略。"
+}

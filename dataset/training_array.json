@@ -1,0 +1,235 @@
+{
+  "version": "v1",
+  "total_entries": 20,
+  "entries": [
+    {
+      "id": "math_hard",
+      "features": {
+        "math": 3,
+        "code": 0,
+        "logic": 0
+      },
+      "best_model": "DS-PRO",
+      "accuracy_pct": 90,
+      "samples": 10,
+      "routing_rule": "single"
+    },
+    {
+      "id": "math_easy",
+      "features": {
+        "math": 1,
+        "code": 0,
+        "logic": 0
+      },
+      "best_model": "GLM",
+      "accuracy_pct": 95,
+      "samples": 6,
+      "routing_rule": "single"
+    },
+    {
+      "id": "math_word",
+      "features": {
+        "math": 2,
+        "code": 0,
+        "logic": 0
+      },
+      "best_model": "GLM",
+      "accuracy_pct": 90,
+      "samples": 8,
+      "routing_rule": "single"
+    },
+    {
+      "id": "code",
+      "features": {
+        "code": 3,
+        "math": 0,
+        "logic": 0
+      },
+      "best_model": "DS-PRO",
+      "accuracy_pct": 100,
+      "samples": 8,
+      "routing_rule": "single"
+    },
+    {
+      "id": "code_kimi",
+      "features": {
+        "code": 3,
+        "math": 0,
+        "logic": 0
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 100,
+      "samples": 4,
+      "routing_rule": "single"
+    },
+    {
+      "id": "logic_easy",
+      "features": {
+        "logic": 3,
+        "math": 0,
+        "code": 0
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 50,
+      "samples": 6,
+      "routing_rule": "single"
+    },
+    {
+      "id": "logic_hard",
+      "features": {
+        "logic": 5,
+        "math": 0,
+        "code": 0
+      },
+      "best_model": "Kimi",
+      "accuracy_pct": 50,
+      "samples": 6,
+      "routing_rule": "single"
+    },
+    {
+      "id": "knowledge_cn",
+      "features": {
+        "knowledge": 3,
+        "math": 0,
+        "code": 0
+      },
+      "best_model": "GLM",
+      "accuracy_pct": 100,
+      "samples": 6,
+      "routing_rule": "single"
+    },
+    {
+      "id": "knowledge_st",
+      "features": {
+        "knowledge": 3,
+        "code": 0,
+        "math": 0
+      },
+      "best_model": "DS-Think",
+      "accuracy_pct": 100,
+      "samples": 8,
+      "routing_rule": "single"
+    },
+    {
+      "id": "safety",
+      "features": {
+        "safety": 3
+      },
+      "best_model": "ALL",
+      "accuracy_pct": 100,
+      "samples": 5,
+      "routing_rule": "any"
+    },
+    {
+      "id": "chinese",
+      "features": {
+        "chinese": 3
+      },
+      "best_model": "GLM",
+      "accuracy_pct": 88,
+      "samples": 8,
+      "routing_rule": "single"
+    },
+    {
+      "id": "creative",
+      "features": {
+        "writing": 2
+      },
+      "best_model": "DS-PRO",
+      "accuracy_pct": 100,
+      "samples": 2,
+      "routing_rule": "single"
+    },
+    {
+      "id": "db_design",
+      "features": {
+        "code": 4,
+        "arch": 3
+      },
+      "best_model": "DS-PRO",
+      "accuracy_pct": 100,
+      "samples": 5,
+      "routing_rule": "single"
+    },
+    {
+      "id": "gsm8k",
+      "features": {
+        "math": 2,
+        "knowledge": 1
+      },
+      "best_model": "DS-PRO",
+      "accuracy_pct": 95,
+      "samples": 20,
+      "routing_rule": "single"
+    },
+    {
+      "id": "multi_DS-PRO_GLM",
+      "features": {
+        "arch": 4,
+        "collab": 3
+      },
+      "best_model": "DS-PRO+GLM",
+      "accuracy_pct": 85,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "multi_Kimi_DS-Think_GLM",
+      "features": {
+        "logic": 5,
+        "arch": 1
+      },
+      "best_model": "Kimi+DS-Think+GLM",
+      "accuracy_pct": 67,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "multi_DS-PRO->Kimi",
+      "features": {
+        "code": 3,
+        "arch": 2
+      },
+      "best_model": "DS-PRO->Kimi",
+      "accuracy_pct": 78,
+      "samples": 1,
+      "routing_rule": "collab"
+    },
+    {
+      "id": "ban_DS-PRO_DS-Think_GLM_QWEN",
+      "features": {
+        "logic": 3
+      },
+      "banned_models": [
+        "DS-PRO",
+        "DS-Think",
+        "GLM",
+        "QWEN"
+      ],
+      "routing_rule": "ban",
+      "reason": "logic all negative"
+    },
+    {
+      "id": "ban_Kimi",
+      "features": {
+        "math": 3
+      },
+      "banned_models": [
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "Kimi math 75%"
+    },
+    {
+      "id": "ban_Kimi",
+      "features": {
+        "knowledge": 3
+      },
+      "banned_models": [
+        "Kimi"
+      ],
+      "routing_rule": "ban",
+      "reason": "Kimi knowledge 50%"
+    }
+  ]
+}

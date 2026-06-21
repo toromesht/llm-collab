@@ -1,0 +1,50 @@
+{
+  "partition": "db_design",
+  "total_entries": 4,
+  "primary_models": [
+    "DS-V4",
+    "GLM-4+"
+  ],
+  "secondary_models": [
+    "Qwen3-235B"
+  ],
+  "banned_models": [
+    "Kimi",
+    "Groq-Llama"
+  ],
+  "data": [
+    {
+      "features": {
+        "sql": 4,
+        "ddl": 3
+      },
+      "best": "DS-V4",
+      "pct": 100
+    },
+    {
+      "features": {
+        "架构": 4,
+        "分布式": 3
+      },
+      "best": "GLM-4+",
+      "pct": 88
+    },
+    {
+      "features": {
+        "优化": 3,
+        "索引": 2
+      },
+      "best": "DS-V4",
+      "pct": 95
+    },
+    {
+      "features": {
+        "迁移": 3,
+        "零中断": 2
+      },
+      "best": "DS-V4+GLM-4+",
+      "pct": 85,
+      "rule": "collab"
+    }
+  ]
+}

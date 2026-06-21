@@ -1,0 +1,54 @@
+{
+  "timestamp": "2026-06-21",
+  "test_count": 19,
+  "models": 5,
+  "rankings": {
+    "math": [
+      "DS-Think",
+      "DS-PRO",
+      "GLM",
+      "QWEN"
+    ],
+    "code": [
+      "DS-Think",
+      "DS-PRO",
+      "GLM",
+      "QWEN",
+      "Kimi"
+    ],
+    "reasoning": [
+      "DS-Think",
+      "GLM",
+      "QWEN",
+      "Kimi",
+      "DS-PRO"
+    ],
+    "knowledge": [
+      "DS-Think",
+      "DS-PRO",
+      "GLM",
+      "QWEN",
+      "Kimi"
+    ],
+    "safety": [
+      "DS-Think",
+      "DS-PRO",
+      "GLM",
+      "QWEN",
+      "Kimi"
+    ]
+  },
+  "overall_ranking": [
+    "DS-Think(100%)",
+    "GLM(94.7%)",
+    "QWEN(89.5%)",
+    "DS-PRO(84.2%)",
+    "Kimi(73.7%)"
+  ],
+  "key_insights": [
+    "DS-Think(SJTU) is the strongest model overall - use for math/code/knowledge",
+    "GLM(SJTU) is best for Chinese reasoning (100% vs DS-PRO 33%)",
+    "DS-PRO has a reasoning blind spot - always pair with GLM or DS-Think for logic tasks",
+    "Kimi is only competitive for code(100%) and safety(100%) - avoid for math/knowledge"
+  ]
+}

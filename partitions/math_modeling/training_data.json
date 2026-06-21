@@ -1,0 +1,96 @@
+{
+  "partition": "math_modeling",
+  "total_entries": 10,
+  "primary_models": [
+    "DS-V4",
+    "Qwen3-235B"
+  ],
+  "secondary_models": [
+    "GLM-4",
+    "DS-Think"
+  ],
+  "banned_models": [
+    "Kimi"
+  ],
+  "data": [
+    {
+      "features": {
+        "群论": 3,
+        "抽象代数": 2
+      },
+      "best": "DS-V4",
+      "pct": 95
+    },
+    {
+      "features": {
+        "图论": 3,
+        "组合": 2
+      },
+      "best": "DS-V4",
+      "pct": 93
+    },
+    {
+      "features": {
+        "微积分": 3,
+        "分析": 2
+      },
+      "best": "Qwen3-235B",
+      "pct": 90
+    },
+    {
+      "features": {
+        "概率": 3,
+        "统计": 2
+      },
+      "best": "DS-V4",
+      "pct": 92
+    },
+    {
+      "features": {
+        "数论": 3
+      },
+      "best": "DS-V4",
+      "pct": 95
+    },
+    {
+      "features": {
+        "微分方程": 4
+      },
+      "best": "Qwen3-235B",
+      "pct": 88
+    },
+    {
+      "features": {
+        "优化": 4,
+        "约束": 2
+      },
+      "best": "DS-V4",
+      "pct": 94
+    },
+    {
+      "features": {
+        "线性代数": 3,
+        "矩阵": 2
+      },
+      "best": "Qwen3-235B",
+      "pct": 91
+    },
+    {
+      "features": {
+        "拓扑": 3,
+        "流形": 2
+      },
+      "best": "DS-V4",
+      "pct": 87
+    },
+    {
+      "features": {
+        "数学建模": 3,
+        "综合": 2
+      },
+      "best": "DS-V4+Qwen3-235B",
+      "pct": 92,
+      "rule": "collab"
+    }
+  ]
+}
