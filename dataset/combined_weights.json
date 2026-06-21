@@ -1,0 +1,26 @@
+{
+  "SJTU-DS-Think": {
+    "score": 0.611,
+    "samples": 500
+  },
+  "DS-V4": {
+    "score": 0.595,
+    "samples": 2000
+  },
+  "GLM-4+": {
+    "score": 0.639,
+    "samples": 500
+  },
+  "QWEN": {
+    "score": 0.642,
+    "samples": 500
+  },
+  "Kimi": {
+    "score": 0.677,
+    "samples": 500
+  },
+  "Qwen3-235B": {
+    "score": 0.709,
+    "samples": 1000
+  }
+}
