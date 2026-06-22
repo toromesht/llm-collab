@@ -58,6 +58,7 @@ from engine.brain import (
 )
 from engine.math_router import MathRouter
 from engine.path_learner import PathLearner
+from engine.fep_unified import UnifiedFEPRouter
 
 # ─── Feature key ordering (must match brainstem.f90 N_DIMS=22) ─
 
@@ -190,6 +191,7 @@ class NeuroOrchestrator:
         self.synapses = PathwayNetwork(config_path)
         self.math_router = MathRouter(seed=42)       # JL+LSH+UCB+CUSUM+SPRT
         self.path_learner = PathLearner()             # Bayesian adaptive forgetting
+        self.fep = UnifiedFEPRouter()                 # FEP unified framework
         self.round_counter = self._load_round_counter()
 
         # Preload feature key order for speed
@@ -353,6 +355,10 @@ class NeuroOrchestrator:
         # Path Learner update (Bayesian adaptive forgetting)
         pl_path = self.path_learner.get_or_create(region_name, model_to_update, category)
         self.path_learner.update(pl_path, 1.0 if validated else 0.0)
+
+        # FEP update: minimize free energy (unifies all plasticity mechanisms)
+        self.fep.update(region_name, model_to_update, category,
+                        reward=1.0 if validated else 0.0)
 
         # Also update brainstem SDM (online learning)
         if validated:
