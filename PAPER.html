@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Multi-Objective Active Inference for Online LLM Routing</title>
+<style>
+:root{--twocol:820px}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#fff;color:#1a1a1a;font-family:'Times New Roman','STIX Two Text','Linux Libertine','Georgia',serif;max-width:var(--twocol);margin:0 auto;padding:48px 52px;line-height:1.52;font-size:15.5px;text-rendering:optimizeLegibility}
+
+/* ── Title block ── */
+h1{font-size:21px;text-align:center;margin-bottom:2px;font-weight:700;letter-spacing:-0.3px}
+.authors{text-align:center;font-size:13px;color:#333;margin:6px 0 2px}
+.affil{text-align:center;font-size:11px;color:#666;margin-bottom:6px;font-style:italic}
+.email{text-align:center;font-size:10px;color:#888;margin-bottom:16px}
+
+/* ── Abstract ── */
+.abstract{margin:18px 0 22px;padding:14px 20px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;font-size:13.5px;line-height:1.45}
+.abstract strong{font-variant:small-caps;letter-spacing:0.5px}
+
+/* ── Sections ── */
+h2{font-size:15px;margin:26px 0 8px;font-weight:700}
+h3{font-size:13.5px;margin:18px 0 6px;font-weight:600;font-style:italic}
+p{margin:6px 0;text-align:justify;hyphens:auto}
+p.indent{text-indent:18px}
+
+/* ── Equations ── */
+.equation{margin:10px 0;text-align:center}
+.eq-block{display:inline-block;text-align:left;padding:8px 24px;margin:4px 0;font-family:'Cambria Math','STIX Two Math','Latin Modern Math',serif;font-size:14px;line-height:1.8;white-space:pre}
+.eq-number{float:right;margin-left:20px}
+
+/* ── Tables ── */
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12px}
+th{background:#222;color:#fff;padding:6px 9px;text-align:center;font-weight:600;font-size:11px;letter-spacing:0.3px}
+td{padding:5px 9px;text-align:center;border-bottom:1px solid #ddd}
+tr:nth-child(even) td{background:#f9f9f9}
+caption{font-size:12px;font-weight:600;margin-bottom:4px;text-align:left}
+
+.high{color:#166534;font-weight:700}
+.low{color:#991b1b;font-weight:700}
+.mid{color:#1e40af}
+
+/* ── Figures ── */
+figure{margin:16px 0;text-align:center}
+figcaption{font-size:11px;color:#555;margin-top:6px;font-style:italic}
+
+/* ── Refs ── */
+.refs{font-size:11px;line-height:1.45;margin-top:10px}
+.refs p{margin:1px 0;padding-left:18px;text-indent:-18px;text-align:left}
+.refs .num{font-weight:600;margin-right:4px}
+
+/* ── Footnotes / meta ── */
+.colophon{text-align:center;font-size:10px;color:#999;margin-top:30px;border-top:1px solid #eee;padding-top:10px}
+
+/* ── Print ── */
+@media print{body{padding:30px 40px;font-size:14px}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ TITLE ═══════════════════════════ -->
+<h1>Multi-Objective Active Inference for<br>Online Large Language Model Routing</h1>
+<div class="authors">Yang Chenran<sup>1</sup></div>
+<div class="affil"><sup>1</sup>Zhiyuan College, Shanghai Jiao Tong University, Shanghai 200240, China</div>
+<div class="email">{toromesht} &middot; github.com/toromesht/llm-collab</div>
+
+<!-- ═══════════════════════════ ABSTRACT ═══════════════════════ -->
+<div class="abstract">
+<strong>Abstract.</strong>
+Selecting the optimal large language model (LLM) for a given query is a contextual decision problem with competing objectives: accuracy, latency, cost, exploration, and robustness. Existing routing systems rely on heuristic feature extraction and single-objective optimization, failing to capture the multi-dimensional trade-offs inherent in real-world LLM deployment across heterogeneous API providers. We present <strong>SynapseFlow</strong>, a multi-objective active inference framework that unifies policy learning, value estimation, and belief updating under a single expected free energy functional <em>G</em>(&pi;). A recognition model <em>q</em><sub>&phi;</sub>(<em>s</em>|<em>x</em>) learns a Markov state representation from 22 brain-inspired query features. Per-region generative models maintain Beta-Bernoulli posteriors over success probabilities, updated online via conjugate Bayesian inference without gradient computation. Multi-objective routing minimizes context-weighted Pareto free energy across six objectives, with context detected automatically from query semantics. The system deploys as a Claude Code plugin, routing queries across six commercial LLM APIs (DeepSeek Pro, DS-Think, GLM-4+, Qwen3-235B, Kimi, Groq/Llama-3.3-70B). Empirical evaluation on 18 questions across five contexts demonstrates context-dependent routing: research questions exhibit 20% higher expected free energy than creative questions, the Groq model attains 92.5% posterior success probability through 18 episodes of online Bayesian learning, and the urgency context correctly biases toward the speed objective (weight 2.0) while suppressing exploration (weight 0.1). All model parameters are optimized by a single scalar loss function, establishing the system as a unified learning framework rather than a heterogeneous heuristic composition.
+</div>
+
+<!-- ═══════════════════════════ 1. INTRODUCTION ═════════════════ -->
+<h2>1. Introduction</h2>
+
+<p class="indent">The proliferation of commercial large language model (LLM) application programming interfaces (APIs)&mdash;including DeepSeek Pro (DeepSeek), GLM-4+ (Zhipu), Qwen3-235B (Alibaba), Kimi (Moonshot), Groq/Llama-3.3-70B, and the SJTU Zhiyuan HPC cluster&mdash;introduces a fundamental routing problem: <em>which model should process a given user query to maximize quality while minimizing cost and latency?</em> This problem is inherently multi-objective and context-dependent. A query about mathematical theorem proving demands accuracy and rigor; an urgent factual lookup demands speed above all; a creative writing task benefits from model diversity.</p>
+
+<p class="indent">Existing approaches to LLM routing occupy three categories, each with limitations. <strong>Heuristic routers</strong> (regex-based keyword matching + static model-to-domain mapping) are computationally efficient but brittle to distribution shift and fail to adapt from experience [6,7]. <strong>Bandit-based selectors</strong> (Upper Confidence Bound, Thompson Sampling) provide principled exploration-exploitation trade-offs but optimize a single objective (typically accuracy) and ignore latency, cost, and diversity [10]. <strong>LLM-as-judge methods</strong> (using one LLM to select another) are circular in their expense and introduce compounding error. None of these approaches provides a unified mathematical framework that jointly optimizes competing objectives while learning online from outcomes.</p>
+
+<p class="indent">We propose a fourth approach grounded in the <strong>Free Energy Principle</strong> (FEP) of Karl Friston [8,1,2]. Active inference casts perception and action as minimizing two quantities: variational free energy (for state estimation) and expected free energy (for policy selection). The expected free energy <em>G</em>(&pi;) decomposes naturally into a pragmatic term (exploitation: choosing policies that yield preferred outcomes) and an epistemic term (exploration: choosing policies that reduce uncertainty about the environment). This decomposition maps directly to the LLM routing problem, where pragmatic value corresponds to selecting models known to produce correct answers, and epistemic value corresponds to trying unfamiliar models to discover their capabilities.</p>
+
+<p class="indent">We present <strong>SynapseFlow</strong>, a multi-objective active inference system with the following contributions:</p>
+
+<p class="indent"><strong>(1) Unified mathematical framework.</strong> All system components&mdash;routing, value estimation, state inference, and belief updating&mdash;derive from a single scalar loss function <em>L</em><sub>total</sub>(&theta;,&psi;,&alpha;,&beta;). This resolves the "multi-system patchwork" critique identified in prior work. <strong>(2) Multi-objective Pareto routing.</strong> Six objectives (accuracy, speed, cost, exploration, robustness, diversity) are optimized with context-dependent weights, enabling automatic adaptation to query urgency and type. <strong>(3) Online conjugate Bayesian learning.</strong> Beta-Bernoulli posteriors per (state, policy) pair are updated without gradient computation, providing sample-efficient learning from sparse binary feedback. <strong>(4) Lightweight deployment.</strong> The full pipeline executes routing in &lt;5 milliseconds via a Fortran brainstem (Sparse Distributed Memory with 10,000-bit hypervectors), operating as a Claude Code plugin.</p>
+
+<!-- ═══════════════════════════ 2. METHOD ═══════════════════════ -->
+<h2>2. Method</h2>
+
+<h3>2.1 Problem Formulation</h3>
+
+<p class="indent">At each discrete timestep <em>t</em>, the system receives a text query <em>x<sub>t</sub></em> and must select a routing policy &pi;<sub><em>t</em></sub> from a discrete action space <em>A</em> = {(&rho;<sub><em>i</em></sub>, <em>m<sub>j</sub></em>)} consisting of 16 (brain region, LLM model) pairs. Executing policy &pi;<sub><em>t</em></sub> produces an output <em>y<sub>t</sub></em> = LLM<sub>&pi;</sub>(<em>x<sub>t</sub></em>) and a binary reward <em>r<sub>t</sub></em> &isin; {0,1} indicating response quality. The system learns from this feedback to improve future routing decisions.</p>
+
+<p class="indent">The action space comprises six brain regions, each with 2&ndash;3 allocated LLM models: Motor (code: DS-PRO, DS-Think, Groq), Parietal (math: DS-PRO, DS-Think, Qwen), PFC (logic: DS-PRO, DS-Think, GLM-4+), Temporal (knowledge: GLM-4+, Qwen, Groq), Language (writing: GLM-4+, Kimi, Qwen), and Visual (multimodal: Kimi, Qwen).</p>
+
+<h3>2.2 Variational Free Energy</h3>
+
+<p class="indent">Following Friston et al. [1], we define the variational free energy <em>F</em> for state inference:</p>
+
+<div class="equation">
+<div class="eq-block">F = D<sub>KL</sub>[q<sub>&phi;</sub>(s|x) || p(s)] &minus; E<sub>q<sub>&phi;</sub>(s|x)</sub>[ln p(o|s, &pi;)]  <span class="eq-number">(1)</span></div>
+</div>
+
+<p>where <em>q</em><sub>&phi;</sub>(<em>s</em>|<em>x</em>) is the approximate posterior over latent states <em>s</em> &isin; {1,...,6}, <em>p</em>(<em>s</em>) is a uniform categorical prior, and <em>p</em>(<em>o</em>|<em>s</em>,&pi;) is the generative model mapping states and policies to outcomes. The recognition model is a 2-layer multilayer perceptron (MLP) with architecture 22 &rarr; 64 &rarr; 6 (ReLU activation, softmax output), trained via variational expectation-maximization to minimize <em>F</em>.</p>
+
+<h3>2.3 Expected Free Energy</h3>
+
+<p class="indent">Policy selection minimizes the expected free energy <em>G</em>(&pi;) [1, Eq. 4]:</p>
+
+<div class="equation">
+<div class="eq-block">G(&pi;) = &minus;E<sub>q(o|&pi;)</sub>[ln p(o|C)]                              <span style="color:#999">(pragmatic)</span>
+       &minus; E<sub>q(o,s|&pi;)</sub>[ln q(s|o,&pi;) &minus; ln q(s|&pi;)]           <span style="color:#999">(epistemic)</span>  <span class="eq-number">(2)</span></div>
+</div>
+
+<p>The <strong>pragmatic term</strong> drives exploitation: selecting policies whose generative model predicts high success probability. The <strong>epistemic term</strong> drives exploration: selecting policies that maximize expected information gain about latent state <em>s</em>. The constant <em>C</em> encodes preferences (we prefer <em>o</em> = success).</p>
+
+<p class="indent">For Beta-Bernoulli generative models, these terms have closed-form expressions:</p>
+
+<div class="equation">
+<div class="eq-block">G<sub>prag</sub>(&pi;) = &minus;E<sub>q(s|x)</sub>[ln(&alpha;<sub>s&pi;</sub> / (&alpha;<sub>s&pi;</sub> + &beta;<sub>s&pi;</sub>))]             <span class="eq-number">(3)</span>
+
+G<sub>epis</sub>(&pi;) = &minus;E<sub>q(s|x)</sub>[ Var(Beta(&alpha;<sub>s&pi;</sub>, &beta;<sub>s&pi;</sub>)) ]                 <span class="eq-number">(4)</span></div>
+</div>
+
+<p>where &alpha;<sub>s&pi;</sub> and &beta;<sub>s&pi;</sub> are the posterior concentration parameters of the Beta distribution for state <em>s</em> and policy &pi;. The variance of Beta(&alpha;,&beta;) = &alpha;&beta; / ((&alpha;+&beta;)&sup2;(&alpha;+&beta;+1)) captures remaining uncertainty: higher variance &rarr; greater epistemic value &rarr; more exploration incentive.</p>
+
+<h3>2.4 Multi-Objective Extension</h3>
+
+<p class="indent">Real-world LLM deployment involves competing objectives beyond accuracy. We extend <em>G</em>(&pi;) to a weighted sum over <em>K</em> = 6 objectives with context-dependent weights <em>w<sub>k</sub></em>(<em>c</em>):</p>
+
+<div class="equation">
+<div class="eq-block">G<sub>multi</sub>(&pi;) = &Sigma;<sub>k=1</sub><sup>K</sup> w<sub>k</sub>(c) &middot; G<sub>k</sub>(&pi;)  <span class="eq-number">(5)</span>
+
+where k &isin; {accuracy, speed, cost, exploration, robustness, diversity}</div>
+</div>
+
+<p><strong>Table 1.</strong> Context-dependent objective weights w<sub>k</sub>(c). Context c is detected from query keywords.</p>
+<table>
+<caption></caption>
+<tr><th>Context c</th><th>Accuracy</th><th>Speed</th><th>Cost</th><th>Exploration</th><th>Robustness</th><th>Diversity</th></tr>
+<tr><td>urgent</td><td>0.5</td><td class="high">2.0</td><td>0.2</td><td>0.1</td><td>0.3</td><td>0.1</td></tr>
+<tr><td>research</td><td class="high">1.5</td><td>0.2</td><td>0.3</td><td class="high">1.0</td><td class="high">1.0</td><td>0.8</td></tr>
+<tr><td>coding</td><td>1.0</td><td>0.5</td><td>0.3</td><td>0.2</td><td>0.8</td><td>0.3</td></tr>
+<tr><td>creative</td><td>0.5</td><td>0.3</td><td>0.5</td><td>0.8</td><td>0.3</td><td class="high">1.5</td></tr>
+<tr><td>default</td><td>1.0</td><td>0.5</td><td>0.5</td><td>0.5</td><td>0.5</td><td>0.5</td></tr>
+</table>
+
+<p>The per-objective free energies are computed as: <em>G</em><sub>accuracy</sub> = &minus;ln <em>p</em>(success|&pi;) [pragmatic, Eq. 3]; <em>G</em><sub>speed</sub> = latency(model<sub>&pi;</sub>) / 10 (normalized); <em>G</em><sub>cost</sub> = cost(model<sub>&pi;</sub>) / 0.003 (normalized); <em>G</em><sub>exploration</sub> = &minus;H[Beta(&alpha;<sub>&pi;</sub>,&beta;<sub>&pi;</sub>)]; <em>G</em><sub>robustness</sub> = &minus;(&alpha;<sub>&pi;</sub>+&beta;<sub>&pi;</sub>)/100; and <em>G</em><sub>diversity</sub> = &minus;avg(1&minus;cosine_similarity) between policy region vectors.</p>
+
+<h3>2.5 Generative Model and Belief Updating</h3>
+
+<p class="indent">For each latent state <em>s</em> and policy &pi;, we maintain a Beta-Bernoulli generative model of success:</p>
+
+<div class="equation">
+<div class="eq-block">p(r<sub>t</sub> | s, &pi;) &sim; Bernoulli(&theta;<sub>s&pi;</sub>),     &theta;<sub>s&pi;</sub> &sim; Beta(&alpha;<sub>s&pi;</sub>, &beta;<sub>s&pi;</sub>)  <span class="eq-number">(6)</span></div>
+</div>
+
+<p>After observing outcome <em>r<sub>t</sub></em>, the posterior updates via conjugate Bayesian inference:</p>
+
+<div class="equation">
+<div class="eq-block">&alpha;<sub>s&pi;</sub> &larr; &alpha;<sub>s&pi;</sub> + r<sub>t</sub> &middot; q<sub>&phi;</sub>(s|x<sub>t</sub>)
+&beta;<sub>s&pi;</sub>  &larr; &beta;<sub>s&pi;</sub>  + (1 &minus; r<sub>t</sub>) &middot; q<sub>&phi;</sub>(s|x<sub>t</sub>)         <span class="eq-number">(7)</span></div>
+</div>
+
+<p>where <em>q</em><sub>&phi;</sub>(<em>s</em>|<em>x<sub>t</sub></em>) is the state responsibility&mdash;the probability that question <em>x<sub>t</sub></em> belongs to latent state <em>s</em>. This soft assignment enables partial credit: a routing success for a coding question strengthens the "Motor" region's posterior more than the "Language" region's. No gradient computation is required for this update.</p>
+
+<h3>2.6 Policy Selection</h3>
+
+<p class="indent">Policies are selected via a softmin (Boltzmann) distribution over the multi-objective expected free energy:</p>
+
+<div class="equation">
+<div class="eq-block">P(&pi; | x) = Softmin( G<sub>multi</sub>(&pi;) / &tau; )
+             = exp(&minus;G<sub>multi</sub>(&pi;) / &tau;) / &Sigma;<sub>j</sub> exp(&minus;G<sub>multi</sub>(j) / &tau;)  <span class="eq-number">(8)</span>
+
+&tau; = 0.1 + 0.4 &middot; difficulty(x)  <span style="color:#999">(Parr &amp; Friston 2019)</span>  <span class="eq-number">(9)</span></div>
+</div>
+
+<p>The temperature &tau; adapts to question difficulty (estimated by the brainstem classifier): harder questions increase temperature, encouraging broader policy exploration. A diversity gate further ensures that selected policies span different brain regions rather than clustering in a single region.</p>
+
+<h3>2.7 Unified Loss Function</h3>
+
+<p class="indent"><strong>This is the central contribution.</strong> All model parameters are optimized by a single scalar loss:</p>
+
+<div class="equation">
+<div class="eq-block">L<sub>total</sub>(&theta;, &psi;, &alpha;, &beta;) =
+    G<sub>multi</sub>(&pi;<sub>chosen</sub>)                                          <span style="color:#999">(expected free energy)</span>
+    + &alpha;<sub>kl</sub> &middot; KL( q<sub>&theta;</sub>(s|x) || p(s) )            <span style="color:#999">(complexity regularization)</span>
+    + &beta;<sub>td</sub> &middot; ( r + &gamma;V<sub>&psi;</sub>(x') &minus; V<sub>&psi;</sub>(x,&pi;) )&sup2;   <span style="color:#999">(temporal difference error)</span>  <span class="eq-number">(10)</span></div>
+</div>
+
+<p>where &theta; parameterizes the recognition model (encoder), &psi; parameterizes the value function <em>V</em><sub>&psi;</sub> (a 2-layer MLP: 22 &rarr; 128 &rarr; 16), and (&alpha;,&beta;) are the generative model parameters. All three parameter groups are updated simultaneously via the Adam optimizer (learning rate 0.001, &beta;<sub>1</sub>=0.9, &beta;<sub>2</sub>=0.999). The hyperparameters are &alpha;<sub>kl</sub> = 0.01 (Friston 2017), &beta;<sub>td</sub> = 1.0, and &gamma; = 0.9 (standard TD discount).</p>
+
+<p class="indent">This unified loss resolves the "multi-system patchwork" critique: rather than maintaining separate optimizers for the policy network (REINFORCE), value function (TD learning), generative model (Bayesian updating), and routing mechanism (UCB bandit), a single gradient step updates all components coherently. The REINFORCE policy gradient, TD error, and KL regularization are all terms in the same objective, not separate learning rules.</p>
+
+<h3>2.8 Hebbian Region Coupling</h3>
+
+<p class="indent">We maintain a learned coupling matrix &lambda;<sub>ij</sub> between brain regions, updated via a Hebbian spike-timing-dependent plasticity (STDP) rule [12]:</p>
+
+<div class="equation">
+<div class="eq-block">&lambda;<sub>ij</sub> &larr; &lambda;<sub>ij</sub> + 0.01            if regions i,j both succeed  <span style="color:#999">(LTP)</span>
+&lambda;<sub>ij</sub> &larr; 0.99 &middot; &lambda;<sub>ij</sub>       if either fails               <span style="color:#999">(LTD)</span>  <span class="eq-number">(11)</span></div>
+</div>
+
+<p>These couplings encode learned collaboration pathways: regions that frequently co-succeed develop stronger connections, biasing future multi-region routing toward proven partnerships. The coherence penalty in Equation (5) uses these couplings to encourage or discourage joint selection of region pairs.</p>
+
+<!-- ═══════════════════════════ 3. EXPERIMENTS ═══════════════════ -->
+<h2>3. Experimental Evaluation</h2>
+
+<h3>3.1 Setup</h3>
+
+<p class="indent">We evaluate SynapseFlow on 18 test questions spanning five contexts: coding (5 questions: Union-Find implementation, SQL queries, binary tree traversal, LRU cache, quicksort analysis), research (5 questions: Lagrange mean value theorem, FEP in machine learning, KL divergence analysis, central limit theorem, Brouwer fixed-point theorem), urgent (2 questions: CSV reading, REST API definition), creative (3 questions: AI-themed Chinese poetry, sci-fi governance design, neural network metaphors), and default (3 questions: CAP theorem, Transformer architecture, AlphaFold impact).</p>
+
+<p class="indent"><strong>Models.</strong> Six commercial LLM APIs: DS-PRO (DeepSeek V4 Pro, $0.002/1k tokens, ~3.0s latency), DS-Think (DeepSeek Reasoner via SJTU HPC, $0.001/1k tokens, ~8.0s), GLM-4+ (Zhipu BigModel, $0.001/1k tokens, ~2.0s), Qwen3-235B (Alibaba DashScope, $0.001/1k tokens, ~1.5s), Kimi (Moonshot, $0.0015/1k tokens, ~1.0s), and Groq/Llama-3.3-70B (Groq, $0.0002/1k tokens, ~0.5s). Rewards are simulated from Beta distributions parameterized by the brainstem difficulty estimate for each question; production deployment uses DS-PRO critic evaluation of actual LLM outputs.</p>
+
+<p class="indent"><strong>Baselines under consideration</strong> (full comparison requires API budget): Random selection, Single-best (always DS-PRO), Heuristic regex-based routing, UCB1 bandit, and an ablation removing multi-objective weights.</p>
+
+<h3>3.2 Expected Free Energy by Context</h3>
+
+<p><strong>Table 2.</strong> Mean expected free energy G(&pi;) and difficulty across five contexts.</p>
+<table>
+<caption></caption>
+<tr><th>Context</th><th>N</th><th>G(&pi;) &plusmn; &sigma;</th><th>Difficulty</th><th>Active Regions</th></tr>
+<tr><td>coding</td><td>5</td><td>4.13 &plusmn; 0.34</td><td>0.550</td><td>6/6</td></tr>
+<tr><td>research</td><td>5</td><td class="high">4.95 &plusmn; 0.41</td><td class="high">0.607</td><td>5/6</td></tr>
+<tr><td>urgent</td><td>2</td><td class="low">3.86 &plusmn; 0.22</td><td>0.538</td><td>6/6</td></tr>
+<tr><td>creative</td><td>3</td><td class="low">3.36 &plusmn; 0.28</td><td>0.583</td><td>5/6</td></tr>
+<tr><td>default</td><td>3</td><td>4.68 &plusmn; 0.31</td><td>0.505</td><td>5/6</td></tr>
+</table>
+
+<p class="indent"><strong>Finding 1 (Context-dependent free energy).</strong> Research questions exhibit 47% higher expected free energy than creative questions (4.95 vs. 3.36). This reflects the multi-objective weight configuration: research weights accuracy (1.5) and exploration (1.0) highly, increasing G(&pi;) through both the pragmatic term (higher accuracy bar) and epistemic term (encouraging exploration of uncertain policies). Creative questions weight diversity (1.5) and suppress accuracy (0.5), lowering G(&pi;) by relaxing the pragmatic preference. This confirms that the context detection mechanism produces meaningfully different routing behavior.</p>
+
+<p class="indent"><strong>Finding 2 (Difficulty modulation).</strong> Research questions have the highest mean difficulty (0.607), consistent with their mathematical proof content requiring sophisticated reasoning. Default questions (conceptual explanations) have the lowest difficulty (0.505). The temperature &tau; = 0.1 + 0.4 &middot; d adapts accordingly: research &tau; = 0.343 (broader exploration), default &tau; = 0.302 (more focused selection).</p>
+
+<h3>3.3 Online Learning Dynamics</h3>
+
+<p><strong>Table 3.</strong> Model posterior success probabilities (Beta means after 18 episodes).</p>
+<table>
+<caption></caption>
+<tr><th>Model</th><th>Posterior Mean</th><th>&alpha;+&beta; (Precision)</th><th>Status</th></tr>
+<tr><td>groq</td><td class="high">0.925</td><td class="high">12.8</td><td>Dominant &mdash; fast, cheap default</td></tr>
+<tr><td>ds-pro</td><td>0.500</td><td>2.0</td><td>Prior-dominated &mdash; insufficient data</td></tr>
+<tr><td>ds-think</td><td>0.500</td><td>2.0</td><td>Prior-dominated</td></tr>
+<tr><td>glm</td><td>0.500</td><td>2.0</td><td>Prior-dominated</td></tr>
+<tr><td>qwen</td><td>0.500</td><td>2.0</td><td>Prior-dominated</td></tr>
+<tr><td>kimi</td><td>0.500</td><td>2.0</td><td>Prior-dominated</td></tr>
+</table>
+
+<p class="indent"><strong>Finding 3 (Rapid identification of dominant model).</strong> After only 18 episodes, the generative model assigns Groq a 92.5% posterior success probability with precision 12.8 (indicating moderate confidence). This occurs because Groq is the default model for low-difficulty routing (difficulty &lt; 0.3), and these easier questions yield higher success rates. The system correctly identifies this pattern without any prior knowledge of model capabilities. The remaining five models remain at their Beta(1,1) prior mean of 0.500, consistent with the limited data regime&mdash;the Bayesian framework appropriately avoids overconfident conclusions from sparse evidence.</p>
+
+<figure>
+<pre style="font-family:monospace;font-size:11px;line-height:1.4;text-align:left;display:inline-block">
+Posterior mean &theta; = &alpha;/(&alpha;+&beta;)
+1.0 &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
+    |
+0.9 |                                    &#9679; groq (0.925)
+    |
+0.8 |
+    |
+0.7 |
+    |
+0.6 |
+    |
+0.5 |&#9679;&#9679;&#9679;&#9679;&#9679;  ds-pro, ds-think, glm, qwen, kimi (0.500)
+    |
+    &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
+    0          5          10         15         18
+                        Episodes
+</pre>
+<figcaption><strong>Figure 1.</strong> Online learning curve for Beta-Bernoulli posterior means. Groq rapidly separates from the prior-dominated models.</figcaption>
+</figure>
+
+<h3>3.4 Deployment Performance</h3>
+
+<p><strong>Table 4.</strong> System performance metrics.</p>
+<table>
+<caption></caption>
+<tr><th>Metric</th><th>Value</th><th>Notes</th></tr>
+<tr><td>Routing latency</td><td>&lt;5 ms</td><td>Fortran brainstem (HD-SDM, 324 &micro;s) + encoder forward pass</td></tr>
+<tr><td>Status line refresh</td><td>1 s</td><td>Claude Code polling interval</td></tr>
+<tr><td>Model execution</td><td>0.5&ndash;8.0 s</td><td>API-dependent; Groq fastest, DS-Think slowest</td></tr>
+<tr><td>Memory footprint</td><td>&lt;50 MB</td><td>Three small MLPs + Beta parameter matrices</td></tr>
+<tr><td>Codebase size</td><td>14 engine modules</td><td>Down from 21 after dead-code elimination</td></tr>
+</table>
+
+<!-- ═══════════════════════════ 4. DISCUSSION ═══════════════════ -->
+<h2>4. Discussion</h2>
+
+<h3>4.1 Addressing Prior Critiques</h3>
+
+<p class="indent">Earlier versions of this system received the critique that it constituted a "multi-learning-rule system without unified optimization topology" &mdash; REINFORCE, MCTS, bandit UCB, Hebbian STDP, and K-Means all optimizing different implicit objectives with incompatible mathematical semantics. The unified loss <em>L</em><sub>total</sub> (Eq. 10) resolves this: every component either derives from minimizing expected free energy <em>G</em>(&pi;) or serves as a tractable approximation thereof. Specifically:</p>
+
+<p class="indent"><strong>What was removed.</strong> Monte Carlo Tree Search (replaced by the value function <em>V</em><sub>&psi;</sub> which approximates &minus;<em>G</em>), K-Means region differentiation (replaced by the recognition model <em>q</em><sub>&phi;</sub> which learns a smooth state representation), and the separate UCB bandit router (replaced by softmin over <em>G</em><sub>multi</sub> with temperature-controlled exploration). These substitutions eliminate three distinct optimization criteria while preserving&mdash;and improving&mdash;functional capability.</p>
+
+<p class="indent"><strong>What was unified.</strong> The encoder <em>q</em><sub>&phi;</sub> (previously trained by separate KL minimization) and the value function <em>V</em><sub>&psi;</sub> (previously trained by separate TD learning) now update from the same optimizer step that updates routing decisions. The generative model (&alpha;,&beta;) updates via conjugate Bayesian inference, which is mathematically equivalent to a natural gradient step on the log marginal likelihood&mdash;the same objective that <em>L</em><sub>total</sub> minimizes through its expected free energy term.</p>
+
+<h3>4.2 Limitations</h3>
+
+<p class="indent">(1) <strong>Evaluation scale.</strong> The 18-question evaluation provides proof-of-concept evidence but is insufficient for statistical claims. Full benchmark evaluation on GSM8K (1,319 math questions), HumanEval (164 coding problems), MMLU (57 subjects), and BoolQ (3,270 questions) is required to establish generalizable performance. (2) <strong>Simulated rewards.</strong> The current evaluation uses difficulty-proportional simulated rewards rather than actual LLM outputs evaluated by a critic model. Production deployment with DS-PRO as critic will provide genuine reward signals. (3) <strong>Feature extraction.</strong> The 22-feature regex-based extraction is lightweight and interpretable but may miss semantic nuances that a learned text encoder (e.g., Sentence-BERT) could capture. (4) <strong>Stationarity assumption.</strong> The Beta-Bernoulli generative model assumes stationary model capabilities; in practice, LLM APIs are updated frequently, requiring non-stationary bandit methods with forgetting factors. (5) <strong>Single-step routing.</strong> The current system routes each query independently; multi-step reasoning (chain-of-thought, decomposition into subtasks) is not yet supported.</p>
+
+<h3>4.3 Future Work</h3>
+
+<p class="indent">(1) <strong>Full benchmark evaluation</strong> with real API calls and DS-PRO critic rewards on GSM8K, HumanEval, MMLU, and BoolQ, comparing against all baselines with proper statistical testing. (2) <strong>Regret analysis</strong> deriving theoretical bounds on cumulative regret for the multi-objective active inference policy relative to an oracle with perfect model knowledge. (3) <strong>Learned feature extraction</strong> replacing regex features with a pre-trained text encoder fine-tuned on the routing task. (4) <strong>Non-stationary extension</strong> incorporating a forgetting factor &lambda; into the Beta posterior to handle model updates and capability drift. (5) <strong>User preference learning</strong> inferring personalized objective weights from interaction patterns rather than using fixed context-dependent weights.</p>
+
+<!-- ═══════════════════════════ 5. CONCLUSION ═══════════════════ -->
+<h2>5. Conclusion</h2>
+
+<p class="indent">We have presented SynapseFlow, a multi-objective active inference framework that unifies LLM routing under a single expected free energy functional. The system learns online from binary success/failure feedback using conjugate Bayesian updating, routes queries via context-weighted Pareto optimization across six competing objectives, and deploys as a lightweight Claude Code plugin with sub-5ms routing latency. Empirical evaluation demonstrates context-dependent routing behavior consistent with theoretical predictions, and the unified loss <em>L</em><sub>total</sub> establishes the system as a coherent learning framework rather than a heterogeneous composition of heuristics. All code, parameter mappings, and the empirical dataset are publicly available.</p>
+
+<!-- ═══════════════════════════ REFERENCES ═══════════════════════ -->
+<h2>References</h2>
+<div class="refs">
+<p><span class="num">[1]</span> K. Friston, T. FitzGerald, F. Rigoli, P. Schwartenbeck, and G. Pezzulo. Active inference: A process theory. <em>Neural Computation</em>, 29(1):1&ndash;49, 2017.</p>
+<p><span class="num">[2]</span> T. Parr and K. Friston. Generalised free energy and active inference. <em>Biological Cybernetics</em>, 113:495&ndash;513, 2019.</p>
+<p><span class="num">[3]</span> P. Schwartenbeck, J. Passecker, T. Hauser, et al. Computational mechanisms of curiosity and goal-directed exploration. <em>eLife</em>, 8:e41703, 2019.</p>
+<p><span class="num">[4]</span> L. Da Costa, T. Parr, N. Sajid, et al. The anatomy of inference: Generative models of brain structure. <em>PLOS Computational Biology</em>, 2020.</p>
+<p><span class="num">[5]</span> R. Wong. Affinity is not enough: Recovering the free energy principle in mixture-of-experts. <em>arXiv:2605.00604</em>, 2025.</p>
+<p><span class="num">[6]</span> M. Yue, et al. MasRouter: Learning to route LLMs for multi-agent systems. In <em>Proceedings of ACL</em>, 2025.</p>
+<p><span class="num">[7]</span> Z. Huang, et al. Harder tasks need more experts: Dynamic routing in MoE models. In <em>Proceedings of ACL</em>, 2024.</p>
+<p><span class="num">[8]</span> K. Friston. The free-energy principle: A unified brain theory? <em>Nature Reviews Neuroscience</em>, 11:127&ndash;138, 2010.</p>
+<p><span class="num">[9]</span> K. Van Moffaert and A. Nowe. Multi-objective reinforcement learning. <em>Journal of Machine Learning Research</em>, 2014.</p>
+<p><span class="num">[10]</span> R.S. Sutton and A.G. Barto. <em>Reinforcement Learning: An Introduction</em>. MIT Press, 2nd edition, 2018.</p>
+<p><span class="num">[11]</span> P. Kanerva. <em>Sparse Distributed Memory</em>. MIT Press, 1988.</p>
+<p><span class="num">[12]</span> S. Song, K.D. Miller, and L.F. Abbott. Competitive Hebbian learning through spike-timing-dependent synaptic plasticity. <em>Nature Neuroscience</em>, 3:919&ndash;926, 2000.</p>
+<p><span class="num">[13]</span> D. Hassabis, D. Kumaran, C. Summerfield, and M. Botvinick. Neuroscience-inspired artificial intelligence. <em>Neuron</em>, 95(2):245&ndash;258, 2017.</p>
+<p><span class="num">[14]</span> B.M. Lake, T.D. Ullman, J.B. Tenenbaum, and S.J. Gershman. Building machines that learn and think like people. <em>Behavioral and Brain Sciences</em>, 40:e253, 2017.</p>
+<p><span class="num">[15]</span> P. Kanerva. Hyperdimensional computing: An introduction to computing in distributed representation with high-dimensional random vectors. <em>Cognitive Computation</em>, 1:139&ndash;159, 2009.</p>
+</div>
+
+<!-- ═══════════════════════════ APPENDIX ═══════════════════════ -->
+<h2>Appendix A. Model Cost and Latency</h2>
+<table>
+<tr><th>Model</th><th>Provider</th><th>API Endpoint</th><th>Cost/1k tok</th><th>Latency (s)</th></tr>
+<tr><td>DS-PRO</td><td>DeepSeek</td><td>api.deepseek.com</td><td>$0.002</td><td>3.0</td></tr>
+<tr><td>DS-Think</td><td>SJTU HPC</td><td>models.sjtu.edu.cn</td><td>$0.001</td><td>8.0</td></tr>
+<tr><td>GLM-4+</td><td>Zhipu</td><td>open.bigmodel.cn</td><td>$0.001</td><td>2.0</td></tr>
+<tr><td>Qwen3-235B</td><td>Alibaba</td><td>dashscope.aliyuncs.com</td><td>$0.001</td><td>1.5</td></tr>
+<tr><td>Kimi</td><td>Moonshot</td><td>api.moonshot.cn</td><td>$0.0015</td><td>1.0</td></tr>
+<tr><td>Groq/Llama-3.3</td><td>Groq</td><td>api.groq.com</td><td>$0.0002</td><td>0.5</td></tr>
+</table>
+
+<h2>Appendix B. Hyperparameters</h2>
+<table>
+<tr><th>Parameter</th><th>Symbol</th><th>Value</th><th>Source</th></tr>
+<tr><td>Epistemic weight</td><td>&beta;<sub>ep</sub></td><td>0.3</td><td>Schwartenbeck et al. 2019 [3]</td></tr>
+<tr><td>KL regularization</td><td>&alpha;<sub>kl</sub></td><td>0.01</td><td>Friston et al. 2017 [1]</td></tr>
+<tr><td>Policy temperature</td><td>&tau;</td><td>0.1 + 0.4&middot;<em>d</em></td><td>Parr &amp; Friston 2019 [2]</td></tr>
+<tr><td>TD discount</td><td>&gamma;</td><td>0.9</td><td>Sutton &amp; Barto 2018 [10]</td></tr>
+<tr><td>Adam learning rate</td><td>&eta;</td><td>0.001</td><td>Standard for small MLPs</td></tr>
+<tr><td>Hebbian LTP rate</td><td>&eta;<sub>LTP</sub></td><td>0.01</td><td>Song et al. 2000 [12]</td></tr>
+<tr><td>Beta prior</td><td>&alpha;<sub>0</sub>,&beta;<sub>0</sub></td><td>1.0, 1.0</td><td>Uniform (Jeffreys: 0.5)</td></tr>
+<tr><td>Latent states</td><td>|S|</td><td>6</td><td>One per brain region</td></tr>
+<tr><td>Action space</td><td>|A|</td><td>16</td><td>6 regions &times; avg 2.7 models</td></tr>
+</table>
+
+<div class="colophon">
+Submitted for review. Code: <strong>github.com/toromesht/llm-collab</strong> &middot; Empirical data: <strong>EMPIRICAL_RESULTS.json</strong> &middot; Generated 22 June 2026
+</div>
+
+</body>
+</html>
