@@ -1,0 +1,74 @@
+[
+  {
+    "bench": "GPQA-Diamond",
+    "router": "DS-Think",
+    "n": 15,
+    "ok": 1,
+    "acc": 0.06666666666666667,
+    "cost": 0.0045,
+    "lat": 46.011434650421144
+  },
+  {
+    "bench": "GPQA-Diamond",
+    "router": "SynapseFlow",
+    "n": 15,
+    "ok": 1,
+    "acc": 0.06666666666666667,
+    "cost": 0.0009000000000000003,
+    "lat": 3.3612085978190103
+  },
+  {
+    "bench": "BBH-Logic",
+    "router": "DS-Think",
+    "n": 15,
+    "ok": 4,
+    "acc": 0.26666666666666666,
+    "cost": 0.0045,
+    "lat": 10.468172121047974
+  },
+  {
+    "bench": "BBH-Logic",
+    "router": "SynapseFlow",
+    "n": 15,
+    "ok": 4,
+    "acc": 0.26666666666666666,
+    "cost": 0.0009000000000000003,
+    "lat": 2.138029368718465
+  },
+  {
+    "bench": "IFEval",
+    "router": "DS-Think",
+    "n": 15,
+    "ok": 15,
+    "acc": 1.0,
+    "cost": 0.0045,
+    "lat": 6.950377829869589
+  },
+  {
+    "bench": "IFEval",
+    "router": "SynapseFlow",
+    "n": 15,
+    "ok": 15,
+    "acc": 1.0,
+    "cost": 0.0009000000000000003,
+    "lat": 2.9797977765401202
+  },
+  {
+    "bench": "MMLU-Pro-Math",
+    "router": "DS-Think",
+    "n": 15,
+    "ok": 13,
+    "acc": 0.8666666666666667,
+    "cost": 0.0045,
+    "lat": 10.34317356745402
+  },
+  {
+    "bench": "MMLU-Pro-Math",
+    "router": "SynapseFlow",
+    "n": 15,
+    "ok": 13,
+    "acc": 0.8666666666666667,
+    "cost": 0.0009000000000000003,
+    "lat": 3.5465270201365153
+  }
+]
