@@ -54,6 +54,18 @@ import sys, json, os, threading, re, math, random, time
 from pathlib import Path
 from openai import OpenAI
 
+# ─── Native Polyglot Modules (C++ Router + Fortran Encoder) ───
+try:
+    sys.path.insert(0, str(Path(__file__).parent.parent))
+    from engine.native_bridge import NativeRouter, NativeEncoder
+    _NATIVE_ROUTER = NativeRouter()
+    _NATIVE_ENCODER = NativeEncoder()
+    _HAS_NATIVE = _NATIVE_ROUTER.available
+except Exception:
+    _NATIVE_ROUTER = None
+    _NATIVE_ENCODER = None
+    _HAS_NATIVE = False
+
 CONFIG_FILE = Path.home() / ".claude" / "tools" / "llm-config.json"
 RULES_FILE = Path.home() / ".claude" / "tools" / "decision-rules.json"
 
@@ -336,6 +348,17 @@ def get_allowed_models(category, candidates):
 # ─── Stage 2: Collaboration Mode (MasRouter: cascaded decision) ──
 
 def decide_mode(K, difficulty, collab_benefit, affinity, dims):
+    # ─── Native C++ Router Fast Path ──────────────────────
+    if _HAS_NATIVE and _NATIVE_ROUTER is not None:
+        try:
+            # Use C++ router for sub-microsecond decision
+            features = {k: float(v) for k, v in dims.items()}
+            native_decision = _NATIVE_ROUTER.route(features, dims, 'general')
+            if native_decision.get('confidence', 0) > 0.3:
+                return native_decision
+        except Exception:
+            pass  # Fall back to Python routing
+    # ─── Python Router (original path) ────────────────────
     """Strict exclusion routing (RACER 2025 + Router-R1 inspired):
        Banned models = never called. Only allowed models participate."""
     # Detect category from dims
@@ -1268,7 +1291,7 @@ def main():
     # Output
     print(f"\n{CC['W']}{'='*64}{CC['R']}")
     print(answer[:3000] if len(answer) > 3000 else answer)
-    print(f"\n{CC['D']}v11 | diff={scores['difficulty']:.2f} K={K} | dims={scores['dims']}{CC['R']}\n")
+    print(f"\n{CC['D']}v14 | diff={scores['difficulty']:.2f} K={K} | dims={scores['dims']}{CC['R']}\n")
 
     # TDA cache: store this question→routing for future similarity matching
     tda_cache_question(question, scores["dims"], decision)
