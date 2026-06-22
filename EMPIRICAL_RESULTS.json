@@ -1,0 +1,75 @@
+{
+  "contexts": {
+    "coding": {
+      "n": 5,
+      "avg_G": 4.1295,
+      "avg_diff": 0.55,
+      "regions": {
+        "Motor": 5,
+        "Parietal": 5,
+        "Temporal": 5,
+        "Visual": 5,
+        "PFC": 4,
+        "Language": 1
+      }
+    },
+    "research": {
+      "n": 5,
+      "avg_G": 4.9455,
+      "avg_diff": 0.607,
+      "regions": {
+        "Motor": 5,
+        "Parietal": 5,
+        "Temporal": 5,
+        "Visual": 5,
+        "PFC": 5
+      }
+    },
+    "urgent": {
+      "n": 2,
+      "avg_G": 3.8628,
+      "avg_diff": 0.538,
+      "regions": {
+        "Motor": 2,
+        "Language": 1,
+        "Visual": 2,
+        "Parietal": 2,
+        "Temporal": 2,
+        "PFC": 1
+      }
+    },
+    "creative": {
+      "n": 3,
+      "avg_G": 3.3555,
+      "avg_diff": 0.583,
+      "regions": {
+        "Motor": 3,
+        "Parietal": 3,
+        "Temporal": 3,
+        "Visual": 3,
+        "PFC": 3
+      }
+    },
+    "default": {
+      "n": 3,
+      "avg_G": 4.675,
+      "avg_diff": 0.505,
+      "regions": {
+        "Motor": 3,
+        "Parietal": 3,
+        "Temporal": 3,
+        "Visual": 3,
+        "PFC": 3
+      }
+    }
+  },
+  "models": {
+    "ds-pro": 0.5,
+    "ds-think": 0.5,
+    "groq": 0.925,
+    "qwen": 0.5,
+    "glm": 0.5,
+    "kimi": 0.5
+  },
+  "episodes": 18
+}

@@ -36,16 +36,22 @@ from typing import Dict, List, Tuple, Optional
 class TextEmbedder:
     def __init__(self, dim=384):
         self.dim = dim
-
+        self._model = None
+        try:
+            from sentence_transformers import SentenceTransformer
+            self._model = SentenceTransformer('all-MiniLM-L6-v2')
+            self.dim = 384
+        except Exception:
+            self._model = None
     def encode(self, text: str) -> np.ndarray:
+        if self._model is not None:
+            emb = self._model.encode(text, convert_to_numpy=True)
+            return emb.astype(np.float64) / (np.linalg.norm(emb) + 1e-8)
         vec = np.zeros(self.dim, dtype=np.float64)
-        text = text.lower()
         for n in [2, 3, 4]:
             for i in range(len(text) - n + 1):
-                h = hash(text[i:i+n]) % self.dim
-                vec[h] += 1.0
-        norm = np.linalg.norm(vec)
-        return vec / (norm + 1e-8)
+                h = hash(text[i:i+n]) % self.dim; vec[h] += 1.0
+        norm = np.linalg.norm(vec); return vec / (norm + 1e-8)
 
 
 # ═══════════════════════════════════════════════════════════════

@@ -190,6 +190,7 @@ MODELS = {
     "glm":      ("[GLM]",    lambda: (OpenAI(api_key=config["sjtu_zhiyuan"]["api_key"], base_url=config["sjtu_zhiyuan"]["base_url"]), "glm")),
     "qwen":     ("[QWEN]",   lambda: (OpenAI(api_key=config["sjtu_zhiyuan"]["api_key"], base_url=config["sjtu_zhiyuan"]["base_url"]), "qwen")),
     "ds-think": ("[SJTU DS-Think]",  lambda: (OpenAI(api_key=config["sjtu_zhiyuan"]["api_key"], base_url=config["sjtu_zhiyuan"]["base_url"]), "deepseek-reasoner")),
+    "groq":     ("[GROQ]",    lambda: (OpenAI(api_key=config["groq"]["api_key"], base_url=config["groq"]["base_url"]), config["groq"]["model"])),
 }
 
 CC = {"R":"\033[0m","C":"\033[36m","G":"\033[32m","Y":"\033[33m","D":"\033[2m","E":"\033[31m","M":"\033[35m","B":"\033[1;34m","W":"\033[1;37m"}
