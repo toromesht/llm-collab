@@ -176,17 +176,19 @@ def _call_model(model_id: str, prompt: str, max_tok: int = 2000) -> str:
     return r.choices[0].message.content.strip()
 
 
-def run_brain_pipeline(prompt, routing):
-    bp = os.path.expanduser('~/.claude/tools/brain.py')
+def run_brain_pipeline(prompt: str, routing: dict):
+    """Run neuro_runner: brainstem + regions + parallel + cortex + STDP/LTP/LTD."""
+    runner = os.path.expanduser('~/Desktop/collab-cloud/engine/neuro_runner.py')
     try:
-        env = os.environ.copy(); env['NEURO_MODE'] = '1'
-        proc = subprocess.Popen([sys.executable, bp], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding='utf-8', errors='replace', env=env)
+        env = os.environ.copy()
+        proc = subprocess.Popen([sys.executable, runner], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding='utf-8', errors='replace', env=env)
         stdout, _ = proc.communicate(input=prompt, timeout=300)
         output = stdout.strip() if stdout else ''
         rf = os.path.expanduser('~/.synapseflow/brain/last_result.json')
         os.makedirs(os.path.dirname(rf), exist_ok=True)
         with open(rf, 'w', encoding='utf-8') as f: json.dump({'output': output[:5000], 'timestamp': time.time()}, f, ensure_ascii=False)
         write_status(routing, done=True)
+    except subprocess.TimeoutExpired: proc.kill(); write_status(routing, done=True)
     except Exception: write_status(routing, done=True)
 
 
