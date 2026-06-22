@@ -1,0 +1,58 @@
+{
+  "name": "synapseflow",
+  "version": "2.1.0",
+  "description": "Neurosynaptic LLM Orchestration — real-time brain region + parallel AI execution monitor for Claude Code",
+  "author": {
+    "name": "toromesht",
+    "url": "https://github.com/toromesht"
+  },
+  "homepage": "https://github.com/toromesht/llm-collab",
+  "license": "MIT",
+  "keywords": ["llm", "routing", "neuroscience", "parallel", "monitor", "brain"],
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python ${CLAUDE_PLUGIN_ROOT}/hooks/neuro_hook.py",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  },
+  "files": {
+    "hooks/neuro_hook.py": "UserPromptSubmit hook — neuro monitor",
+    "hooks/brain_engine.py": "Brain v14 core engine",
+    "hooks/hook_diag.py": "Diagnostic logging",
+    "README.md": "Plugin documentation"
+  },
+  "install": {
+    "requirements": ["openai>=1.50.0", "numpy>=1.26.0"],
+    "setup": "Configure API keys in ~/.claude/tools/llm-config.json before use."
+  },
+  "userConfig": {
+    "neuro_mode_default": {
+      "type": "boolean",
+      "default": true,
+      "description": "Enable neuro monitoring by default for all questions"
+    },
+    "show_brain_regions": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show brain region mapping in execution UI"
+    },
+    "show_pathway": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show synaptic pathway in execution UI"
+    },
+    "show_parallel_ui": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show parallel AI execution status"
+    }
+  }
+}
