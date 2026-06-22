@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SynapseFlow — Neuro Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0e17;color:#c9d1d9;font-family:'Segoe UI',system-ui,sans-serif;padding:20px}
+h1{color:#58a6ff;font-size:22px;margin-bottom:4px}
+.sub{color:#8b949e;font-size:13px;margin-bottom:16px}
+.panel{background:#131a2a;border:1px solid #21262d;border-radius:12px;padding:16px 20px;margin-bottom:14px}
+.panel h2{color:#7ee787;font-size:15px;margin-bottom:10px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.card{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px 14px;min-width:140px;flex:1}
+.card .region{color:#d2a8ff;font-size:12px;margin-bottom:3px}
+.card .model{font-size:15px;font-weight:bold;color:#e6edf3}
+.card .status{font-size:11px;margin-top:3px}
+.status-running{color:#d2991d}
+.status-done{color:#3fb950}
+.status-pending{color:#8b949e}
+.status-failed{color:#f85149}
+.bar{height:4px;background:#21262d;border-radius:2px;margin-top:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px;transition:width 0.3s}
+.bar-running{background:#d2991d;animation:pulse 1s infinite}
+.bar-done{background:#3fb950}
+.bar-pending{background:#30363d}
+.bar-failed{background:#f85149}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.region-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.region-card{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:12px}
+.region-card .rname{color:#58a6ff;font-size:13px;font-weight:bold}
+.region-card .rmodels{color:#8b949e;font-size:11px;margin-top:3px}
+.region-card .ractive{color:#3fb950;font-size:11px;margin-top:3px}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.stat{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px;text-align:center}
+.stat .num{font-size:24px;font-weight:bold;color:#58a6ff}
+.stat .label{font-size:11px;color:#8b949e;margin-top:2px}
+.log{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px;max-height:200px;overflow-y:auto;font-family:monospace;font-size:11px}
+.log .line{margin:2px 0}
+.log .ts{color:#484f58}
+.log .info{color:#8b949e}
+.log .ok{color:#3fb950}
+.log .err{color:#f85149}
+.btn{background:#238636;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;margin-right:8px}
+.btn:hover{background:#2ea043}
+.btn-refresh{background:#21262d;color:#c9d1d9}
+.btn-refresh:hover{background:#30363d}
+</style>
+</head>
+<body>
+
+<h1>SynapseFlow</h1>
+<div class="sub">Neurosynaptic LLM Orchestration — Live Dashboard</div>
+
+<!-- Region Map -->
+<div class="panel">
+  <h2>6 Brain Regions</h2>
+  <div class="region-list" id="regions"></div>
+</div>
+
+<!-- Active Execution -->
+<div class="panel">
+  <h2>Parallel AI Execution — Live</h2>
+  <div class="row" id="exec"></div>
+</div>
+
+<!-- Stats -->
+<div class="panel">
+  <h2>System Stats</h2>
+  <div class="stats" id="stats"></div>
+</div>
+
+<!-- Event Log -->
+<div class="panel">
+  <h2>Event Log</h2>
+  <div class="log" id="log"></div>
+  <div style="margin-top:10px">
+    <button class="btn" onclick="runDemo()">Run Demo</button>
+    <button class="btn btn-refresh" onclick="refresh()">Refresh</button>
+  </div>
+</div>
+
+<script>
+const REGIONS = [
+  {name:"Motor Cortex", icon:"<>", desc:"Code / SQL / Algorithms", models:["DS-PRO","DS-Think"], active:false},
+  {name:"Parietal Cortex", icon:"π", desc:"Math / Numerical", models:["DS-PRO","QWEN3"], active:false},
+  {name:"Prefrontal Cortex", icon:"∟", desc:"Logic / Reasoning", models:["DS-PRO","DS-Think"], active:false},
+  {name:"Temporal Cortex", icon:"📚", desc:"Knowledge / Memory", models:["GLM-4+","QWEN3"], active:false},
+  {name:"Language Area", icon:"💬", desc:"Writing / Chinese", models:["GLM-4+","KIMI"], active:false},
+  {name:"Visual Cortex", icon:"👁", desc:"Vision / Multimodal", models:["KIMI","QWEN3"], active:false},
+];
+
+const MODELS = {
+  "DS-PRO": {color:"#58a6ff", provider:"DeepSeek"},
+  "DS-Think": {color:"#d2a8ff", provider:"SJTU"},
+  "GLM-4+": {color:"#7ee787", provider:"Zhipu"},
+  "QWEN3": {color:"#f0883e", provider:"Alibaba"},
+  "KIMI": {color:"#f85149", provider:"Moonshot"},
+};
+
+function renderRegions() {
+  const el = document.getElementById("regions");
+  el.innerHTML = REGIONS.map(r => `
+    <div class="region-card" style="border-color:${r.active?'#3fb950':'#30363d'}">
+      <div class="rname">${r.icon} ${r.name}</div>
+      <div class="rmodels">${r.desc}</div>
+      <div class="rmodels">Primary: ${r.models.join(", ")}</div>
+      <div class="ractive">${r.active ? "ACTIVE" : "idle"}</div>
+    </div>
+  `).join("");
+}
+
+const log = [];
+function addLog(msg, type="info") {
+  const ts = new Date().toLocaleTimeString();
+  log.unshift({ts, msg, type});
+  if(log.length > 50) log.pop();
+  document.getElementById("log").innerHTML = log.map(l =>
+    `<div class="line"><span class="ts">${l.ts}</span> <span class="${l.type}">${l.msg}</span></div>`
+  ).join("");
+}
+
+function renderExec(activeModels) {
+  const el = document.getElementById("exec");
+  if(!activeModels || activeModels.length===0){
+    el.innerHTML = '<div class="card"><div class="region">No active execution</div><div class="model">Idle</div></div>';
+    return;
+  }
+  el.innerHTML = activeModels.map(m => {
+    const info = MODELS[m.model] || {color:"#8b949e"};
+    return `<div class="card">
+      <div class="region">${m.region}</div>
+      <div class="model" style="color:${info.color}">${m.model}</div>
+      <div class="status status-${m.status}">${m.status.toUpperCase()}</div>
+      <div class="bar"><div class="bar-fill bar-${m.status}" style="width:${m.status==='done'?'100%':m.status==='running'?'60%':'5%'}"></div></div>
+      <div class="status" style="margin-top:3px">${m.time || ""} ${m.output || ""}</div>
+    </div>`;
+  }).join("");
+}
+
+function renderStats() {
+  document.getElementById("stats").innerHTML = `
+    <div class="stat"><div class="num">6</div><div class="label">Brain Regions</div></div>
+    <div class="stat"><div class="num">8</div><div class="label">AI Models</div></div>
+    <div class="stat"><div class="num">11</div><div class="label">Plasticity Mech.</div></div>
+    <div class="stat"><div class="num">20</div><div class="label">Papers</div></div>
+    <div class="stat"><div class="num">4</div><div class="label">Languages</div></div>
+    <div class="stat"><div class="num">$0.20</div><div class="label">Avg Cost/Q</div></div>
+  `;
+}
+
+async function refresh() {
+  renderRegions();
+  renderExec(null);
+  renderStats();
+  addLog("Dashboard refreshed", "info");
+}
+
+// Demo: simulate parallel execution
+async function runDemo() {
+  addLog("=== PARALLEL EXECUTION START ===", "info");
+  addLog("Brainstem: classifying question...", "info");
+  await sleep(300);
+  addLog("Brainstem: parietal_cortex + prefrontal_cortex activated", "ok");
+  REGIONS[1].active = true; REGIONS[2].active = true;
+  renderRegions();
+
+  const demoModels = [
+    {region:"Parietal Cortex", model:"DS-PRO", status:"pending"},
+    {region:"Parietal Cortex", model:"QWEN3", status:"pending"},
+    {region:"Prefrontal Cortex", model:"DS-PRO", status:"pending"},
+    {region:"Prefrontal Cortex", model:"DS-Think", status:"pending"},
+    {region:"Temporal Cortex", model:"GLM-4+", status:"pending"},
+  ];
+
+  // Launch all in parallel (simulated with staggered timing)
+  for(const m of demoModels) {
+    m.status = "running";
+    m.time = "0.0s";
+    renderExec(demoModels);
+    addLog(`[START] ${m.model} @ ${m.region}`, "info");
+    await sleep(400 + Math.random()*800);
+  }
+
+  // Complete one by one
+  for(const m of demoModels.slice().sort(()=>Math.random()-0.5)) {
+    const delay = 800 + Math.random()*2500;
+    await sleep(delay);
+    if(Math.random() < 0.15){
+      m.status = "failed";
+      addLog(`[FAIL] ${m.model}: rate limit`, "err");
+    } else {
+      m.status = "done";
+      const chars = 500 + Math.floor(Math.random()*3000);
+      m.output = chars + "c";
+      m.time = (0.5 + Math.random()*3).toFixed(1)+"s";
+      addLog(`[DONE] ${m.model}: ${chars}c in ${m.time}`, "ok");
+    }
+    renderExec(demoModels);
+  }
+
+  addLog("=== ALL MODELS COMPLETE: Synthesizing answer ===", "ok");
+  addLog("[CORTEX] DS-PRO final validation: PASSED", "ok");
+  addLog("[SYNAPSE] Pathway weights updated (STDP+LTP+LTD)", "info");
+  REGIONS[1].active = false; REGIONS[2].active = false;
+  renderRegions();
+}
+
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+
+// Init
+refresh();
+</script>
+</body>
+</html>
