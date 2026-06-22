@@ -146,69 +146,61 @@ def write_status(routing: dict, done: bool = False, pathway: str = ""):
     with open(STATUS_FILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False)
 
+    # Also append to repo data log for post-hoc review
+    repo_data = os.path.expanduser('~/Desktop/collab-cloud/data/brain_activity.jsonl')
+    os.makedirs(os.path.dirname(repo_data), exist_ok=True)
+    log_entry = {k: data[k] for k in ['active_regions','models','region','difficulty','classification','pathway','done','timestamp']}
+    with open(repo_data, 'a', encoding='utf-8') as f:
+        f.write(json.dumps(log_entry, ensure_ascii=False) + '\n')
+
 
 # ═══════════════════════════════════════════════════════════
 # BRAIN.PY BACKGROUND EXECUTION
 # ═══════════════════════════════════════════════════════════
 
-def run_brain_background(prompt: str, routing: dict):
-    """Run brain.py in background with status file updates."""
-    try:
-        env = os.environ.copy()
-        env['NEURO_MODE'] = '1'
+def _call_model(model_id: str, prompt: str, max_tok: int = 2000) -> str:
+    """Call a single model API. Returns response text."""
+    from openai import OpenAI
+    cf = json.loads(open(os.path.expanduser('~/.claude/tools/llm-config.json'),'r',encoding='utf-8').read())
+    km = {"ds-pro":"deepseek_pro","ds-think":"sjtu_zhiyuan","glm":"zhipu","qwen":"qwen3","kimi":"kimi","groq":"groq"}
+    ck = km.get(model_id)
+    if not ck or ck not in cf: raise ValueError(f"No config for {model_id}")
+    c = cf[ck]; cl = OpenAI(api_key=c["api_key"], base_url=c["base_url"])
+    am = "deepseek-reasoner" if ck == "sjtu_zhiyuan" else c.get("model", model_id)
+    r = cl.chat.completions.create(model=am, messages=[{"role":"user","content":prompt}], temperature=0.3, max_tokens=max_tok)
+    return r.choices[0].message.content.strip()
 
-        proc = subprocess.Popen(
-            [sys.executable, BRAIN_PATH],
-            stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE, text=True,
-            encoding='utf-8', errors='replace',
-            env=env
-        )
 
-        # Update status: models running (use pending_models, not models which is empty)
-        pending = routing.get("pending_models", [])
-        region_map = routing.get("region_map", {})
-        models_running = {m: "running" for m in pending}
-        routing["models"] = models_running
-        routing["region"] = region_map
+def run_models_background(prompt: str, routing: dict):
+    """Call each model in sequence, updating status as each runs/completes."""
+    pending = routing.get("pending_models", [])
+    if not pending:
+        write_status(routing, done=True)
+        return
+
+    results = {}
+    for model in pending:
+        # Mark this model running, write status (status line updates within 1s)
+        routing["models"][model] = "running"
+        write_status(routing, done=False)
+        try:
+            result = _call_model(model, prompt)
+            results[model] = result
+            routing["models"][model] = "done"
+        except Exception as e:
+            results[model] = f"[ERR: {str(e)[:80]}]"
+            routing["models"][model] = "failed"
         write_status(routing, done=False)
 
-        # Wait for brain.py to finish
-        stdout, stderr = proc.communicate(input=prompt, timeout=TIMEOUT)
+    write_status(routing, done=True)
 
-        # Update status: models done
-        models_done = {m: "done" for m in routing.get("models", {})}
-        routing["models"] = models_done
-
-        pathway = extract_pathway(stdout)
-        write_status(routing, done=True, pathway=pathway)
-
-        # Write result file for next hook invocation
-        result_file = os.path.expanduser('~/.synapseflow/brain/last_result.json')
-        os.makedirs(os.path.dirname(result_file), exist_ok=True)
-        with open(result_file, 'w', encoding='utf-8') as f:
-            json.dump({
-                "output": stdout[:5000] if stdout else "",
-                "timestamp": time.time(),
-            }, f, ensure_ascii=False)
-
-    except subprocess.TimeoutExpired:
-        proc.kill()
-        models_failed = {m: "failed" for m in routing.get("models", {})}
-        routing["models"] = models_failed
-        write_status(routing, done=True)
-    except Exception:
-        write_status(routing, done=True)
-
-
-def extract_pathway(output: str) -> str:
-    """Extract pathway from brain.py output."""
-    for line in (output or "").split('\n'):
-        if 'Brainstem' in line and '→' in line:
-            return line.strip()
-        if 'Region=' in line:
-            return line.strip()
-    return ''
+    # Save combined result
+    if results:
+        combined = "\n\n".join(f"=== {m} ===\n{results[m]}" for m in results if not results[m].startswith("[ERR"))
+        rf = os.path.expanduser('~/.synapseflow/brain/last_result.json')
+        os.makedirs(os.path.dirname(rf), exist_ok=True)
+        with open(rf, 'w', encoding='utf-8') as f:
+            json.dump({"output": combined[:5000], "timestamp": time.time()}, f, ensure_ascii=False)
 
 
 # ═══════════════════════════════════════════════════════════
@@ -281,7 +273,7 @@ def main():
         write_status(routing, done=False)
 
         # Launch brain.py in background for full LLM execution
-        t = threading.Thread(target=run_brain_background, args=(prompt, dict(routing)), daemon=True)
+        t = threading.Thread(target=run_models_background, args=(prompt, dict(routing)), daemon=True)
         t.start()
 
         # Return immediately — status line already updated!

@@ -27,24 +27,24 @@ has_done = any(st == 'done' for st in models.values())
 
 icons = {0: '<>', 1: 'π', 2: '∟', 3: '📚', 4: '💬', 5: '👁'}
 names = {0: 'Motor', 1: 'Parietal', 2: 'PFC', 3: 'Temporal', 4: 'Language', 5: 'Visual'}
+COLORS = {0: '\033[36m', 1: '\033[35m', 2: '\033[32m', 3: '\033[33m', 4: '\033[31m', 5: '\033[34m'}
+R = '\033[0m'
 SHORT = {'ds-pro':'ds-p', 'ds-think':'ds-tk', 'glm':'glm', 'qwen':'qw', 'kimi':'ki', 'groq':'grq'}
 
+def _color_region(rid, text):
+    c = COLORS.get(rid, '')
+    return f'{c}{text}{R}' if c else text
+
 # ── State 1: Models actively running or done ──
+# Color dots per model
+MDOT = {'done': '\033[32m●\033[0m', 'running': '\033[36m◐\033[0m', 'failed': '\033[31m✕\033[0m', 'pending': '\033[2m○\033[0m'}
 if running or has_done:
-    # Build reverse lookup: model -> region
-    model_region = {}
-    for rname, mlist in region_map.items():
-        for m in mlist:
-            model_region[m] = rname[:4]
     parts = []
     for m, st in models.items():
-        dot = '●' if st == 'done' else ('◐' if st == 'running' else ('✕' if st == 'failed' else '○'))
+        dot = MDOT.get(st, '○')
         ms = SHORT.get(m, m[:4])
-        reg = model_region.get(m, '')[:4]
-        parts.append(f'{dot}{ms}@{reg}')
-    line = '  '.join(parts)
-    if not done: line += '  ...'
-    print(line)
+        parts.append(f'{dot}{ms}')
+    print(' '.join(parts))
     sys.exit(0)
 
 # ── State 2: Brainstem classified → show regions + planned models ──
