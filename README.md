@@ -1,6 +1,8 @@
 # SynapseFlow — Neurosynaptic LLM Orchestration
 
 > **Unified under one principle: minimize prediction error.**
+> 
+> `v2.0 — Predictive Coding + FEP + 6 Brain Regions`
 >
 > Not MoE. Not Agent framework. Not a Frankenstein's monster of math papers.
 >
