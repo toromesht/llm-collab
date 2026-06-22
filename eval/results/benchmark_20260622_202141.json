@@ -1,0 +1,7372 @@
+{
+  "gsm8k_random": {
+    "benchmark": "gsm8k",
+    "router": "RandomRouter",
+    "n_questions": 10,
+    "correct": 0,
+    "total_cost": 0.012700000000000001,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 3,
+      "ds-think": 0,
+      "glm": 5,
+      "qwen": 0,
+      "kimi": 1,
+      "groq": 1
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      }
+    ],
+    "started": "2026-06-22T20:21:40.248568",
+    "accuracy": 0.0,
+    "avg_cost_per_q": 0.00127,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:40.248568"
+  },
+  "gsm8k_single-best": {
+    "benchmark": "gsm8k",
+    "router": "SingleBestRouter",
+    "n_questions": 10,
+    "correct": 0,
+    "total_cost": 0.020000000000000004,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 10,
+      "ds-think": 0,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 0
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      }
+    ],
+    "started": "2026-06-22T20:21:40.248568",
+    "accuracy": 0.0,
+    "avg_cost_per_q": 0.0020000000000000005,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:40.248568"
+  },
+  "gsm8k_heuristic": {
+    "benchmark": "gsm8k",
+    "router": "HeuristicRouter",
+    "n_questions": 10,
+    "correct": 0,
+    "total_cost": 0.0020000000000000005,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 0,
+      "ds-think": 0,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 10
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      }
+    ],
+    "started": "2026-06-22T20:21:40.248568",
+    "accuracy": 0.0,
+    "avg_cost_per_q": 0.00020000000000000004,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:40.249568"
+  },
+  "gsm8k_ucb1": {
+    "benchmark": "gsm8k",
+    "router": "UCB1Router",
+    "n_questions": 10,
+    "correct": 0,
+    "total_cost": 0.020000000000000004,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 10,
+      "ds-think": 0,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 0
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      }
+    ],
+    "started": "2026-06-22T20:21:40.249568",
+    "accuracy": 0.0,
+    "avg_cost_per_q": 0.0020000000000000005,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:40.249568"
+  },
+  "gsm8k_synapseflow": {
+    "benchmark": "gsm8k",
+    "router": "ParetoFEP",
+    "n_questions": 10,
+    "correct": 0,
+    "total_cost": 0.031800000000000016,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 2,
+      "ds-think": 1,
+      "glm": 9,
+      "qwen": 8,
+      "kimi": 6,
+      "groq": 4
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "groq"
+          ],
+          "Parietal": [
+            "qwen"
+          ],
+          "Temporal": [
+            "qwen"
+          ],
+          "Visual": [
+            "qwen"
+          ],
+          "PFC": [
+            "glm"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Parietal": [
+            "qwen"
+          ],
+          "Temporal": [
+            "qwen"
+          ],
+          "Visual": [
+            "qwen"
+          ],
+          "PFC": [
+            "glm"
+          ],
+          "Language": [
+            "glm"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Temporal": [
+            "qwen"
+          ],
+          "Visual": [
+            "qwen"
+          ],
+          "PFC": [
+            "glm"
+          ],
+          "Language": [
+            "glm",
+            "kimi"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Visual": [
+            "qwen"
+          ],
+          "PFC": [
+            "glm"
+          ],
+          "Temporal": [
+            "glm"
+          ],
+          "Language": [
+            "glm",
+            "kimi"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "PFC": [
+            "glm"
+          ],
+          "Temporal": [
+            "glm"
+          ],
+          "Language": [
+            "glm",
+            "kimi"
+          ],
+          "Visual": [
+            "kimi"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Temporal": [
+            "glm"
+          ],
+          "Language": [
+            "glm",
+            "kimi"
+          ],
+          "Visual": [
+            "kimi"
+          ],
+          "Motor": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Language": [
+            "glm",
+            "kimi"
+          ],
+          "Visual": [
+            "kimi"
+          ],
+          "Motor": [
+            "groq",
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Language": [
+            "kimi"
+          ],
+          "Visual": [
+            "kimi"
+          ],
+          "Motor": [
+            "groq",
+            "ds-pro"
+          ],
+          "Parietal": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Visual": [
+            "kimi"
+          ],
+          "Motor": [
+            "groq",
+            "ds-pro"
+          ],
+          "Parietal": [
+            "ds-pro"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "groq",
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      }
+    ],
+    "started": "2026-06-22T20:21:40.249568",
+    "accuracy": 0.0,
+    "avg_cost_per_q": 0.0031800000000000014,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.775673"
+  },
+  "humaneval_random": {
+    "benchmark": "humaneval",
+    "router": "RandomRouter",
+    "n_questions": 10,
+    "correct": 10,
+    "total_cost": 0.011200000000000002,
+    "total_latency": 0.0009996891021728516,
+    "model_counts": {
+      "ds-pro": 1,
+      "ds-think": 1,
+      "glm": 2,
+      "qwen": 3,
+      "kimi": 2,
+      "groq": 1
+    },
+    "per_question": [
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      }
+    ],
+    "started": "2026-06-22T20:21:41.776671",
+    "accuracy": 1.0,
+    "avg_cost_per_q": 0.0011200000000000001,
+    "avg_latency_per_q": 9.996891021728516e-05,
+    "finished": "2026-06-22T20:21:41.777671"
+  },
+  "humaneval_single-best": {
+    "benchmark": "humaneval",
+    "router": "SingleBestRouter",
+    "n_questions": 10,
+    "correct": 10,
+    "total_cost": 0.020000000000000004,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 10,
+      "ds-think": 0,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 0
+    },
+    "per_question": [
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      }
+    ],
+    "started": "2026-06-22T20:21:41.777671",
+    "accuracy": 1.0,
+    "avg_cost_per_q": 0.0020000000000000005,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.777671"
+  },
+  "humaneval_heuristic": {
+    "benchmark": "humaneval",
+    "router": "HeuristicRouter",
+    "n_questions": 10,
+    "correct": 10,
+    "total_cost": 0.020000000000000004,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 10,
+      "ds-think": 0,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 0
+    },
+    "per_question": [
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      }
+    ],
+    "started": "2026-06-22T20:21:41.777671",
+    "accuracy": 1.0,
+    "avg_cost_per_q": 0.0020000000000000005,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.777671"
+  },
+  "humaneval_ucb1": {
+    "benchmark": "humaneval",
+    "router": "UCB1Router",
+    "n_questions": 10,
+    "correct": 10,
+    "total_cost": 0.020000000000000004,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 10,
+      "ds-think": 0,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 0
+    },
+    "per_question": [
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      }
+    ],
+    "started": "2026-06-22T20:21:41.777671",
+    "accuracy": 1.0,
+    "avg_cost_per_q": 0.0020000000000000005,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.777671"
+  },
+  "humaneval_synapseflow": {
+    "benchmark": "humaneval",
+    "router": "ParetoFEP",
+    "n_questions": 10,
+    "correct": 10,
+    "total_cost": 0.05000000000000003,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 20,
+      "ds-think": 10,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 0
+    },
+    "per_question": [
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "Complete this Python function:\n",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      }
+    ],
+    "started": "2026-06-22T20:21:41.777671",
+    "accuracy": 1.0,
+    "avg_cost_per_q": 0.005000000000000003,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.784176"
+  },
+  "mmlu_random": {
+    "benchmark": "mmlu",
+    "router": "RandomRouter",
+    "n_questions": 100,
+    "correct": 100,
+    "total_cost": 0.12300000000000015,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 28,
+      "ds-think": 14,
+      "glm": 14,
+      "qwen": 15,
+      "kimi": 14,
+      "groq": 15
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "glm"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      }
+    ],
+    "started": "2026-06-22T20:21:41.785182",
+    "accuracy": 1.0,
+    "avg_cost_per_q": 0.0012300000000000015,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.785182"
+  },
+  "mmlu_single-best": {
+    "benchmark": "mmlu",
+    "router": "SingleBestRouter",
+    "n_questions": 100,
+    "correct": 100,
+    "total_cost": 0.20000000000000015,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 100,
+      "ds-think": 0,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 0
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      }
+    ],
+    "started": "2026-06-22T20:21:41.785182",
+    "accuracy": 1.0,
+    "avg_cost_per_q": 0.0020000000000000013,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.785182"
+  },
+  "mmlu_heuristic": {
+    "benchmark": "mmlu",
+    "router": "HeuristicRouter",
+    "n_questions": 100,
+    "correct": 100,
+    "total_cost": 0.01999999999999999,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 0,
+      "ds-think": 0,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 100
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": true
+      }
+    ],
+    "started": "2026-06-22T20:21:41.785182",
+    "accuracy": 1.0,
+    "avg_cost_per_q": 0.0001999999999999999,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.785182"
+  },
+  "mmlu_ucb1": {
+    "benchmark": "mmlu",
+    "router": "UCB1Router",
+    "n_questions": 100,
+    "correct": 100,
+    "total_cost": 0.20000000000000015,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 100,
+      "ds-think": 0,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 0
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      }
+    ],
+    "started": "2026-06-22T20:21:41.785182",
+    "accuracy": 1.0,
+    "avg_cost_per_q": 0.0020000000000000013,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.786686"
+  },
+  "mmlu_synapseflow": {
+    "benchmark": "mmlu",
+    "router": "ParetoFEP",
+    "n_questions": 100,
+    "correct": 100,
+    "total_cost": 0.5000000000000003,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 200,
+      "ds-think": 100,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 0
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": true
+      }
+    ],
+    "started": "2026-06-22T20:21:41.786686",
+    "accuracy": 1.0,
+    "avg_cost_per_q": 0.005000000000000004,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.859131"
+  },
+  "boolq_random": {
+    "benchmark": "boolq",
+    "router": "RandomRouter",
+    "n_questions": 10,
+    "correct": 0,
+    "total_cost": 0.0152,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 5,
+      "ds-think": 1,
+      "glm": 0,
+      "qwen": 1,
+      "kimi": 2,
+      "groq": 1
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-think"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "qwen"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "kimi"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      }
+    ],
+    "started": "2026-06-22T20:21:41.859131",
+    "accuracy": 0.0,
+    "avg_cost_per_q": 0.00152,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.859131"
+  },
+  "boolq_single-best": {
+    "benchmark": "boolq",
+    "router": "SingleBestRouter",
+    "n_questions": 10,
+    "correct": 0,
+    "total_cost": 0.020000000000000004,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 10,
+      "ds-think": 0,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 0
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      }
+    ],
+    "started": "2026-06-22T20:21:41.859131",
+    "accuracy": 0.0,
+    "avg_cost_per_q": 0.0020000000000000005,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.859131"
+  },
+  "boolq_heuristic": {
+    "benchmark": "boolq",
+    "router": "HeuristicRouter",
+    "n_questions": 10,
+    "correct": 0,
+    "total_cost": 0.0020000000000000005,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 0,
+      "ds-think": 0,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 10
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "groq"
+          ]
+        },
+        "correct": false
+      }
+    ],
+    "started": "2026-06-22T20:21:41.859131",
+    "accuracy": 0.0,
+    "avg_cost_per_q": 0.00020000000000000004,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.860131"
+  },
+  "boolq_ucb1": {
+    "benchmark": "boolq",
+    "router": "UCB1Router",
+    "n_questions": 10,
+    "correct": 0,
+    "total_cost": 0.020000000000000004,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 10,
+      "ds-think": 0,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 0
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Default": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      }
+    ],
+    "started": "2026-06-22T20:21:41.860131",
+    "accuracy": 0.0,
+    "avg_cost_per_q": 0.0020000000000000005,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.860131"
+  },
+  "boolq_synapseflow": {
+    "benchmark": "boolq",
+    "router": "ParetoFEP",
+    "n_questions": 10,
+    "correct": 0,
+    "total_cost": 0.05000000000000003,
+    "total_latency": 0.0,
+    "model_counts": {
+      "ds-pro": 20,
+      "ds-think": 10,
+      "glm": 0,
+      "qwen": 0,
+      "kimi": 0,
+      "groq": 0
+    },
+    "per_question": [
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      },
+      {
+        "question": "",
+        "selected_models": {
+          "Motor": [
+            "ds-pro",
+            "ds-think"
+          ],
+          "Parietal": [
+            "ds-pro",
+            "qwen"
+          ],
+          "PFC": [
+            "ds-pro"
+          ]
+        },
+        "correct": false
+      }
+    ],
+    "started": "2026-06-22T20:21:41.860131",
+    "accuracy": 0.0,
+    "avg_cost_per_q": 0.005000000000000003,
+    "avg_latency_per_q": 0.0,
+    "finished": "2026-06-22T20:21:41.866144"
+  }
+}
