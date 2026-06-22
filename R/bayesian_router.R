@@ -168,7 +168,7 @@ summarize <- function() {
     )
   }
   result$total_episodes <- nrow(history)
-  result$models_used <- table(history$model)
+  result$models_used <- as.list(table(history$model))
   result$avg_reward <- if(nrow(history) > 0) mean(history$reward) else 0
   return(result)
 }
@@ -255,7 +255,7 @@ if (length(args) == 0) {
 
 } else {
   cmd <- args[1]
-  if (cmd == "--command" && length(args) >= 3) {
+  if (cmd == "--command" && length(args) >= 2) {
     subcmd <- args[2]
     if (subcmd == "route") {
       q <- paste(args[-(1:2)], collapse = " ")
