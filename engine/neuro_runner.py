@@ -1,113 +1,122 @@
 #!/usr/bin/env python3
 """
-neuro_runner.py — Multi-Objective Active Inference Harness
+neuro_runner.py — 7-Mechanism Neural Routing Harness
 
-L_total = G(π) + α·KL(q||p) + (r - V)²
-G(π) = Σ_k w_k(c) · G_k(π)   [6 objectives, context-weighted]
-
-Uses ParetoFEP for routing. Called by hook_brain.py.
+Mechanisms (each independent, paper-anchored):
+  GridCellMap        → encode question in cognitive space
+  PredictiveCoding   → predict model success, error-driven learning
+  SynapticTagging    → tag important events for rapid consolidation
+  HebbianSTDP        → wire together, fire together
+  LateralInhibition  → winner suppresses competitors
+  MemoryConsolidation → L-LTP for repeated success
+  SynapticDecay      → forgetting curve
 """
-import sys, json, os, time, threading, numpy as np
-from pathlib import Path
+import sys,os,json,time,threading,numpy as np
+sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from engine.neural_mechanisms import *
+from engine.brain import call
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
+MODELS=["ds-pro","ds-think","glm","qwen","kimi","groq"]
+N=len(MODELS)
+STATUS=os.path.expanduser("~/.claude/tools/neuro_status.json")
 
-STATUS = os.path.expanduser('~/.claude/tools/neuro_status.json')
-REGION_NAMES = ["Motor", "Parietal", "PFC", "Temporal", "Language", "Visual"]
-
-def ws(stage, models=None, done=False, region=None, diff=0, obj_info=None):
-    d = {}
-    if os.path.exists(STATUS):
-        try: d = json.loads(open(STATUS,'r',encoding='utf-8').read())
-        except: pass
-    d['stage'] = stage; d['done'] = done; d['timestamp'] = time.time()
-    if models: d['models'] = models
-    if region: d['region'] = region
-    if diff: d['difficulty'] = diff
-    if obj_info: d['objectives'] = obj_info
-    os.makedirs(os.path.dirname(STATUS), exist_ok=True)
-    with open(STATUS,'w',encoding='utf-8') as f: json.dump(d, f, ensure_ascii=False)
-
-
-def run(prompt: str):
-    from engine.brainstem_wrapper import load as load_brainstem
-    from engine.pareto_fep import ParetoFEP
-    from engine.brain import call
-
-    # ── 1. Multi-objective routing ──
-    ws('routing')
-    bs = load_brainstem()
-    router = ParetoFEP(bs)
-    decision = router.route(prompt)
-
-    model_list = []; region_map = {}
-    for rname, models in decision['selected_models'].items():
-        for m in models: model_list.append(m); region_map[m] = rname
-
-    initial = {m: "pending" for m in model_list}
-    ws('routing_done', models=initial, region=decision['selected_models'],
-       diff=decision['difficulty'],
-       obj_info={'context': decision['context'], 'weights': decision['weights']})
-
-    # ── 2. Parallel execution ──
-    ws('executing', models=initial, region=decision['selected_models'])
-    results = {}; lock = threading.Lock()
-
-    def _worker(model):
-        with lock: initial[model] = "running"; ws('executing', models=initial, region=decision['selected_models'])
+class NeuralRunner:
+    def __init__(self):
+        # Embedder
         try:
-            result = call(model, prompt, max_tok=2000)
-            with lock: results[model] = result; initial[model] = "done"
-        except Exception as e:
-            with lock: results[model] = f"[ERR:{str(e)[:80]}]"; initial[model] = "failed"
-        with lock: ws('executing', models=initial, region=decision['selected_models'])
+            from sentence_transformers import SentenceTransformer
+            self.embedder=SentenceTransformer('all-MiniLM-L6-v2')
+            self.has_bert=True
+        except: self.has_bert=False
 
-    threads = [threading.Thread(target=_worker, args=(m,)) for m in model_list]
-    for t in threads: t.start()
-    for t in threads: t.join()
+        # All 7 mechanisms
+        self.grid=GridCellMap(n_modules=4,dim=384 if self.has_bert else 384)
+        self.pred=PredictiveCodingLayer(n_input=len(self.grid.modules),n_output=N)
+        self.tags=SynapticTagging(n_synapses=N)
+        self.hebb=HebbianSTDP(n_synapses=N)
+        self.lateral=LateralInhibition(n_units=N)
+        self.consolid=MemoryConsolidation(n_synapses=N)
+        self.decay=SynapticDecay(decay_rate=0.0005)
+        self.episodes=0
 
-    # ── 3. Cortex synthesis ──
-    ws('cortex', models=initial, region=decision['selected_models'])
-    valid = {m: r for m, r in results.items() if not r.startswith("[ERR")}
-    if len(valid) > 1:
-        combined = "\n\n".join(f"=== {m} ({region_map.get(m,'?')}) ===\n{r}" for m, r in valid.items())
-        try: final = call("ds-pro", f"综合以下{len(valid)}个模型的独立回答给出最佳答案:\n\n{prompt}\n\n{combined}", max_tok=3000)
-        except: final = list(valid.values())[0][:3000]
-    elif len(valid) == 1: final = list(valid.values())[0]
-    else: final = "[ALL FAILED]"
+    def _embed(self,text):
+        if self.has_bert:
+            e=self.embedder.encode(text,convert_to_numpy=True).astype(np.float64)
+            return e/(np.linalg.norm(e)+1e-8)
+        v=np.zeros(384); tx=text.lower()
+        for n in[2,3,4]:
+            for i in range(len(tx)-n+1): v[hash(tx[i:i+n])%384]+=1.0
+        return v/(np.linalg.norm(v)+1e-8)
 
-    # ── 4. Learn: Pareto posterior + Hebbian coupling ──
-    ws('learning', models=initial, region=decision['selected_models'])
-    for idx in decision['top_policy_indices']:
-        _, model = [(0,"ds-pro"),(0,"ds-think"),(0,"groq"),(1,"ds-pro"),(1,"ds-think"),(1,"qwen"),
-                     (2,"ds-pro"),(2,"ds-think"),(2,"glm"),(3,"glm"),(3,"qwen"),(4,"glm"),(4,"kimi"),
-                     (5,"kimi"),(5,"qwen")][idx]
-        result = results.get(model, "")
-        reward = 1.0 if result and not result.startswith("[ERR") else 0.0
-        router.learn(prompt, decision, idx, reward)
+    def _ws(self,stage,models=None,region=None,done=False):
+        d={}
+        if os.path.exists(STATUS):
+            try:d=json.loads(open(STATUS,"r",encoding="utf-8").read())
+            except:pass
+        d["stage"]=stage;d["done"]=done;d["timestamp"]=time.time()
+        if models:d["models"]=models
+        os.makedirs(os.path.dirname(STATUS),exist_ok=True)
+        with open(STATUS,"w",encoding="utf-8") as f:json.dump(d,f,ensure_ascii=False)
 
-    # ── 5. Done ──
-    final_models = {m: ("done" if m in valid else "failed") for m in model_list}
-    ws('done', models=final_models, region=decision['selected_models'], done=True)
+    def route(self,question):
+        emb=self._embed(question)
+        grid_vec=self.grid.encode(emb)           # 1. Grid: where in cognitive space?
+        preds=self.pred.predict(grid_vec)         # 2. Predict: which model will succeed?
+        # 3. Tag info: tagged models get exploration boost
+        tag_boost=self.tags.tags*0.3
+        # 4. Hebbian weights: learned pathway strength
+        heb_boost=self.hebb.weights*0.2
+        scores=preds+tag_boost+heb_boost
+        # 5. Lateral inhibition: winner suppresses others
+        if np.max(scores)>0:
+            winner=int(np.argmax(scores))
+            scores=self.lateral.apply(scores,winner)
+        best=int(np.argmax(scores))
+        return {"primary_model":MODELS[best],"predictions":{MODELS[i]:round(float(preds[i]),3) for i in np.argsort(-preds)[:4]}}
 
-    rf = os.path.expanduser('~/.synapseflow/brain/last_result.json')
-    os.makedirs(os.path.dirname(rf), exist_ok=True)
-    with open(rf,'w',encoding='utf-8') as f:
-        json.dump({'output': final[:5000], 'routing': decision['selected_models'],
-                   'context': decision['context'], 'pareto': decision.get('pareto_front',[]),
-                   'timestamp': time.time()}, f, ensure_ascii=False)
+    def learn(self,question,model,reward):
+        emb=self._embed(question); mi=MODELS.index(model)
+        grid_vec=self.grid.encode(emb)
+        # 2. Predictive coding: only prediction error drives update
+        target=np.zeros(N); target[mi]=reward
+        self.pred.update(grid_vec,target,mi,lr=0.01)
+        # 3. Synaptic tagging: large errors set tags
+        error=target-self.pred.predict(grid_vec)
+        self.tags.update(error)
+        # 4. Hebbian: pre (question) → post (model success/failure)
+        self.hebb.pre_fire(mi); self.hebb.post_fire(mi,reward>0.5)
+        # 5. Lateral: adapt inhibition
+        best=int(np.argmax(self.pred.predict(grid_vec)))
+        if best!=mi: self.lateral.adapt(best,mi,reward>0.5)
+        # 6. Consolidation
+        self.consolid.update(mi,reward>0.5)
+        # 7. Decay
+        self.hebb.weights=self.decay.apply(self.hebb.weights,[mi])
+        self.episodes+=1
 
-    repo_log = os.path.expanduser('~/Desktop/collab-cloud/data/brain_activity.jsonl')
-    os.makedirs(os.path.dirname(repo_log), exist_ok=True)
-    with open(repo_log,'a',encoding='utf-8') as f:
-        f.write(json.dumps({'routing': decision['selected_models'], 'models': final_models,
-            'difficulty': decision['difficulty'], 'context': decision['context'],
-            'pareto': decision.get('pareto_front',[]), 'timestamp': time.time()}, ensure_ascii=False)+'\n')
+    def execute(self,question):
+        self._ws("routing")
+        d=self.route(question); m=d["primary_model"]
+        self._ws("executing",models={m:"running"})
+        try:
+            prompt=f"Step by step. Answer precisely.\n\n{question}"
+            resp=call(m,prompt,max_tok=2000); reward=1.0 if len(str(resp))>20 else 0.0
+        except: resp="[ERR]"; reward=0.0
+        self._ws("done",models={m:"done"})
+        self.learn(question,m,reward)
+        # Log
+        rf=os.path.expanduser("~/.synapseflow/brain/last_result.json")
+        os.makedirs(os.path.dirname(rf),exist_ok=True)
+        with open(rf,"w",encoding="utf-8") as f: json.dump({"chosen":m,"reward":reward,"episode":self.episodes,"ts":time.time()},f)
+        return {"model":m,"reward":reward,"response":str(resp)[:500],"predictions":d["predictions"]}
 
-    return final
-
-
-if __name__ == '__main__':
-    prompt = sys.stdin.read().strip()
-    if not prompt: sys.exit(1)
-    print(run(prompt))
+if __name__=="__main__":
+    r=NeuralRunner()
+    qs=[("Solve 2x+5=17 step by step","ds-think"),("What is the capital of France?","groq"),("Write Python quicksort","ds-pro")]
+    for epoch in range(3):
+        print(f"\n--- Epoch {epoch+1} ---")
+        for q,exp in qs:
+            res=r.execute(q); ok="OK" if res["model"]==exp else "LEARN"
+            print(f"{ok} {q[:35]:35s} -> {res['model']:10s} r={res['reward']} pred={list(res['predictions'].items())[:2]}")
+    print(f"\nEpisodes: {r.episodes} | Consolidated: {sum(r.consolid.consolidated)} | Tagged: {sum(r.tags.tags>0)}")
+    print("NeuralRunner: ALL 7 MECHANISMS ACTIVE")
