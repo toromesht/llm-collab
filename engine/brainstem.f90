@@ -224,44 +224,68 @@ contains
     end do
   end function do_hamming
 
-  ! ---- SDM Read (Kanerva 1988, Ch.4.3) ----
+  ! ---- SDM Read (TOP-K, Kanerva 1988, Ch.4.3) ----
 
   subroutine do_sdm_read(query_hv, region_scores, confidence, n_activated)
     integer(kind=1), intent(in)  :: query_hv(HV_SIZE)
     real(kind=8),    intent(out) :: region_scores(N_REGIONS)
     real(kind=8),    intent(out) :: confidence
     integer,         intent(out) :: n_activated
-    integer, parameter :: RADIUS = 500
-    integer :: j, i, d
+    integer, parameter :: K = 5
+    integer :: j, i, d, best_j
     real(kind=8) :: total_score
+    integer :: distances(N_PROTOTYPES), top_k_idx(K)
 
     region_scores(:) = 0.0d0
-    n_activated = 0
 
+    ! Compute all distances
     do j = 1, N_PROTOTYPES
-      d = do_hamming(query_hv, address_memory(:, j))
-      if (d < RADIUS) then
+      distances(j) = do_hamming(query_hv, address_memory(:, j))
+    end do
+
+    ! Find K nearest (simple selection sort for K=5)
+    top_k_idx(:) = 0
+    do i = 1, K
+      best_j = 1
+      do j = 2, N_PROTOTYPES
+        if (distances(j) < distances(best_j)) then
+          ! Check not already selected
+          best_j = j
+        end if
+      end do
+      ! Mark as used
+      do j = 1, i-1
+        if (top_k_idx(j) == best_j) best_j = 0
+      end do
+      if (best_j > 0) then
+        top_k_idx(i) = best_j
+        distances(best_j) = 100000  ! exclude from next selection
+      end if
+    end do
+
+    ! Average content of K nearest
+    n_activated = 0
+    do i = 1, K
+      if (top_k_idx(i) > 0) then
         n_activated = n_activated + 1
-        do i = 1, N_REGIONS
-          region_scores(i) = region_scores(i) + content_memory(i, j)
+        do j = 1, N_REGIONS
+          region_scores(j) = region_scores(j) + content_memory(j, top_k_idx(i))
         end do
       end if
     end do
 
     if (n_activated > 0) then
       region_scores(:) = region_scores(:) / dble(n_activated)
-      total_score = 0.0d0
-      do i = 1, N_REGIONS
-        if (region_scores(i) > 0.0d0) total_score = total_score + region_scores(i)
-      end do
-      if (total_score > 0.0d0) then
-        confidence = maxval(region_scores) / total_score
-      else
-        confidence = 1.0d0 / dble(N_REGIONS)
-      end if
+    end if
+
+    total_score = 0.0d0
+    do i = 1, N_REGIONS
+      if (region_scores(i) > 0.0d0) total_score = total_score + region_scores(i)
+    end do
+    if (total_score > 0.0d0) then
+      confidence = maxval(region_scores) / total_score
     else
-      region_scores(:) = 0.0d0
-      confidence = 0.0d0
+      confidence = 1.0d0 / dble(N_REGIONS)
     end if
 
     sdm_read_count = sdm_read_count + 1

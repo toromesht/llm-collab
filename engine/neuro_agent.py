@@ -56,6 +56,8 @@ from engine.brain import (
     synaptic_update, spsa_step,
     CC, MODELS, PARAMS,
 )
+from engine.math_router import MathRouter
+from engine.path_learner import PathLearner
 
 # ─── Feature key ordering (must match brainstem.f90 N_DIMS=22) ─
 
@@ -186,12 +188,15 @@ class NeuroOrchestrator:
         self.brainstem = load_brainstem()
         self.regions = get_router(config_path)
         self.synapses = PathwayNetwork(config_path)
+        self.math_router = MathRouter(seed=42)       # JL+LSH+UCB+CUSUM+SPRT
+        self.path_learner = PathLearner()             # Bayesian adaptive forgetting
         self.round_counter = self._load_round_counter()
 
         # Preload feature key order for speed
         self._feature_keys = FEATURE_KEYS
 
         print(f"  {CC.get('C','')}[NEURO] Brainstem: {type(self.brainstem).__name__}")
+        print(f"  {CC.get('C','')}[NEURO] MathRouter: JL+LSH+CUSUM+SPRT+TD(λ)")
         print(f"  {CC.get('C','')}[NEURO] Regions: {len(self.regions.regions)} areas loaded")
         stats = self.synapses.get_statistics()
         print(f"  {CC.get('C','')}[NEURO] Synapses: {stats['active']} active, "
@@ -339,6 +344,16 @@ class NeuroOrchestrator:
         )
         self.synapses.update(pathway, validated, feature_vec)
 
+        # Math Router update (JL+LSH+UCB+CUSUM+SPRT)
+        self.math_router.update(
+            region_name, model_to_update, category,
+            reward=1.0 if validated else 0.0, features=features
+        )
+
+        # Path Learner update (Bayesian adaptive forgetting)
+        pl_path = self.path_learner.get_or_create(region_name, model_to_update, category)
+        self.path_learner.update(pl_path, 1.0 if validated else 0.0)
+
         # Also update brainstem SDM (online learning)
         if validated:
             try:
@@ -365,9 +380,11 @@ class NeuroOrchestrator:
         return answer
 
     def get_stats(self) -> Dict:
-        """Return comprehensive system statistics including neuromodulation."""
+        """Return comprehensive system statistics including math-router learning."""
         bs_reads, bs_writes, bs_avg_act = self.brainstem.get_stats()
         synapse_stats = self.synapses.get_statistics()
+        math_stats = self.math_router.get_stats()
+        pl_stats = self.path_learner.get_stats()
 
         return {
             "round": self.round_counter,
@@ -382,6 +399,8 @@ class NeuroOrchestrator:
                 for name, r in self.regions.regions.items()
             },
             "synapses": synapse_stats,
+            "math_router": math_stats,
+            "path_learner": pl_stats,
             "neuromodulation": {
                 "dopamine": round(synapse_stats.get("dopamine", 0.5), 3),
                 "serotonin": round(synapse_stats.get("serotonin", 0.5), 3),

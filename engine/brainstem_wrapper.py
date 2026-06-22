@@ -150,41 +150,32 @@ class PythonBrainstem:
         return int(np.sum(a != b))
 
     # ── SDM Read (Kanerva 1988, Ch.4.3) ───────────────────────
+    # Uses TOP-K nearest neighbors instead of fixed radius.
+    # With 10k-bit vectors and 100 prototypes, radius-based
+    # activation misses ~100% of the time. TOP-K=3 always works.
 
     def sdm_read(self, query_hv: np.ndarray) -> tuple:
-        """
-        Read region scores from SDM near the query hypervector.
-
-        Activation radius = 500 (5% of HV_SIZE)
-
-        Returns:
-            region_scores: (6,) float64
-            confidence: float in [0,1]
-            n_activated: int
-        """
-        RADIUS = 500
+        K = 5  # Use 5 nearest prototypes
         region_scores = np.zeros(N_REGIONS, dtype=np.float64)
-        n_activated = 0
 
-        for j in range(N_PROTOTYPES):
-            d = self.hamming_distance(query_hv, self.address_memory[:, j])
-            if d < RADIUS:
-                n_activated += 1
-                region_scores += self.content_memory[:, j]
+        # Compute all distances, find K nearest
+        distances = np.array([
+            self.hamming_distance(query_hv, self.address_memory[:, j])
+            for j in range(N_PROTOTYPES)
+        ])
+        top_k_idx = np.argpartition(distances, K)[:K]
 
-        if n_activated > 0:
-            region_scores /= n_activated
-            total = np.maximum(region_scores, 0).sum()
-            confidence = (region_scores.max() / total) if total > 0 else (1.0 / N_REGIONS)
-        else:
-            region_scores[:] = 0.0
-            confidence = 0.0
+        for j in top_k_idx:
+            region_scores += self.content_memory[:, j]
 
-        # Update running stats
+        region_scores /= K
+        total = np.maximum(region_scores, 0).sum()
+        confidence = (region_scores.max() / total) if total > 0 else (1.0 / N_REGIONS)
+
         self.read_count += 1
-        self.avg_activation = 0.9 * self.avg_activation + 0.1 * n_activated
+        self.avg_activation = 0.9 * self.avg_activation + 0.1 * K
 
-        return region_scores, confidence, n_activated
+        return region_scores, confidence, K
 
     # ── SDM Write (Kanerva 1988, Ch.4.4) ─────────────────────
     # Hebbian update: reinforce correct region, mildly depress others
@@ -243,12 +234,6 @@ class PythonBrainstem:
         region_id = int(np.argmax(region_scores))
 
         diff = self.difficulty(features)
-
-        # Fallback: direct affinity scoring if no SDM activation
-        if n_activated == 0:
-            raw_scores = self.region_affinity @ features
-            region_id = int(np.argmax(raw_scores))
-            confidence = 0.3
 
         confidence = max(0.0, min(1.0, confidence))
         return region_id, confidence, diff

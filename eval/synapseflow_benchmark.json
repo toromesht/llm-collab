@@ -1,0 +1,84 @@
+{
+  "timestamp": "2026-06-22T14:09:08",
+  "results": [
+    {
+      "benchmark": "BoolQ",
+      "questions": 4,
+      "neuro_pct": 0.0,
+      "single_pct": 0.0,
+      "neuro_time": 8.3,
+      "single_time": 8.8
+    },
+    {
+      "benchmark": "MMLU",
+      "questions": 4,
+      "neuro_pct": 50.0,
+      "single_pct": 0.0,
+      "neuro_time": 8.4,
+      "single_time": 5.1
+    },
+    {
+      "benchmark": "HumanEval",
+      "questions": 4,
+      "neuro_pct": 100.0,
+      "single_pct": 100.0,
+      "neuro_time": 23.7,
+      "single_time": 6.2
+    },
+    {
+      "benchmark": "GSM8K",
+      "questions": 4,
+      "neuro_pct": 75.0,
+      "single_pct": 75.0,
+      "neuro_time": 5.7,
+      "single_time": 5.5
+    }
+  ],
+  "synaptic_state": {
+    "round": 88,
+    "brainstem": {
+      "type": "FortranCLIBrainstem",
+      "sdm_reads": 5,
+      "sdm_writes": 0,
+      "avg_activation": 0.0
+    },
+    "regions": {
+      "motor_cortex": 5,
+      "parietal_cortex": 11,
+      "prefrontal_cortex": 0,
+      "temporal_cortex": 0,
+      "language_area": 0,
+      "visual_cortex": 0
+    },
+    "synapses": {
+      "total_pathways": 7,
+      "active": 6,
+      "hardened": 3,
+      "pruned": 1,
+      "shortcuts": 6,
+      "avg_weight": 0.6581,
+      "dopamine": 0.014,
+      "serotonin": 0.78,
+      "branching_ratio": 0.5,
+      "prp_pools": {
+        "parietal_cortex": 0.05
+      },
+      "astrocyte_ca": {
+        "parietal_cortex": 0.392,
+        "motor_cortex": 0.249
+      }
+    },
+    "neuromodulation": {
+      "dopamine": 0.014,
+      "serotonin": 0.78,
+      "branching_ratio": 0.5,
+      "prp_pools": {
+        "parietal_cortex": 0.05
+      },
+      "astrocyte_ca": {
+        "parietal_cortex": 0.392,
+        "motor_cortex": 0.249
+      }
+    }
+  }
+}
