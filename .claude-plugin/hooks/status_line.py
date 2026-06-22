@@ -31,11 +31,16 @@ SHORT = {'ds-pro':'ds-p', 'ds-think':'ds-tk', 'glm':'glm', 'qwen':'qw', 'kimi':'
 
 # ── State 1: Models actively running or done ──
 if running or has_done:
+    # Build reverse lookup: model -> region
+    model_region = {}
+    for rname, mlist in region_map.items():
+        for m in mlist:
+            model_region[m] = rname[:4]
     parts = []
     for m, st in models.items():
         dot = '●' if st == 'done' else ('◐' if st == 'running' else ('✕' if st == 'failed' else '○'))
         ms = SHORT.get(m, m[:4])
-        reg = region_map.get(m, '')[:4]
+        reg = model_region.get(m, '')[:4]
         parts.append(f'{dot}{ms}@{reg}')
     line = '  '.join(parts)
     if not done: line += '  ...'
@@ -48,12 +53,8 @@ if active:
     for rid in active:
         icon = icons.get(rid, '?')
         name = names.get(rid, '?')
-        nshort = name[:4].lower()
-        # Find models planned for this region
-        rmodels = []
-        for m, r in region_map.items():
-            if r and r[:4].lower() == nshort:
-                rmodels.append(SHORT.get(m, m[:4]))
+        # New format: region -> [models]
+        rmodels = [SHORT.get(m, m[:4]) for m in region_map.get(name, [])]
         if rmodels:
             region_parts.append(f'{icon} {name}({",".join(rmodels)})')
         else:
@@ -70,7 +71,7 @@ if cls:
     name = names.get(rid, '?')
     conf = cls.get('confidence', 0)
     nshort = name[:4].lower()
-    rmodels = [SHORT.get(m, m[:4]) for m, r in region_map.items() if r and r[:4].lower() == nshort]
+    rmodels = [SHORT.get(m, m[:4]) for m in region_map.get(name, [])]
     if rmodels:
         print(f'{icon} {name}({",".join(rmodels)})  conf={conf:.0%}')
     else:

@@ -86,27 +86,32 @@ def fast_classify(prompt: str) -> dict:
         if 3 not in active_regions:
             active_regions.append(3)  # Temporal for knowledge
 
-    # Determine models per region (2-3 models each)
-    model_region_map = {}
-    if region_id == 0:  # Motor: code/execution
-        model_region_map = {"ds-pro": "Motor", "ds-think": "Motor", "groq": "Motor"}
-    elif region_id == 1:  # Parietal: math/numerical
-        model_region_map = {"ds-pro": "Parietal", "ds-think": "Parietal", "qwen": "Parietal"}
-    elif region_id == 2:  # PFC: logic/reasoning
-        model_region_map = {"ds-pro": "PFC", "ds-think": "PFC", "glm": "PFC"}
-    elif region_id == 3:  # Temporal: knowledge/memory
-        model_region_map = {"glm": "Temporal", "qwen": "Temporal", "groq": "Temporal"}
-    elif region_id == 4:  # Language: writing/chinese
-        model_region_map = {"glm": "Language", "kimi": "Language", "qwen": "Language"}
-    else:  # Visual: multimodal
-        model_region_map = {"kimi": "Visual", "qwen": "Visual"}
+    # Models per region — keyed by REGION (not model) to avoid overwrites
+    ALL_MODELS = {
+        0: ["ds-pro", "ds-think", "groq"],
+        1: ["ds-pro", "ds-think", "qwen"],
+        2: ["ds-pro", "ds-think", "glm"],
+        3: ["glm", "qwen", "groq"],
+        4: ["glm", "kimi", "qwen"],
+        5: ["kimi", "qwen"],
+    }
+    region_models = {}  # {region_name: [model_list]}
+    pending_models = []
+    for rid in active_regions:
+        rname = _REGION_NAMES[rid]
+        models = list(ALL_MODELS.get(rid, []))
+        if rid != region_id: models = models[:2]  # secondary: 2 models
+        region_models[rname] = models
+        pending_models.extend(models)
 
-    # Low difficulty = use Groq only (fast/cheap)
     if difficulty < 0.3:
-        model_region_map = {"groq": _REGION_NAMES[region_id]}
-    # High difficulty = add ds-think for deep reasoning
-    if difficulty > 0.6 and "ds-think" not in model_region_map:
-        model_region_map["ds-think"] = _REGION_NAMES[region_id]
+        rname = _REGION_NAMES[region_id]
+        region_models = {rname: ["groq"]}
+        pending_models = ["groq"]
+    if difficulty > 0.6 and "ds-think" not in pending_models:
+        rname = _REGION_NAMES[region_id]
+        region_models.setdefault(rname, []).append("ds-think")
+        pending_models.append("ds-think")
 
     return {
         "region_id": region_id,
@@ -115,8 +120,8 @@ def fast_classify(prompt: str) -> dict:
         "difficulty": round(float(difficulty), 2),
         "active_regions": active_regions,
         "models": {},  # empty -> status_line shows region view
-        "region_map": model_region_map,  # used by bg runner
-        "pending_models": list(model_region_map.keys()),
+        "region": region_models,  # {region_name: [model_list]}
+        "pending_models": pending_models,  # flat list for bg runner
     }
 
 
@@ -126,7 +131,7 @@ def write_status(routing: dict, done: bool = False, pathway: str = ""):
         "active": len(routing.get("active_regions", [])),
         "active_regions": routing.get("active_regions", []),
         "models": routing.get("models", {}),
-        "region": routing.get("region_map", {}),
+        "region": routing.get("region", {}),  # {region_name: [model_list]}
         "difficulty": routing.get("difficulty", 0),
         "classification": {
             "region_id": routing.get("region_id", 0),
