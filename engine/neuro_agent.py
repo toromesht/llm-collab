@@ -59,6 +59,7 @@ from engine.brain import (
 from engine.math_router import MathRouter
 from engine.path_learner import PathLearner
 from engine.fep_unified import UnifiedFEPRouter
+from engine.parallel_ui import ParallelMonitor, parallel_call
 
 # ─── Feature key ordering (must match brainstem.f90 N_DIMS=22) ─
 
@@ -314,7 +315,12 @@ class NeuroOrchestrator:
             if len(models_used) >= 2:
                 print(f"  {CC.get('M','')}[MULTI-REGION] "
                       f"Low conf={brainstem_conf:.2f}, activating: {', '.join(top_2[0][0] for _ in top_2[:0])}")
-                answer = execute_collab(question, models_used)
+                print(f"  {CC.get('M','')}[MULTI-REGION] "
+                      f"Low conf={brainstem_conf:.2f}")
+                # Parallel UI execution
+                region_models = {region_name: models_used}
+                results = parallel_call(region_models, question)
+                answer = results.get(models_used[0], "") if results else ""
                 strategy_used = "multi_region_collab"
                 primary_model = models_used[0] if models_used else "ds-pro"
             else:
@@ -323,11 +329,28 @@ class NeuroOrchestrator:
                 primary_model = models_used[0] if models_used else "ds-pro"
         else:
             # High confidence: single region
-            print(f"  {CC.get('G','')}[REGION] {region.config.get('name', region_name)}")
-            answer = region.execute(question, features, difficulty)
-            strategy_used = region.get_strategy(difficulty)
             active_models = region.get_active_models(difficulty)
-            primary_model = active_models[0] if active_models else "ds-pro"
+            print(f"  {CC.get('G','')}[REGION] {region.config.get('name', region_name)}")
+            print(f"  {CC.get('G','')}[MODELS] {active_models}")
+
+            # Parallel UI for multi-model execution
+            if len(active_models) > 1:
+                region_models = {region_name: active_models}
+                results = parallel_call(region_models, question)
+                # Combine results using DS-PRO
+                if results:
+                    combined = "\n\n".join(f"=== {m} ===\n{results[m]}" for m in results)
+                    answer = call("ds-pro",
+                        f"Synthesize these parallel answers:\n{combined}",
+                        max_tok=2000)
+                else:
+                    answer = ""
+                strategy_used = "parallel_collab"
+                primary_model = active_models[0]
+            else:
+                answer = region.execute(question, features, difficulty)
+                strategy_used = region.get_strategy(difficulty)
+                primary_model = active_models[0] if active_models else "ds-pro"
 
         # ── 4. Cortical Validation (DS-PRO review) ────────────
         answer, validated = cortical_validation(answer, question, features, difficulty)
