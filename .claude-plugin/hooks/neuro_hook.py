@@ -97,12 +97,17 @@ def fast_classify(prompt: str) -> dict:
     }
     region_models = {}  # {region_name: [model_list]}
     pending_models = []
+    seen = set()
     for rid in active_regions:
         rname = _REGION_NAMES[rid]
         models = list(ALL_MODELS.get(rid, []))
         if rid != region_id: models = models[:2]  # secondary: 2 models
-        region_models[rname] = models
-        pending_models.extend(models)
+        region_models[rname] = []
+        for m in models:
+            if m not in seen:
+                seen.add(m)
+                region_models[rname].append(m)
+                pending_models.append(m)
 
     if difficulty < 0.3:
         rname = _REGION_NAMES[region_id]
@@ -171,6 +176,20 @@ def _call_model(model_id: str, prompt: str, max_tok: int = 2000) -> str:
     return r.choices[0].message.content.strip()
 
 
+def run_brain_pipeline(prompt, routing):
+    bp = os.path.expanduser('~/.claude/tools/brain.py')
+    try:
+        env = os.environ.copy(); env['NEURO_MODE'] = '1'
+        proc = subprocess.Popen([sys.executable, bp], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding='utf-8', errors='replace', env=env)
+        stdout, _ = proc.communicate(input=prompt, timeout=300)
+        output = stdout.strip() if stdout else ''
+        rf = os.path.expanduser('~/.synapseflow/brain/last_result.json')
+        os.makedirs(os.path.dirname(rf), exist_ok=True)
+        with open(rf, 'w', encoding='utf-8') as f: json.dump({'output': output[:5000], 'timestamp': time.time()}, f, ensure_ascii=False)
+        write_status(routing, done=True)
+    except Exception: write_status(routing, done=True)
+
+
 def run_models_background(prompt: str, routing: dict):
     """Call each model in sequence, updating status as each runs/completes."""
     pending = routing.get("pending_models", [])
@@ -179,18 +198,26 @@ def run_models_background(prompt: str, routing: dict):
         return
 
     results = {}
-    for model in pending:
-        # Mark this model running, write status (status line updates within 1s)
-        routing["models"][model] = "running"
-        write_status(routing, done=False)
+    # Mark all pending first (visible immediately), then launch parallel
+    for m in pending:
+        routing["models"][m] = "pending"
+    write_status(routing, done=False)
+
+    lock = threading.Lock()
+    def _worker(model):
+        with lock:
+            routing["models"][model] = "running"
+            write_status(routing, done=False)
         try:
             result = _call_model(model, prompt)
-            results[model] = result
-            routing["models"][model] = "done"
+            with lock: results[model] = result; routing["models"][model] = "done"
         except Exception as e:
-            results[model] = f"[ERR: {str(e)[:80]}]"
-            routing["models"][model] = "failed"
-        write_status(routing, done=False)
+            with lock: results[model] = f"[ERR: {str(e)[:80]}]"; routing["models"][model] = "failed"
+        with lock: write_status(routing, done=False)
+
+    threads = [threading.Thread(target=_worker, args=(m,)) for m in pending]
+    for t in threads: t.start()
+    for t in threads: t.join()
 
     write_status(routing, done=True)
 
@@ -273,7 +300,7 @@ def main():
         write_status(routing, done=False)
 
         # Launch brain.py in background for full LLM execution
-        t = threading.Thread(target=run_models_background, args=(prompt, dict(routing)), daemon=True)
+        t = threading.Thread(target=run_brain_pipeline, args=(prompt, dict(routing)), daemon=True)
         t.start()
 
         # Return immediately — status line already updated!
