@@ -1,0 +1,312 @@
+{
+  "timestamp": "2026-06-22T09:37:58",
+  "results": [
+    {
+      "id": "math_1",
+      "domain": "math",
+      "expected_region": "parietal_cortex",
+      "neuro": {
+        "time": 0.0,
+        "quality": {
+          "keyword_coverage": 0.0,
+          "length": 68,
+          "length_score": 0.17,
+          "has_code": false,
+          "has_structure": false,
+          "quality_score": 0.184,
+          "found_keywords": [],
+          "missing_keywords": [
+            "Sylow",
+            "正规子群",
+            "共轭",
+            "n_p",
+            "同余",
+            "单群",
+            "矛盾"
+          ]
+        }
+      },
+      "single": {
+        "time": 27.57,
+        "quality": {
+          "keyword_coverage": 0.571,
+          "length": 687,
+          "length_score": 1.0,
+          "has_code": false,
+          "has_structure": true,
+          "quality_score": 0.786,
+          "found_keywords": [
+            "sylow",
+            "正规子群",
+            "共轭",
+            "单群"
+          ],
+          "missing_keywords": [
+            "n_p",
+            "同余",
+            "矛盾"
+          ]
+        }
+      },
+      "delta": {
+        "quality": -0.602,
+        "time_ratio": 0.0
+      }
+    },
+    {
+      "id": "code_1",
+      "domain": "code",
+      "expected_region": "motor_cortex",
+      "neuro": {
+        "time": 118.74,
+        "quality": {
+          "keyword_coverage": 0.571,
+          "length": 7219,
+          "length_score": 1.0,
+          "has_code": true,
+          "has_structure": true,
+          "quality_score": 0.786,
+          "found_keywords": [
+            "cas",
+            "atomic",
+            "thread",
+            "aba"
+          ],
+          "missing_keywords": [
+            "compare_and_swap",
+            "lock-free",
+            "memory_order"
+          ]
+        }
+      },
+      "single": {
+        "time": 48.29,
+        "quality": {
+          "keyword_coverage": 0.0,
+          "length": 0,
+          "length_score": 0.0,
+          "has_code": false,
+          "has_structure": false,
+          "quality_score": 0.0,
+          "found_keywords": [],
+          "missing_keywords": [
+            "CAS",
+            "atomic",
+            "compare_and_swap",
+            "lock-free",
+            "thread",
+            "memory_order",
+            "ABA"
+          ]
+        }
+      },
+      "delta": {
+        "quality": 0.786,
+        "time_ratio": 2.46
+      }
+    },
+    {
+      "id": "logic_1",
+      "domain": "logic",
+      "expected_region": "prefrontal_cortex",
+      "neuro": {
+        "time": 0.0,
+        "quality": {
+          "keyword_coverage": 0.0,
+          "length": 68,
+          "length_score": 0.113,
+          "has_code": false,
+          "has_structure": false,
+          "quality_score": 0.173,
+          "found_keywords": [],
+          "missing_keywords": [
+            "骑士",
+            "无赖",
+            "间谍",
+            "推理",
+            "矛盾",
+            "假设"
+          ]
+        }
+      },
+      "single": {
+        "time": 27.78,
+        "quality": {
+          "keyword_coverage": 0.0,
+          "length": 0,
+          "length_score": 0.0,
+          "has_code": false,
+          "has_structure": false,
+          "quality_score": 0.15,
+          "found_keywords": [],
+          "missing_keywords": [
+            "骑士",
+            "无赖",
+            "间谍",
+            "推理",
+            "矛盾",
+            "假设"
+          ]
+        }
+      },
+      "delta": {
+        "quality": 0.023,
+        "time_ratio": 0.0
+      }
+    },
+    {
+      "id": "knowledge_1",
+      "domain": "knowledge",
+      "expected_region": "temporal_cortex",
+      "neuro": {
+        "time": 86.8,
+        "quality": {
+          "keyword_coverage": 1.0,
+          "length": 8147,
+          "length_score": 1.0,
+          "has_code": true,
+          "has_structure": true,
+          "quality_score": 1.0,
+          "found_keywords": [
+            "mvcc",
+            "版本链",
+            "快照隔离",
+            "vacuum",
+            "postgresql",
+            "innodb",
+            "事务id",
+            "可见性"
+          ],
+          "missing_keywords": []
+        }
+      },
+      "single": {
+        "time": 40.37,
+        "quality": {
+          "keyword_coverage": 0.625,
+          "length": 1969,
+          "length_score": 1.0,
+          "has_code": true,
+          "has_structure": true,
+          "quality_score": 0.812,
+          "found_keywords": [
+            "mvcc",
+            "版本链",
+            "postgresql",
+            "innodb",
+            "可见性"
+          ],
+          "missing_keywords": [
+            "快照隔离",
+            "vacuum",
+            "事务ID"
+          ]
+        }
+      },
+      "delta": {
+        "quality": 0.188,
+        "time_ratio": 2.15
+      }
+    },
+    {
+      "id": "writing_1",
+      "domain": "writing",
+      "expected_region": "language_area",
+      "neuro": {
+        "time": 0.0,
+        "quality": {
+          "keyword_coverage": 0.0,
+          "length": 68,
+          "length_score": 0.034,
+          "has_code": false,
+          "has_structure": false,
+          "quality_score": 0.157,
+          "found_keywords": [],
+          "missing_keywords": [
+            "遗忘",
+            "突触",
+            "修剪",
+            "记忆",
+            "AI",
+            "神经",
+            "人类"
+          ]
+        }
+      },
+      "single": {
+        "time": 17.21,
+        "quality": {
+          "keyword_coverage": 1.0,
+          "length": 1093,
+          "length_score": 0.546,
+          "has_code": false,
+          "has_structure": false,
+          "quality_score": 0.759,
+          "found_keywords": [
+            "遗忘",
+            "突触",
+            "修剪",
+            "记忆",
+            "ai",
+            "神经",
+            "人类"
+          ],
+          "missing_keywords": []
+        }
+      },
+      "delta": {
+        "quality": -0.602,
+        "time_ratio": 0.0
+      }
+    }
+  ],
+  "summary": {
+    "avg_neuro_quality": 0.46,
+    "avg_single_quality": 0.501,
+    "avg_neuro_time": 41.1,
+    "avg_single_time": 32.2,
+    "quality_delta": -0.041,
+    "time_ratio": 1.3
+  },
+  "neuro_stats": {
+    "round": 69,
+    "brainstem": {
+      "type": "PythonBrainstem",
+      "sdm_reads": 3,
+      "sdm_writes": 0,
+      "avg_activation": 0.0
+    },
+    "regions": {
+      "motor_cortex": 2,
+      "parietal_cortex": 0,
+      "prefrontal_cortex": 0,
+      "temporal_cortex": 0,
+      "language_area": 0,
+      "visual_cortex": 0
+    },
+    "synapses": {
+      "total_pathways": 5,
+      "active": 4,
+      "hardened": 1,
+      "pruned": 1,
+      "shortcuts": 3,
+      "avg_weight": 0.445,
+      "dopamine": 0.029,
+      "serotonin": 0.549,
+      "branching_ratio": 1.0,
+      "prp_pools": {},
+      "astrocyte_ca": {
+        "motor_cortex": 0.133
+      }
+    },
+    "neuromodulation": {
+      "dopamine": 0.029,
+      "serotonin": 0.549,
+      "branching_ratio": 1.0,
+      "prp_pools": {},
+      "astrocyte_ca": {
+        "motor_cortex": 0.133
+      }
+    }
+  }
+}

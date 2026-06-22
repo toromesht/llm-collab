@@ -1,0 +1,85 @@
+{
+  "regions": {
+    "motor_cortex": {
+      "name": "Motor Cortex (Code/Execution)",
+      "index": 0,
+      "bio_analog": "Primary motor cortex (M1) — voluntary action execution",
+      "description": "Code generation, SQL, algorithms, debugging",
+      "models": ["ds-pro", "ds-think"],
+      "secondary": ["qwen"],
+      "banned": ["glm", "kimi"],
+      "feature_checks": ["code", "db", "sql", "algorithm", "function"],
+      "execution": "pipeline_or_collab",
+      "threshold": 0.55,
+      "paper_ref": "Chen et al. 2021 — Codex evaluation shows LLMs strongest in code generation"
+    },
+    "parietal_cortex": {
+      "name": "Parietal Cortex (Math/Numerical)",
+      "index": 1,
+      "bio_analog": "Intraparietal sulcus (IPS) — numerical cognition, magnitude processing",
+      "description": "Mathematics, numerical computation, formal proofs",
+      "models": ["ds-pro", "qwen"],
+      "secondary": ["ds-think"],
+      "banned": ["kimi", "glm"],
+      "feature_checks": ["math", "calculus", "algebra", "equation", "number", "group_theory", "graph_theory", "topology", "linear_algebra", "probability", "number_theory", "diff_eq", "combinatorics", "optimization"],
+      "execution": "single_or_pipeline",
+      "threshold": 0.5,
+      "paper_ref": "GSM8K 0-shot: DS-PRO 95% (surpasses GPT-4o 5-shot 93%)"
+    },
+    "prefrontal_cortex": {
+      "name": "Prefrontal Cortex (Logic/Reasoning)",
+      "index": 2,
+      "bio_analog": "Dorsolateral PFC (dlPFC) — abstract reasoning, planning, logic",
+      "description": "Logical reasoning, planning, multi-step deduction",
+      "models": ["ds-pro", "ds-think"],
+      "secondary": ["qwen"],
+      "banned": ["glm", "kimi"],
+      "feature_checks": ["logic", "reasoning", "prove", "argument", "planning", "decision"],
+      "execution": "pipeline",
+      "threshold": 0.6,
+      "paper_ref": "Wei et al. 2022 CoT; Wang et al. 2023 Self-Consistency; Logic wall at 67%"
+    },
+    "temporal_cortex": {
+      "name": "Temporal Cortex (Knowledge/Memory)",
+      "index": 3,
+      "bio_analog": "Anterior temporal lobe (ATL) — semantic memory, factual knowledge",
+      "description": "Knowledge retrieval, definitions, conceptual explanation",
+      "models": ["glm", "qwen"],
+      "secondary": ["ds-pro"],
+      "banned": ["ds-think", "kimi"],
+      "feature_checks": ["knowledge", "history", "concept", "definition", "what", "why"],
+      "execution": "single",
+      "threshold": 0.4,
+      "paper_ref": "GLM-4+ 100% on Chinese knowledge (eval_latest.json)"
+    },
+    "language_area": {
+      "name": "Language Area (Broca/Wernicke)",
+      "index": 4,
+      "bio_analog": "Broca's area (production) + Wernicke's area (comprehension)",
+      "description": "Language, writing, translation, Chinese text",
+      "models": ["glm", "kimi"],
+      "secondary": ["qwen"],
+      "banned": ["ds-pro", "ds-think"],
+      "feature_checks": ["writing", "chinese", "translation", "essay", "literature", "summary"],
+      "execution": "single",
+      "threshold": 0.5,
+      "paper_ref": "GLM-4+ strongest Chinese; Kimi strongest writing (evolved_weights.json)"
+    },
+    "visual_cortex": {
+      "name": "Visual Cortex (Vision/Multimodal)",
+      "index": 5,
+      "bio_analog": "V1-V5 visual pathway — visual processing hierarchy",
+      "description": "Image understanding, multimodal analysis",
+      "models": ["kimi", "qwen"],
+      "secondary": ["ds-pro"],
+      "banned": ["glm", "ds-think"],
+      "feature_checks": ["image", "vision", "multimodal", "picture", "photo"],
+      "execution": "single",
+      "threshold": 0.4,
+      "paper_ref": "Kimi supports vision input; Qwen multimodal (llm-config.json)"
+    }
+  },
+  "default_region": "temporal_cortex",
+  "multi_region_threshold": 0.55,
+  "max_regions_activated": 2
+}

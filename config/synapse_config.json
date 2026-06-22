@@ -1,0 +1,86 @@
+{
+  "hardening": {
+    "comment": "L-LTP pathway hardening. Ref: Kandel, Science 294:1030-1038 (2001)",
+    "A_LTP": 0.15,
+    "tau_hardening": 50.0,
+    "theta_hardening": 0.5,
+    "n_min_successes": 3,
+    "bio_mechanism": "cAMP/PKA/CREB cascade -> protein synthesis -> structural spine enlargement"
+  },
+  "forgetting": {
+    "comment": "Performance-driven LTD (PRIMARY) + Time-based decay (secondary). Primary ref: Bienenstock J Neurosci (1982); Secondary: Dudek & Bear, PNAS 89(10):4363-4367 (1992)",
+    "A_LTD_performance": 0.15,
+    "A_LTD_time": 0.02,
+    "tau_forgetting_hours": 720,
+    "theta_prune": 0.02,
+    "consecutive_fails_for_prune": 8,
+    "note": "Pruning is PRIMARILY driven by consecutive wrong answers in the wrong region. Time decay is a gentle background process (30-day half-life)."
+  },
+  "shortcuts": {
+    "comment": "Metaplasticity-based fast paths. Ref: Abraham & Bear, TINS 19(4):126-130 (1996)",
+    "theta_highfreq_per_hour": 5,
+    "n_hard_min": 3,
+    "theta_match": 0.85,
+    "window_hours": 1.0,
+    "bio_mechanism": "Prior high-freq activity lowers LTP induction threshold (metaplasticity)"
+  },
+  "brainstem": {
+    "comment": "HD Computing + SDM. Ref: Kanerva 1988, 2009",
+    "hv_dim": 10000,
+    "n_prototypes": 100,
+    "sdm_radius": 500,
+    "theta_confidence": 0.55
+  },
+  "tagging_capture": {
+    "comment": "Synaptic Tagging & Capture. Ref: Frey & Morris, Nature 385:533-536 (1997)",
+    "A_tag": 0.05,
+    "A_capture": 0.08,
+    "tau_prp": 100.0,
+    "theta_tagged": 0.25,
+    "n_uses_for_tag": 2,
+    "bio_mechanism": "Strong synapse generates PRP pool; weak tagged synapses capture PRPs -> associative strengthening"
+  },
+  "clustered_plasticity": {
+    "comment": "Clustered Plasticity. Ref: Fu et al., Nature 483:92-96 (2012)",
+    "cluster_radius": 0.3,
+    "cluster_boost": 0.03,
+    "bio_mechanism": "Nearby synapses on same dendritic branch share PRPs; co-active neighbors get boosted"
+  },
+  "eligibility_trace": {
+    "comment": "Eligibility Traces. Ref: Gerstner et al., Nat Neurosci 21:1273-1283 (2018)",
+    "tau_eligibility": 3.0,
+    "theta_eligibility": 0.4,
+    "conversion_rate": 0.1,
+    "bio_mechanism": "Synapse tagged by success (eligibility trace); second success within window converts tag to permanent LTP"
+  },
+  "neuromodulation": {
+    "comment": "Volume Transmission / Neuromodulation. Ref: Fuxe et al., Prog Neurobiol 83:263-287 (2007)",
+    "dopamine_tau": 5.0,
+    "serotonin_tau": 20.0,
+    "reward_prediction_error_alpha": 0.1,
+    "baseline_dopamine": 0.5,
+    "bio_mechanism": "DA = reward prediction error (global); 5-HT = patience/serendipity (slow modulation)"
+  },
+  "astrocyte": {
+    "comment": "Astrocyte Ca2+ modulation. Ref: Perea & Araque, Science 317:1083-1086 (2007); Haydon & Carmignoto, Physiol Rev 86:1009-1031 (2006)",
+    "gamma_ca": 0.2,
+    "tau_ca": 3600.0,
+    "theta_ca": 0.5,
+    "bio_mechanism": "Astrocytes sense regional activity -> release gliotransmitters -> globally modulate all synapses in region"
+  },
+  "criticality": {
+    "comment": "Neuronal Avalanches / Criticality. Ref: Beggs & Plenz, J Neurosci 23(35):11167-11177 (2003)",
+    "target_sigma": 1.0,
+    "epsilon": 0.1,
+    "eta": 0.01,
+    "cascade_window": 20,
+    "bio_mechanism": "Branching ratio sigma ~ 1 at critical point; system auto-tunes pruning/hardening to stay critical"
+  },
+  "storage": {
+    "base_dir": "~/.synapseflow/brain",
+    "pathway_network_file": "pathway_network.json",
+    "hardened_routes_file": "hardened_routes.json",
+    "pruned_pathways_file": "pruned_pathways.json",
+    "cascade_log_file": "cascade_log.jsonl"
+  }
+}

@@ -7,3 +7,9 @@ answer_sheet_filled*.docx
 .github/
 config/llm-config.json
 llm-config.json
+*.dll
+*.exe
+*.mod
+*.o
+*.so
+engine/brainstem_cli*
