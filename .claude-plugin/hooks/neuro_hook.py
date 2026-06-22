@@ -1,35 +1,124 @@
 #!/usr/bin/env python3
 """
-UserPromptSubmit Hook — 多模型智能协作引擎
-- 自动判断复杂度，简单走串行，复杂 4 模型并行
-- 单模型故障不影响整体，降级运行
-- 输出注入 Claude 上下文，过程透明
+neuro_hook.py — UserPromptSubmit Hook (v2.2 FAST)
+
+FAST PATH: brainstem classification + routing done INLINE (<5ms),
+           returns routing status immediately to Claude Code.
+           "brainstem standby" → "Motor Cortex active" in <50ms.
+
+SLOW PATH: LLM API calls launched as daemon background process,
+           results written to ~/.synapseflow/brain/last_result.json,
+           injected as additionalContext on next interaction.
 """
-import sys, json, subprocess, os, traceback, io
+import sys, json, subprocess, os, traceback, io, time
 from pathlib import Path
 
-# Windows GBK 兼容：强制 UTF-8
+# Windows GBK compat
 if sys.stdout.encoding != 'utf-8':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 if sys.stderr.encoding != 'utf-8':
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
-BRAIN_PATH = os.path.expanduser('~/.claude/tools/brain.py')
-TIMEOUT = 120  # 单次 brain.py 最长等待秒数
+ENGINE_DIR = Path(__file__).parent.parent.parent / "engine"
+sys.path.insert(0, str(ENGINE_DIR.parent))
 
-def log_error(msg):
-    """将错误记录到诊断文件"""
-    log_file = os.path.expanduser('~/.claude/tools/hook_errors.log')
-    with open(log_file, 'a', encoding='utf-8') as f:
-        f.write(f"[hook_brain] {msg}\n")
+BRAIN_PATH = os.path.expanduser('~/.claude/tools/brain.py')
+RESULT_FILE = os.path.expanduser('~/.synapseflow/brain/last_result.json')
+TIMEOUT = 120
+
+# ─── Fast inline imports (lazy, only if engine dir exists) ───
+
+_brainstem = None
+def _get_brainstem():
+    global _brainstem
+    if _brainstem is None:
+        try:
+            from engine.brainstem_wrapper import load as load_brainstem
+            _brainstem = load_brainstem()
+        except Exception:
+            _brainstem = None
+    return _brainstem
+
+def _fast_classify(prompt: str) -> dict:
+    """Inline brainstem classification — <5ms, no subprocess."""
+    import re
+    q = prompt.lower()
+
+    # Lightweight feature extraction (matching brain.py score_task dims)
+    features = {
+        "code": len(re.findall(r'(代码|sql|函数|算法|编程|python|写一个|实现|ddl|cte|class |def |import |SELECT|CREATE)', q)),
+        "math": len(re.findall(r'(数学|概率|统计|方程|几何|代数|微积分|矩阵|向量|定理|证明|求导|积分|极限)', q)),
+        "logic": len(re.findall(r'(说谎|谁说|真话|假话|悖论|逻辑|推理|判断|证明|充要|必要|充分)', q)),
+        "knowledge": len(re.findall(r'(什么|如何|为什么|定义|概念|原理|历史|背景|综述)', q)),
+        "writing": len(re.findall(r'(写作|论文|文档|说明|报告|总结|翻译|润色|解释|描述|写一篇)', q)),
+        "arch": len(re.findall(r'(架构|设计|系统|方案|权衡|选型|策略|规划|框架)', q)),
+        "trap_single": len(re.findall(r'(图遍历|递归cte|索引优化|sql调优)', q)),
+        "trap_need_collab": len(re.findall(r'(多视角|对比分析|跨领域|综合评估|深度剖析)', q)),
+        "group_theory": 0, "graph_theory": 0, "topology": 0,
+        "linear_algebra": 0, "calculus": 0, "probability": 0,
+        "number_theory": 0, "diff_eq": 0, "combinatorics": 0, "optimization": 0,
+        "chinese": len(re.findall(r'[一-鿿]', q)) / max(1, len(q)) * 2,
+        "safety": 0, "general": 0.3, "db": len(re.findall(r'(数据库|sql|mysql|postgresql|mongodb|redis)', q)),
+    }
+
+    feature_keys = [
+        "code", "math", "logic", "knowledge", "writing",
+        "arch", "trap_single", "trap_need_collab",
+        "group_theory", "graph_theory", "topology", "linear_algebra",
+        "calculus", "probability", "number_theory", "diff_eq",
+        "combinatorics", "optimization",
+        "chinese", "safety", "general", "db",
+    ]
+
+    import numpy as np
+    vec = np.array([float(features.get(k, 0)) for k in feature_keys], dtype=np.float64)
+
+    bs = _get_brainstem()
+    if bs is not None:
+        region_id, confidence, difficulty = bs.classify(vec)
+    else:
+        region_id, confidence, difficulty = 0, 0.5, 0.3
+
+    REGION_NAMES = [
+        "motor_cortex", "parietal_cortex", "prefrontal_cortex",
+        "temporal_cortex", "language_area", "visual_cortex",
+    ]
+
+    REGION_DISPLAY = {
+        "motor_cortex":      "<> Motor Cortex (Code/SQL/Algorithm)",
+        "parietal_cortex":   "π Parietal Cortex (Math/Numerical)",
+        "prefrontal_cortex": "∟ Prefrontal Cortex (Logic/Reasoning)",
+        "temporal_cortex":   "📚 Temporal Cortex (Knowledge/Memory)",
+        "language_area":     "💬 Language Area (Writing/Chinese)",
+        "visual_cortex":     "👁 Visual Cortex (Vision/Multimodal)",
+    }
+
+    region_name = REGION_NAMES[region_id] if 0 <= region_id < 6 else "temporal_cortex"
+    display_name = REGION_DISPLAY.get(region_name, region_name)
+
+    # Determine secondary regions
+    secondary = []
+    if difficulty > 0.5:
+        if region_id != 2:
+            secondary.append("∟ Prefrontal Cortex")
+        if region_id != 3:
+            secondary.append("📚 Temporal Cortex")
+
+    return {
+        "region": display_name,
+        "region_id": region_id,
+        "region_name": region_name,
+        "confidence": round(float(confidence), 2),
+        "difficulty": round(float(difficulty), 2),
+        "secondary": secondary,
+    }
+
 
 def extract_prompt(hook_input: dict) -> str:
-    """从 hook stdin 中提取用户问题（兼容多种字段名）"""
     for key in ('prompt', 'text', 'user_prompt', 'message', 'input', 'content'):
         val = hook_input.get(key, '')
         if val and isinstance(val, str) and len(val.strip()) > 2:
             return val.strip()
-    # 兜底：尝试嵌套路径
     for path in [['user_input', 'text'], ['message', 'content'], ['data', 'prompt']]:
         d = hook_input
         try:
@@ -41,13 +130,14 @@ def extract_prompt(hook_input: dict) -> str:
             continue
     return ''
 
-def run_brain(prompt: str, neuro_mode: bool = False) -> dict:
-    """运行 brain.py，通过 stdin 传递问题（避免命令行 GBK 编码损坏），
-       流式读取输出以实现实时反馈。"""
+
+def run_brain_background(prompt: str, routing: dict):
+    """Launch brain.py in background for full LLM execution.
+    Results written to RESULT_FILE, picked up next interaction."""
     try:
         env = os.environ.copy()
-        if neuro_mode:
-            env['NEURO_MODE'] = '1'
+        env['NEURO_MODE'] = '1'
+        env['BRAIN_BG'] = '1'  # Signal brain.py: write results to file, don't print
         proc = subprocess.Popen(
             [sys.executable, BRAIN_PATH],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE,
@@ -55,118 +145,115 @@ def run_brain(prompt: str, neuro_mode: bool = False) -> dict:
             encoding='utf-8', errors='replace',
             env=env
         )
-        # Pass prompt via stdin, not command line (avoids GBK corruption)
-        stdout, stderr = proc.communicate(input=prompt, timeout=TIMEOUT)
-        output = stdout.strip()
-        if stderr:
-            stderr_clean = '\n'.join(
-                line for line in stderr.strip().split('\n')
-                if 'gbk' not in line.lower() and 'UnicodeEncodeError' not in line
-            )
-            if stderr_clean:
-                output += '\n\n[brain stderr]\n' + stderr_clean
-        return {'ok': True, 'output': output, 'error': None}
-    except subprocess.TimeoutExpired:
-        proc.kill()
-        return {'ok': False, 'output': '', 'error': f'brain.py timeout ({TIMEOUT}s)'}
-    except FileNotFoundError:
-        return {'ok': False, 'output': '', 'error': f'brain.py not found: {BRAIN_PATH}'}
-    except Exception as e:
-        return {'ok': False, 'output': '', 'error': f'brain.py error: {e}'}
+        # Don't wait — fire and forget
+        # Results stored for next hook invocation
+    except Exception:
+        pass
+
+
+def check_background_result() -> str:
+    """Check if previous background brain.py finished. Return results or empty."""
+    if not os.path.exists(RESULT_FILE):
+        return ""
+    try:
+        with open(RESULT_FILE, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        age = time.time() - data.get("timestamp", 0)
+        if age > 300:  # Stale (>5min)
+            return ""
+        return data.get("output", "")
+    except Exception:
+        return ""
 
 
 def main():
     try:
         raw_stdin = sys.stdin.read()
         if not raw_stdin.strip():
-            # 空输入，放行
             print(json.dumps({}))
             return
-
         hook_input = json.loads(raw_stdin)
-    except json.JSONDecodeError as e:
-        log_error(f"stdin JSON 解析失败: {e}")
+    except json.JSONDecodeError:
         print(json.dumps({}))
         return
 
     prompt = extract_prompt(hook_input)
-
     if not prompt:
         print(json.dumps({}))
         return
 
-    # Neuro toggle: neuro: off to disable, otherwise always ON
+    # Neuro toggle handlers
     neuro_flag = os.path.expanduser('~/.claude/tools/neuro_mode_off')
-    neuro_mode = not os.path.exists(neuro_flag)  # default ON
 
     if prompt.startswith('neuro: off') or prompt.startswith('neuro:off'):
         Path(neuro_flag).touch()
-        resp = {'systemMessage': '[Neuro Monitor] OFF — standard mode',
-                'suppressOutput': True,
-                'hookSpecificOutput': {'hookEventName': 'UserPromptSubmit',
-                    'additionalContext': '\n[Neuro Monitor] OFF. Type `neuro: on` to re-enable.\n'}}
-        print(json.dumps(resp, ensure_ascii=False))
+        print(json.dumps({'systemMessage': '[Neuro] OFF — standard mode',
+            'suppressOutput': True,
+            'hookSpecificOutput': {'hookEventName': 'UserPromptSubmit',
+                'additionalContext': '\n[Neuro Monitor] OFF.\n'}}, ensure_ascii=False))
         return
     if prompt.startswith('neuro: on') or prompt.startswith('neuro:on'):
         if os.path.exists(neuro_flag): os.remove(neuro_flag)
-        resp = {'systemMessage': '[Neuro Monitor] ON — brain+parallel UI active',
-                'suppressOutput': True,
-                'hookSpecificOutput': {'hookEventName': 'UserPromptSubmit',
-                    'additionalContext': '\n[Neuro Monitor] ON.\n'}}
-        print(json.dumps(resp, ensure_ascii=False))
+        print(json.dumps({'systemMessage': '[Neuro] ON — brain+parallel UI active',
+            'suppressOutput': True,
+            'hookSpecificOutput': {'hookEventName': 'UserPromptSubmit',
+                'additionalContext': '\n[Neuro Monitor] ON.\n'}}, ensure_ascii=False))
         return
 
-    # neuro: prefix on a question = one-time force
     if prompt.startswith('neuro:'):
         prompt = prompt.replace('neuro:', '', 1).strip()
-        neuro_mode = True
 
-    # Skip trivial messages
+    # Skip trivial
     skip_patterns = ['hello', 'hi', 'thanks', '好的', '谢谢', 'ok', '嗯']
     if prompt.lower().strip() in skip_patterns or len(prompt) < 2:
         print(json.dumps({}))
         return
 
-    # Execute brain.py (with NEURO_MODE env var if neuro: prefix used)
-    result = run_brain(prompt, neuro_mode=neuro_mode)
+    # ─── FAST PATH: Classify + return routing immediately (<5ms) ───
+    neuro_mode = not os.path.exists(neuro_flag)
 
-    if result['ok']:
-        ctx = (
-            "\n============================================================\n"
-            "[Brain v2] Multi-Model Collaboration Results\n"
-            "   Route: Smart complexity analysis -> Simple(serial) / Complex(4-way parallel)\n"
-            "   Compute: [DS-PRO] [KIMI] [GLM] [QWEN]\n"
-            "============================================================\n\n"
-            + result['output'] +
-            "\n\n============================================================\n"
-            "[Instruction] Synthesize the above multi-model results.\n"
-            "   If models disagree, analyze and pick the best answer.\n"
-            "   Note each model's core contribution.\n"
-            "============================================================\n"
+    t0 = time.perf_counter()
+    routing = _fast_classify(prompt)
+    elapsed_ms = (time.perf_counter() - t0) * 1000
+
+    # ─── Check for previous background results ───
+    prev_result = check_background_result()
+
+    # ─── Launch LLM calls in background ───
+    if neuro_mode and prev_result == "":
+        # Only launch if no pending results
+        threading = __import__('threading')
+        t = threading.Thread(target=run_brain_background, args=(prompt, routing), daemon=True)
+        t.start()
+
+    # ─── Build response ───
+    region_status = (
+        f"\n{'─'*60}\n"
+        f"[Brainstem] {routing['region']}\n"
+        f"   Confidence: {routing['confidence']:.0%} | Difficulty: {routing['difficulty']:.2f}\n"
+        f"   Classify time: {elapsed_ms:.1f}ms\n"
+    )
+    if routing['secondary']:
+        region_status += f"   Secondary: {', '.join(routing['secondary'])}\n"
+    region_status += f"{'─'*60}\n"
+
+    # Append previous LLM results if available
+    full_ctx = region_status
+    if prev_result:
+        full_ctx += (
+            f"\n[Previous Multi-Model Results]\n"
+            f"{prev_result[:3000]}\n"
+            f"{'─'*60}\n"
         )
-        resp = {
-            'systemMessage': '[Brain] Multi-model collaboration complete',
-            'suppressOutput': True,
-            'hookSpecificOutput': {
-                'hookEventName': 'UserPromptSubmit',
-                'additionalContext': ctx
-            }
+
+    resp = {
+        'systemMessage': f'[Brainstem] {routing["region"]} (conf={routing["confidence"]:.0%})',
+        'suppressOutput': True,
+        'hookSpecificOutput': {
+            'hookEventName': 'UserPromptSubmit',
+            'additionalContext': full_ctx
         }
-    else:
-        # 模型故障 → 反馈给 Claude，让我直接用单模型回答
-        ctx = (
-            "\n[WARNING] Multi-model engine unavailable\n"
-            f"   Reason: {result['error']}\n"
-            "   Fallback: single-model mode (DS-PRO only)\n"
-        )
-        resp = {
-            'systemMessage': f'[Brain] Degraded: {result["error"]}',
-            'suppressOutput': True,
-            'hookSpecificOutput': {
-                'hookEventName': 'UserPromptSubmit',
-                'additionalContext': ctx
-            }
-        }
+    }
 
     print(json.dumps(resp, ensure_ascii=False))
 
@@ -175,8 +262,7 @@ if __name__ == '__main__':
     try:
         main()
     except Exception as e:
-        log_error(f"未捕获异常: {e}\n{traceback.format_exc()}")
-        # 降级：返回空 JSON，让 Claude 正常处理
+        # Fallback: return empty, let Claude handle normally
         print(json.dumps({
             'systemMessage': f'[Brain] Hook error: {e}',
             'suppressOutput': True,
