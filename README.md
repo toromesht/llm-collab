@@ -8,6 +8,12 @@
 
 `v2.1 — Polyglot + Network Papers + Predictive Coding`
 
+> ⚠️ **EARLY PROTOTYPE / EMBRYONIC STAGE**
+> This is an experimental research project in active development. Not production-ready.
+> APIs are unstable. Benchmarks are incomplete. C++/Fortran modules need compilation.
+> Paper reproductions are aspirational — algorithm fidelity is being iteratively improved.
+> Use for research exploration only. Feedback and contributions welcome.
+
 ---
 
 ## Architecture: Why 4 Languages?
@@ -100,12 +106,13 @@ gfortran -O3 -march=native -flto -fopenmp -m64 \
 
 ## Benchmark
 
-| Category | Score | vs Industry |
-|----------|-------|-------------|
-| Math (GSM8K 0-shot) | 95% | > GPT-4o 5-shot: 93% |
-| Code | 100% | > Claude 3.5: 96% |
-| DB Design | 100% | > GPT-4o est: 90% |
-| Cost | $0.15-0.30 | vs GPT-5.5: $5.00 |
+| Category | Score | vs Industry | Note |
+|----------|-------|-------------|------|
+| Math (GSM8K 0-shot) | 77% | DS-Think: 97% | Router still learning; cold-start penalty |
+| Code | 87% | DS-Think: 100% | — |
+| DB Design | 100% | — | Small sample |
+| Cost | $0.002/q | vs DS-Pro: $0.020 | 1/10 cost on routable queries |
+| **Caveat** | **440 questions, real API calls, warm-start pending** | | |
 
 ---
 
