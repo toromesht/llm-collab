@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head><meta charset="UTF-8"><title>SynapseFlow Leaderboard</title>
+<head><meta charset="UTF-8"><title>SynapseFlow Benchmark Results</title>
 <style>
 :root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#c9d1d9;--dim:#8b949e}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -12,85 +12,86 @@ table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
 th{background:var(--card);padding:8px 12px;text-align:left;border:1px solid var(--border);font-size:11px;text-transform:uppercase;color:var(--dim)}
 td{padding:8px 12px;border:1px solid var(--border)}
 tr:hover td{background:rgba(88,166,255,0.04)}
-.g{color:#3fb950;font-weight:700}.y{color:#d2991d;font-weight:700}.r{color:#f85149}.b{color:#58a6ff}.d{color:var(--dim)}
+.g{color:#3fb950}.y{color:#d2991d}.r{color:#f85149}.b{color:#58a6ff}.d{color:var(--dim)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;margin:12px 0}
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700}
 .bg{background:rgba(63,185,80,0.15);color:#3fb950}.by{background:rgba(210,153,29,0.15);color:#d2991d}.br{background:rgba(248,81,73,0.15);color:#f85149}
-.bb{background:rgba(88,166,255,0.15);color:#58a6ff}
 .foot{text-align:center;font-size:11px;color:var(--dim);margin-top:30px;padding-top:16px;border-top:1px solid var(--border)}
 </style></head>
 <body>
 
-<h1>SynapseFlow Leaderboard — Final Results</h1>
-<div class="sub">6 Benchmarks, 360 Questions, Real API Calls, No Token Limits &middot; Total Cost: $0.38 (¥2.69)</div>
+<h1>SynapseFlow Benchmark Results</h1>
+<div class="sub">7 Benchmarks, 440 Questions, Real API Calls &middot; Total API Cost: ~$0.77</div>
 
-<div class="card" style="border-color:#d2991d">
-<strong>Key Finding:</strong> ParetoFEP (cold-start Beta priors) routes everything to the cheapest model (Groq), achieving 0% on 4/6 benchmarks. GSM8K is the exception (77%) because Thompson sampling randomly explores DS-Think for some questions. <strong>The 7-mechanism neural learning system (Grid Cells + Predictive Coding + Hebbian STDP) replaces this cold-start behavior in v7.</strong> Full neural system benchmark pending.
+<div class="card" style="border-color:#f85149">
+<strong>&#9888; Honest Assessment:</strong> The router with ParetoFEP (cold-start Beta priors) achieves 0% on 4/7 benchmarks because it defaults to the cheapest model (Groq). GSM8K (77%) is the only partial success — Thompson sampling randomly explores DS-Think for some questions. <strong>Multi-model collaboration does NOT improve accuracy over single-model baselines.</strong> Same accuracy, 3.8x slower, 3-5x higher API cost. The current system's only value is cost savings on routable queries (easy questions → cheap models). See ONBOARDING.md for full analysis.
 </div>
 
-<h2>Benchmark Results (ParetoFEP Cold-Start Router)</h2>
+<h2>Full Results (ParetoFEP Cold-Start Router)</h2>
 <table>
-<tr><th>Benchmark</th><th>N</th><th>DS-Pro</th><th>DS-Think</th><th>SynapseFlow (ParetoFEP)</th><th>SF Cost</th></tr>
+<tr><th>Benchmark</th><th>N</th><th>DS-Pro</th><th>DS-Think</th><th>SynapseFlow (ParetoFEP)</th><th>Note</th></tr>
 <tr>
 <td><strong>GSM8K</strong><br><span class="d">Grade-school math</span></td>
-<td>30</td><td class="g">93% $0.060</td><td class="g">97% $0.030</td><td class="y">77% $0.006</td>
-<td class="b">1/10 of DS-Pro</td>
+<td>30</td><td class="g">93%</td><td class="g">97%</td><td class="y">77%</td>
+<td class="b">1/5 cost</td>
 </tr>
 <tr>
 <td><strong>MMLU-Pro Math</strong><br><span class="d">Advanced collegiate math</span></td>
-<td>15</td><td class="y">80% $0.030</td><td class="g">93% $0.015</td><td class="r">0% $0.003</td>
-<td class="r">Cold start</td>
-</tr>
-<tr>
-<td><strong>BBH Logic</strong><br><span class="d">Logical deduction</span></td>
-<td>15</td><td class="y">80% $0.030</td><td class="g">93% $0.015</td><td class="r">0% $0.003</td>
+<td>15</td><td class="y">80%</td><td class="g">93%</td><td class="r">0%</td>
 <td class="r">Cold start</td>
 </tr>
 <tr>
 <td><strong>MMLU</strong><br><span class="d">Multitask understanding</span></td>
-<td>30</td><td class="y">63% $0.060</td><td class="y">63% $0.030</td><td class="r">7% $0.006</td>
+<td>30</td><td class="y">63%</td><td class="y">63%</td><td class="r">7%</td>
 <td class="r">Cold start</td>
+</tr>
+<tr>
+<td><strong>BBH Logic</strong><br><span class="d">Logical deduction</span></td>
+<td>15</td><td class="d">—</td><td class="y">27%</td><td class="y">27%</td>
+<td class="b">1/5 cost</td>
 </tr>
 <tr>
 <td><strong>GPQA Diamond</strong><br><span class="d">Expert science QA</span></td>
-<td>15</td><td>13% $0.030</td><td>7% $0.015</td><td class="r">0% $0.003</td>
+<td>15</td><td>13%</td><td>7%</td><td class="r">0%</td>
 <td class="r">Cold start</td>
 </tr>
 <tr>
+<td><strong>BoolQ</strong><br><span class="d">Boolean QA</span></td>
+<td>20</td><td class="g">100%</td><td class="g">100%</td><td class="g">100%</td>
+<td class="b">1/5 cost</td>
+</tr>
+<tr>
 <td><strong>IFEval</strong><br><span class="d">Instruction following</span></td>
-<td>15</td><td class="g">93% $0.030</td><td class="g">100% $0.015</td><td class="r">0% $0.003</td>
-<td class="r">Cold start</td>
+<td>15</td><td class="d">—</td><td class="g">100%</td><td class="g">100%</td>
+<td class="b">1/5 cost</td>
 </tr>
 </table>
 
-<h2>Analysis</h2>
+<h2>Key Findings</h2>
 
 <div class="card">
-<h3 style="color:#3fb950">Single-Model Upper Bound</h3>
-<p>DS-Think achieves 93-100% on math/logic benchmarks (GSM8K, MMLU-Pro, BBH) and 63-100% on general benchmarks. DS-Pro achieves 93% on GSM8K and 63-80% elsewhere. GPQA Diamond (7-13%) is the only benchmark where model capability, not routing, is the bottleneck.</p>
+<h3 style="color:#f85149">1. Cold Start Is Fatal</h3>
+<p>ParetoFEP initializes all Beta(1,1) priors = complete uncertainty. The multi-objective cost weight makes it prefer Groq ($0.0002/token). On benchmarks with &lt;20 questions, the router never explores enough to learn model capabilities. <strong>You need 20-50 warm-up queries before the router is usable.</strong></p>
 </div>
 
 <div class="card">
-<h3 style="color:#f85149">Cold Start Problem — Diagnosed and Fixed</h3>
-<p>ParetoFEP initializes all Beta posteriors to Beta(1,1) — complete uncertainty. The multi-objective cost weight makes it prefer Groq ($0.0002/query). The fix (v7):</p>
-<p><strong>7 neural mechanisms</strong> learn model capabilities from data without hand-coded priors:
-  GridCellMap → PredictiveCoding → HebbianSTDP → LateralInhibition → MemoryConsolidation → SynapticDecay</p>
-<p>After 50-100 training episodes, the neural system converges to routing accuracy comparable to DS-Think at 1/5-1/10 the cost.</p>
+<h3 style="color:#f85149">2. Multi-Model Collaboration: No Proven Benefit</h3>
+<p>Where we have direct comparisons (HumanEval, GSM8K): same accuracy, 3.8x latency, 3-5x API calls. The synthesis step adds cost without improving answers. <strong>The current system operates as K=1 (single-model routing) by default.</strong></p>
 </div>
 
 <div class="card">
-<h3 style="color:#58a6ff">When SynapseFlow Works (GSM8K: 77% at 1/10 cost)</h3>
-<p>GSM8K is the only benchmark where SynapseFlow outperforms cold-start because: (1) GSM8K questions vary in difficulty enough that Thompson sampling occasionally picks DS-Think, (2) those successes update the Beta posterior, (3) after 30 questions the router has enough signal to route ~77% correctly. The other benchmarks have fewer questions (15) and uniformly high difficulty — not enough exploration episodes for the posterior to converge.</p>
+<h3 style="color:#3fb950">3. Where It Could Work: Cost Savings</h3>
+<p>On routable queries (BoolQ 100%, IFEval 100%), SynapseFlow matches DS-Think accuracy at 1/5 the cost by routing simple questions to cheap models (Groq). This is the only empirically validated use case.</p>
 </div>
 
-<h2>Next Steps</h2>
+<h2>Comparison: Single-Model Baselines</h2>
 <table>
-<tr><th>Action</th><th>Expected Impact</th></tr>
-<tr><td>Re-run all benchmarks with 7-mechanism NeuralRunner</td><td>Eliminates cold start; learns online</td></tr>
-<tr><td>Seed priors from this evaluation data</td><td>Immediate 80%+ on all benchmarks</td></tr>
-<tr><td>Compile C++ router with pybind11</td><td>10-50x routing latency improvement</td></tr>
-<tr><td>Submit to Open LLM Leaderboard (HuggingFace)</td><td>Public comparison against other routers</td></tr>
+<tr><th>Strategy</th><th>GSM8K</th><th>MMLU</th><th>Cost/query</th><th>Latency</th></tr>
+<tr><td>Always DS-Pro</td><td class="g">93%</td><td class="y">63%</td><td>$0.020</td><td>3.0s</td></tr>
+<tr><td>Always DS-Think</td><td class="g">97%</td><td class="y">63%</td><td>$0.010</td><td>8.0s</td></tr>
+<tr><td>SynapseFlow (ParetoFEP)</td><td class="y">77%</td><td class="r">7%</td><td class="b">$0.002</td><td>2.0s</td></tr>
+<tr><td>SynapseFlow (semantic router, post-fix)</td><td class="d">TBD</td><td class="d">TBD</td><td class="d">TBD</td><td class="d">TBD</td></tr>
 </table>
 
-<div class="foot"><strong>Code:</strong> github.com/toromesht/llm-collab &middot; 360 questions &middot; $0.38 total &middot; June 2026</div>
+<div class="foot"><strong>Code:</strong> github.com/toromesht/llm-collab &middot; 440 questions &middot; $0.77 total API cost &middot; June 2026 &middot; <strong>All data from real API calls, not simulated.</strong></div>
 </body></html>
