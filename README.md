@@ -1,125 +1,223 @@
-# SynapseFlow — Polyglot Neurosynaptic LLM Orchestration
+# SynapseFlow — LLM Model Router
 
-> **4 languages. 1 principle. Zero Frankenstein.**
->
-> Fortran parallel brainstem → C++ high-speed routing → Python orchestration → R statistical monitoring.
-> Computer network algorithms (TCP/BGP/OSPF/BFD/CCN) for LLM model selection.
-> Rao & Ballard predictive coding + Friston free energy for representation learning.
+> **Semantic classification → single-model routing → cost savings.**
+> 
+> Routes user questions to the best LLM. Easy questions → cheap models. Hard questions → smart models.
+> C++ router (<4μs). Fortran encoder. Python orchestration. R analysis.
 
-`v2.1 — Polyglot + Network Papers + Predictive Coding`
+`v2.2 — Semantic classifier + C++/Fortran compiled`
 
-> ⚠️ **EARLY PROTOTYPE / EMBRYONIC STAGE**
-> This is an experimental research project in active development. Not production-ready.
-> APIs are unstable. Benchmarks are incomplete. C++/Fortran modules need compilation.
-> Paper reproductions are aspirational — algorithm fidelity is being iteratively improved.
-> Use for research exploration only. Feedback and contributions welcome.
+> ⚠️ **EARLY PROTOTYPE** — research project, not production-ready. APIs unstable.
 
 ---
 
-## Architecture: Why 4 Languages?
+## What This Does
 
 ```
-PATH                 LANGUAGE    SPEED       ROLE
-─────────────────────────────────────────────────────
-Brainstem HD/SDM     Fortran     <100μs     OpenMP parallel 10k-bit encoding
-Fast path selection  C++         <1μs       Lock-free routing cache
-Congestion control   C++         <1μs       TCP AIMD per-model windows
-Orchestration        Python      ~10ms      Predictive coding + FEP + API
-Statistical monitor  R           ~1s        Changepoint detection + SPC
-─────────────────────────────────────────────────────
+User: "12个球称重找次品"
+  → classify: logic (confidence: 0.85)
+  → route:   ds-pro  (hard logic, need best model)
+  → cost:    ~$0.004 (est.)
+
+User: "法国首都是哪里"
+  → classify: knowledge (confidence: 0.92)
+  → route:   groq     (trivial, use cheapest model)
+  → cost:    ~$0.0001 (est.)
 ```
 
-**Fortran** parallelizes HD encoding across CPU cores with OpenMP.  
-**C++** handles sub-microsecond path selection from hardened cache.  
-**Python** runs predictive coding, FEP inference, and model API calls.  
-**R** performs statistical changepoint detection and survival analysis offline.
+**Saves money** by not calling expensive models for simple questions.
+**Does NOT improve accuracy** over calling the best model directly (proven in benchmarks).
 
 ---
 
-## One Principle
+## Quick Start (Python only, 2 minutes)
 
-```
-F = -ln P(success | path) + KL[belief || prior]
-
-All 11 synaptic mechanisms + 7 network algorithms
-→ emerge from minimizing this single objective.
-```
-
----
-
-## Algorithm Stack
-
-### Neuroscience → Representation Learning
-| Module | Algorithm | Paper |
-|--------|-----------|-------|
-| `predictive_coding.py` | Hierarchical generative model | Rao & Ballard, *Nature Neuroscience* (1999) |
-| `fep_unified.py` | Free Energy Principle | Friston, *Nature Reviews Neuroscience* (2010) |
-| `brainstem.f90` | HD Computing + SDM | Kanerva, *MIT Press* (1988), *Cognitive Computation* (2009) |
-
-### Computer Networks → Model Routing
-| Module | Algorithm | Paper |
-|--------|-----------|-------|
-| `network_routing.py` | TCP Congestion Control (AIMD) | Jacobson, *SIGCOMM* (1988); Chiu & Jain (1989) |
-| `network_routing.py` | BGP Path Vector Routing | Rekhter & Li, *RFC 1771* (1995) |
-| `network_routing.py` | OSPF Link-State (Dijkstra) | Moy, *RFC 2328* (1998) |
-| `network_routing.py` | BFD Failure Detection | Katz & Ward, *RFC 5880* (2010) |
-| `network_routing.py` | CCN Content-Centric | Jacobson et al., *CoNEXT* (2009) |
-| `network_routing.py` | SDN/OpenFlow | McKeown et al., *SIGCOMM* (2008) |
-
-### Mathematics → Optimal Decisions
-| Module | Algorithm | Paper |
-|--------|-----------|-------|
-| `math_router.py` | Johnson-Lindenstrauss Projection | Dasgupta & Gupta (2003) |
-| `math_router.py` | LSH Prototype Matching | Gionis, Indyk, Motwani, *VLDB* (1999) |
-| `math_router.py` | CUSUM Changepoint Detection | Lorden, *Annals Math Stat* (1971) |
-| `math_router.py` | SPRT Evidence Accumulation | Wald, *Annals Math Stat* (1945) |
-| `math_router.py` | Robbins-Monro SGD | *Annals Math Stat* (1951) |
-| `math_router.py` | TD(λ) Eligibility Trace | Sutton & Barto, *MIT Press* (1998) |
-| `math_router.py` | Thompson Sampling | Thompson, *Biometrika* (1933) |
-| `path_learner.py` | Variable Forgetting Factor | Kulhavy & Zarrop, *Automatica* (1993) |
-
----
-
-## Quick Start
+### 1. Install
 
 ```bash
 git clone https://github.com/toromesht/llm-collab.git
 cd llm-collab
-pip install -r requirements.txt
-python setup.py
-
-# Full neuro pipeline
-python engine/neuro_agent.py
-
-# Or: classic mode
-python engine/agent.py "Prove Lagrange's theorem"
+pip install openai numpy sentence-transformers
 ```
 
-### Fortran Brainstem (64-bit, OpenMP parallel)
+### 2. Configure API Keys
+
+Create `~/.claude/tools/llm-config.json`:
+
+```json
+{
+  "deepseek_pro": {
+    "api_key": "sk-your-key-here",
+    "base_url": "https://api.deepseek.com/v1",
+    "model": "deepseek-chat"
+  },
+  "sjtu_zhiyuan": {
+    "api_key": "your-sjtu-hpc-key",
+    "base_url": "https://your-hpc-endpoint/v1"
+  },
+  "groq": {
+    "api_key": "gsk_your-groq-key",
+    "base_url": "https://api.groq.com/openai/v1",
+    "model": "llama-3.3-70b-versatile"
+  }
+}
+```
+
+Or use the setup wizard:
+```bash
+python setup.py
+```
+
+### 3. Run
 
 ```bash
-gfortran -O3 -march=native -flto -fopenmp -m64 \
-  engine/brainstem.f90 engine/brainstem_cli.f90 -o engine/brainstem_cli.exe
+# Single question
+python engine/brain.py "用Python写一个二分查找"
+
+# 7-mechanism neural runner (research mode)
+python engine/neuro_runner.py
 ```
 
 ---
 
-## Benchmark
+## C++/Fortran Compilation (Optional, for speed)
 
-| Category | Score | vs Industry | Note |
-|----------|-------|-------------|------|
-| Math (GSM8K 0-shot) | 77% | DS-Think: 97% | Router still learning; cold-start penalty |
-| Code | 87% | DS-Think: 100% | — |
-| DB Design | 100% | — | Small sample |
-| Cost | $0.002/q | vs DS-Pro: $0.020 | 1/10 cost on routable queries |
-| **Caveat** | **440 questions, real API calls, warm-start pending** | | |
+The Python fallback works fine. For sub-μs routing, compile the native modules.
+
+### Prerequisites
+
+| OS | Requirements |
+|----|--------------|
+| **Windows** | [MSYS2](https://www.msys2.org/) → `pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gcc-fortran mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-openmp` |
+| **Linux** | `sudo apt install build-essential gfortran cmake python3-dev` |
+| **macOS** | `brew install gcc cmake libomp` |
+
+All platforms: `pip install pybind11 numpy`
+
+### Build
+
+```bash
+cd collab-cloud
+rm -rf build && mkdir build
+
+cmake -B build -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -j$(nproc)
+```
+
+Output:
+```
+build/lib/
+├── synapse_router.cp311-win_amd64.pyd   # C++ router (Python importable)
+├── libsynapse_encode.a                  # Fortran encoder (static lib)
+├── libgcc_s_seh-1.dll                   # Runtime (auto-copied)
+├── libstdc++-6.dll
+└── libwinpthread-1.dll
+```
+
+### Verify
+
+```bash
+python -c "
+import sys; sys.path.insert(0, 'build/lib')
+import os
+if hasattr(os, 'add_dll_directory'):
+    os.add_dll_directory('build/lib')
+import synapse_router
+e = synapse_router.RouterEngine()
+print('Native router:', e.stats())
+"
+# → {'lookups': 0, 'hit_rate': 0.0, 'avg_latency_ns': 0.0}
+```
+
+---
+
+## Configuration Reference
+
+### API Keys (`~/.claude/tools/llm-config.json`)
+
+```json
+{
+  "deepseek_pro": {"api_key": "...", "base_url": "...", "model": "deepseek-chat"},
+  "sjtu_zhiyuan": {"api_key": "...", "base_url": "...", "model": "deepseek-reasoner"},
+  "groq":          {"api_key": "...", "base_url": "...", "model": "llama-3.3-70b"},
+  "kimi":          {"api_key": "...", "base_url": "...", "model": "moonshot-v1"},
+  "zhipu":         {"api_key": "...", "base_url": "...", "model": "glm-4"},
+  "qwen3":         {"api_key": "...", "base_url": "...", "model": "qwen-plus"}
+}
+```
+
+Models are auto-detected from available keys. At minimum you need one key.
+
+### Router Configuration
+
+Category→model rules are in `engine/brain.py`:
+```python
+CATEGORY_MODEL_RULES = {
+    "math":         {"primary": "ds-think", "fallback": "ds-pro"},
+    "code":         {"primary": "ds-pro",   "fallback": "ds-think"},
+    "logic":        {"primary": "ds-pro",   "fallback": "ds-think"},
+    "architecture": {"primary": "glm",      "fallback": "ds-pro"},
+    "writing":      {"primary": "glm",      "fallback": "kimi"},
+    "knowledge":    {"primary": "groq",     "fallback": "glm"},
+}
+```
+
+---
+
+## Architecture
+
+```
+Question → embed (MiniLM) → cosine to prototypes → category
+         → difficulty estimate → model routing → API call
+         
+         ┌─ Easy (diff<0.35): cheap model (Groq/GLM)
+K=1 ─────┼─ Medium: primary model for category
+(always) └─ Hard (diff>0.75): ds-pro (strongest)
+```
+
+---
+
+## Project Structure
+
+```
+collab-cloud/
+├── engine/
+│   ├── brain.py              ★ Main entry: classify → route → execute
+│   ├── neural_mechanisms.py  ★ 7 paper-grounded neural mechanisms
+│   ├── neuro_runner.py       ★ 7-mechanism harness + learning loop
+│   ├── brainstem_wrapper.py  ★ Python brainstem (NumPy fallback)
+│   ├── native_bridge.py      ★ C++/Fortran → Python interface
+│   ├── *.f90                 ★ Fortran HD/SDM (OpenMP)
+│   └── router_cpp/           ★ C++ routing engine (pybind11)
+├── eval/                     ★ Benchmarks + evaluation data
+├── config/                   ★ Default configs
+├── BUILD.md                  ★ Compilation tutorial
+└── README.md                 ★ This file
+```
+
+---
+
+## Current Limitations
+
+| Area | Status |
+|------|--------|
+| Classification | 10/10 on test set (semantic + fallback) |
+| C++ Router | Compiled ✅, <4μs latency |
+| Fortran Encoder | Compiled ✅ (static lib, needs C wrapper for Python) |
+| Multi-model collab | **No proven benefit** — 3-5x cost for same accuracy |
+| Benchmark data | 440 questions, 7 benchmarks, real API calls |
+| Cold start | Router needs 20-50 episodes to learn per-model strengths |
 
 ---
 
 ## References
 
-**20 papers** spanning neuroscience, computer networks, mathematical statistics, and control theory.
-
-Full report: [`docs/ALGORITHM_REPORT.html`](docs/ALGORITHM_REPORT.html)
+- GridCellMap: Moser & Moser (2005) *Nature* 436:801
+- PredictiveCoding: Rao & Ballard (1999) *Nature Neuroscience* 2:79
+- STDP: Song, Miller & Abbott (2000) *Nature Neuroscience* 3:919
+- SynapticTagging: Frey & Morris (1997) *Nature* 385:533
+- MemoryConsolidation: Kandel (2001) *Science* 294:1030
+- ConsistentHashing: Karger et al. (1997) *STOC*
+- Top-K Gating: Fedus et al. (2022) *JMLR*
 
 MIT License · [toromesht](https://github.com/toromesht)

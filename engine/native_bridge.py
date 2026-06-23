@@ -34,7 +34,11 @@ _load_attempted = False
 
 
 def _try_load_native():
-    """Lazy-load compiled C++ router and Fortran encoder. Called once."""
+    """Lazy-load compiled C++ router. Called once.
+
+    Fortran is compiled as static library (.a) → needs C wrapper DLL
+    for Python access. PythonBrainstem provides the NumPy fallback.
+    """
     global _router_module, _encoder_module, _load_attempted
     if _load_attempted:
         return _router_module is not None
@@ -44,24 +48,20 @@ def _try_load_native():
     if not build_dir.exists():
         return False
 
-    # Add build/lib to Python path
+    # Add build/lib to Python path AND DLL search path
+    # CMake copies MinGW runtime DLLs into build/lib alongside the .pyd
     sys.path.insert(0, str(build_dir))
+    if hasattr(os, 'add_dll_directory'):
+        try:
+            os.add_dll_directory(str(build_dir))
+        except Exception:
+            pass
 
-    # 1. Try loading C++ router (pybind11)
+    # 1. Load C++ router (pybind11 module)
     try:
         import synapse_router
         _router_module = synapse_router
     except ImportError:
-        pass
-
-    # 2. Try loading Fortran encoder (ctypes)
-    # Fortran shared lib compiled by CMake
-    try:
-        import ctypes
-        dll_path = build_dir / "synapse_encode.dll"
-        if dll_path.exists():
-            _encoder_module = ctypes.CDLL(str(dll_path))
-    except (OSError, ImportError):
         pass
 
     return _router_module is not None

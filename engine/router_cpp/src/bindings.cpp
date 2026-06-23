@@ -110,7 +110,7 @@ PYBIND11_MODULE(synapse_router, m) {
                 if (d.contains("hardened"))
                     pw.hardened = d["hardened"].cast<bool>();
                 if (d.contains("success_rate"))
-                    pw.success_rate.store(d["success_rate"].cast<float>());
+                    pw.success_rate = d["success_rate"].cast<float>();
 
                 pathways.push_back(pw);
             }
@@ -171,8 +171,8 @@ PYBIND11_MODULE(synapse_router, m) {
             ? pathway_dict["weight_stdp"].cast<float>() : 0.0f;
         pw.weight_bcm  = pathway_dict.contains("weight_bcm")
             ? pathway_dict["weight_bcm"].cast<float>() : 0.0f;
-        pw.success_rate.store(pathway_dict.contains("success_rate")
-            ? pathway_dict["success_rate"].cast<float>() : 0.5f);
+        pw.success_rate = pathway_dict.contains("success_rate")
+            ? pathway_dict["success_rate"].cast<float>() : 0.5f;
         // Copy feature signature if present
         if (pathway_dict.contains("feature_signature")) {
             auto sig_list = pathway_dict["feature_signature"].cast<py::list>();
