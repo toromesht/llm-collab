@@ -212,12 +212,7 @@ collab-cloud/
 
 ## References
 
-- GridCellMap: Moser & Moser (2005) *Nature* 436:801
-- PredictiveCoding: Rao & Ballard (1999) *Nature Neuroscience* 2:79
-- STDP: Song, Miller & Abbott (2000) *Nature Neuroscience* 3:919
-- SynapticTagging: Frey & Morris (1997) *Nature* 385:533
-- MemoryConsolidation: Kandel (2001) *Science* 294:1030
-- ConsistentHashing: Karger et al. (1997) *STOC*
-- Top-K Gating: Fedus et al. (2022) *JMLR*
+**36 papers** with DOIs, algorithm mappings, and active/archived status.
+→ [`docs/REFERENCES.md`](docs/REFERENCES.md)
 
 MIT License · [toromesht](https://github.com/toromesht)
