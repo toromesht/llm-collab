@@ -10,7 +10,14 @@ from datetime import datetime
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-CFG = json.loads(Path(os.path.expanduser('~/.claude/tools/llm-config.json')).read_text(encoding='utf-8'))
+def _load_cfg():
+    for p in [Path(os.path.expanduser('~/.claude/tools/llm-config.json')),
+              Path(os.path.expanduser('~/.synapseflow/config.json'))]:
+        if p.exists():
+            try: return json.loads(p.read_text(encoding='utf-8'))
+            except: continue
+    return {}
+CFG = _load_cfg()
 CLIENTS = {
     "DS-Think": (OpenAI(api_key=CFG['sjtu_zhiyuan']['api_key'], base_url=CFG['sjtu_zhiyuan']['base_url']), "deepseek-reasoner"),
     "GLM":    (OpenAI(api_key=CFG['sjtu_zhiyuan']['api_key'], base_url=CFG['sjtu_zhiyuan']['base_url']), "glm"),

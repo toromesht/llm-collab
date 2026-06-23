@@ -67,9 +67,19 @@ except Exception:
     _HAS_NATIVE = False
 
 CONFIG_FILE = Path.home() / ".claude" / "tools" / "llm-config.json"
+SYNAPSEFLOW_CONFIG = Path.home() / ".synapseflow" / "config.json"
 RULES_FILE = Path.home() / ".claude" / "tools" / "decision-rules.json"
 
-config = json.loads(CONFIG_FILE.read_text(encoding="utf-8")) if CONFIG_FILE.exists() else {}
+def _load_config():
+    for path in [CONFIG_FILE, SYNAPSEFLOW_CONFIG]:
+        if path.exists():
+            try:
+                return json.loads(path.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                continue
+    return {}
+
+config = _load_config()
 
 # ═══════════════════════════════════════════════════════
 # TUNABLE HYPERPARAMETERS (调整这些参数来优化系统)
@@ -466,9 +476,15 @@ def execute_pipeline(question, steps):
 
 def execute_collab(question, models):
     results = {}
+    lock = threading.Lock()
     def worker(mid):
-        try: results[mid] = call(mid, question, max_tok=2500)
-        except Exception as e: results[mid] = f"[ERR:{e}]"
+        try:
+            r = call(mid, question, max_tok=2500)
+            with lock:
+                results[mid] = r
+        except Exception as e:
+            with lock:
+                results[mid] = f"[ERR:{e}]"
 
     threads = [threading.Thread(target=worker, args=(m,)) for m in models]
     for t in threads: t.start()
@@ -1219,14 +1235,16 @@ def brain_consolidate(question, model_used, correct, round_num, features):
             fep_temporal_memory(model_name, False, round_num)  # mild decay
 
     # Synaptic pruning: errors → eventually banned (like real forgetting)
+    # Only penalize the model that actually answered incorrectly
     if not correct:
-        for model_name in ["ds-pro","ds-think","glm","qwen","kimi"]:
-            w = load_synapse_weights()
-            cat = w.get(model_name, {})
-            cat["consecutive_wrong"] = cat.get("consecutive_wrong", 0) + 1
-            if cat["consecutive_wrong"] >= 5:
-                cat["banned"] = True  # Permanent forgetting
-            save_synapse_weights(w)
+        w = load_synapse_weights()
+        cat = w.get(model_used, {})
+        consecutive = cat.get("consecutive_wrong", 0) + 1
+        cat["consecutive_wrong"] = consecutive
+        if consecutive >= 5:
+            cat["banned"] = True  # Permanent forgetting for THIS model only
+            print(f"  [PRUNE] {model_used} banned after {consecutive} consecutive failures")
+        save_synapse_weights(w)
 
 # ─── Main ────────────────────────────────────────────
 

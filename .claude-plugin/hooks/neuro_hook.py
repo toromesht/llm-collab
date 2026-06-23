@@ -99,7 +99,7 @@ def fast_classify(prompt: str) -> dict:
     pending_models = []
     seen = set()
     for rid in active_regions:
-        rname = _REGION_NAMES[rid]
+        rname = REGION_NAMES[rid]
         models = list(ALL_MODELS.get(rid, []))
         if rid != region_id: models = models[:2]  # secondary: 2 models
         region_models[rname] = []
@@ -166,7 +166,14 @@ def write_status(routing: dict, done: bool = False, pathway: str = ""):
 def _call_model(model_id: str, prompt: str, max_tok: int = 2000) -> str:
     """Call a single model API. Returns response text."""
     from openai import OpenAI
-    cf = json.loads(open(os.path.expanduser('~/.claude/tools/llm-config.json'),'r',encoding='utf-8').read())
+    def _load_cfg():
+        for p in [os.path.expanduser('~/.claude/tools/llm-config.json'),
+                  os.path.expanduser('~/.synapseflow/config.json')]:
+            if os.path.exists(p):
+                try: return json.loads(open(p,'r',encoding='utf-8').read())
+                except: continue
+        return {}
+    cf = _load_cfg()
     km = {"ds-pro":"deepseek_pro","ds-think":"sjtu_zhiyuan","glm":"zhipu","qwen":"qwen3","kimi":"kimi","groq":"groq"}
     ck = km.get(model_id)
     if not ck or ck not in cf: raise ValueError(f"No config for {model_id}")

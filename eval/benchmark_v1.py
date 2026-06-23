@@ -10,7 +10,14 @@ from datetime import datetime
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-CFG = json.loads(Path(os.path.expanduser('~/.claude/tools/llm-config.json')).read_text(encoding='utf-8'))
+def _load_cfg():
+    for p in [Path(os.path.expanduser('~/.claude/tools/llm-config.json')),
+              Path(os.path.expanduser('~/.synapseflow/config.json'))]:
+        if p.exists():
+            try: return json.loads(p.read_text(encoding='utf-8'))
+            except: continue
+    return {}
+CFG = _load_cfg()
 CLIENTS = {
     "DS-PRO": (OpenAI(api_key=CFG['deepseek_pro']['api_key'], base_url=CFG['deepseek_pro']['base_url']), CFG['deepseek_pro']['model']),
     "Kimi":   (OpenAI(api_key=CFG['kimi']['api_key'], base_url=CFG['kimi']['base_url']), CFG['kimi']['model']),

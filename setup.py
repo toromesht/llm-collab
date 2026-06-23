@@ -3,8 +3,10 @@
 import json, os, getpass
 from pathlib import Path
 
-CONFIG_DIR = Path.home() / ".synapseflow"
-CONFIG_FILE = CONFIG_DIR / "config.json"
+CONFIG_DIR = Path.home() / ".claude" / "tools"
+CONFIG_FILE = CONFIG_DIR / "llm-config.json"
+# Also support synapseflow config path
+SYNAPSEFLOW_CONFIG = Path.home() / ".synapseflow" / "config.json"
 TEMPLATE = Path(__file__).parent / "config" / "llm-config.template.json"
 
 def setup():

@@ -1,15 +1,31 @@
+# API keys & config (never commit)
 engine/llm-config.json
-__pycache__/
-*.pyc
-.env
-answer_sheet_filled*.docx
-*.pdf
-.github/
 config/llm-config.json
 llm-config.json
+.env
+~/.claude/tools/llm-config.json
+~/.synapseflow/config.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+
+# Build artifacts
+build/
+cmake-build-*/
 *.dll
 *.exe
 *.mod
 *.o
 *.so
+*.a
+*.lib
 engine/brainstem_cli*
+
+# Generated
+answer_sheet_filled*.docx
+*.pdf
+.github/
