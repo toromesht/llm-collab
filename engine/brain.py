@@ -323,62 +323,48 @@ def execute_single(question, model="ds-pro"):
     return call(model, question)
 
 
-def execute_pipeline(question, steps):
-    """
-    [EXPERIMENTAL] Sequential multi-model pipeline.
-    NOT used in production routing — no proven accuracy benefit.
-    """
-    results = []
-    for i, s in enumerate(steps):
-        mid, role = s["model"], s.get("role", "")
-        print(f"  {CC['B']}[{MODELS[mid][0]}]{CC['R']} Step {i+1}: {role}...")
-        r = call(mid, f"任务: {role}\n\n完整上下文: {question}", max_tok=2500)
-        results.append({"step": i+1, "model": mid, "role": role, "result": r})
-    if len(results) == 1:
-        return results[0]["result"]
-    parts = "\n\n".join(f"--- Step {r['step']} ({r['role']}) ---\n{r['result']}"
-                        for r in results)
-    print(f"  {CC['B']}[GLM]{CC['R']} Combining...")
-    return call("glm", f"整合以下分步结果为一篇连贯回答:\n\n{question}\n\n{parts}",
-                system="保留所有代码、SQL、数字。中文作答。", max_tok=3500)
-
-
-def execute_collab(question, models):
-    """
-    [EXPERIMENTAL] Parallel multi-model collaboration.
-    NOT used in production routing — same accuracy, 3-5x cost.
-    """
-    import threading
-    results = {}
-    lock = threading.Lock()
-
-    def worker(mid):
-        try:
-            r = call(mid, question, max_tok=2500)
-            with lock:
-                results[mid] = r
-        except Exception as e:
-            with lock:
-                results[mid] = f"[ERR:{e}]"
-
-    threads = [threading.Thread(target=worker, args=(m,)) for m in models]
-    for t in threads:
-        t.start()
-    for t in threads:
-        t.join()
-
-    valid = {m: r for m, r in results.items() if not str(r).startswith("[ERR")}
-    if len(valid) == 0:
-        return "[ERROR: all models failed]"
-    if len(valid) == 1:
-        return list(valid.values())[0]
-
-    sections = "\n\n".join(f"=== {MODELS[m][0]} ===\n{valid[m]}"
-                           for m in models if m in valid)
-    print(f"  {CC['B']}[DS-PRO]{CC['R']} Synthesizing {len(valid)} answers...")
-    return call("glm", f"综合以下{len(valid)}个模型的独立回答，取长补短:\n\n"
-                f"{question}\n\n{sections}",
-                system="保留所有代码/SQL/数字。取各模型之精华。中文作答。", max_tok=4000)
+# ═══════════════════════════════════════════════════════════════
+# ARCHIVED: execute_pipeline & execute_collab — removed per empirical finding:
+# "Multi-model collaboration does NOT improve accuracy over single-model
+#  baselines. Same accuracy, 3.8x latency, 3-5x API cost."
+#  (440-question benchmark, 7 benchmarks, real API calls)
+#
+# These functions are preserved as reference for future research.
+# They are NOT called by the production routing path (K=1 always).
+# ═══════════════════════════════════════════════════════════════
+#
+# def execute_pipeline(question, steps):
+#     """[ARCHIVED] Sequential multi-model pipeline."""
+#     results = []
+#     for i, s in enumerate(steps):
+#         mid, role = s["model"], s.get("role", "")
+#         r = call(mid, f"任务: {role}\n\n完整上下文: {question}", max_tok=2500)
+#         results.append({"step": i+1, "model": mid, "role": role, "result": r})
+#     if len(results) == 1:
+#         return results[0]["result"]
+#     parts = "\n\n".join(f"--- {r['step']} ({r['role']}) ---\n{r['result']}" for r in results)
+#     return call("glm", f"整合:\n\n{question}\n\n{parts}",
+#                 system="保留所有代码、SQL、数字。中文作答。", max_tok=3500)
+#
+# def execute_collab(question, models):
+#     """[ARCHIVED] Parallel multi-model collaboration."""
+#     import threading
+#     results, lock = {}, threading.Lock()
+#     def worker(mid):
+#         try:
+#             r = call(mid, question, max_tok=2500)
+#             with lock: results[mid] = r
+#         except Exception as e:
+#             with lock: results[mid] = f"[ERR:{e}]"
+#     threads = [threading.Thread(target=worker, args=(m,)) for m in models]
+#     for t in threads: t.start()
+#     for t in threads: t.join()
+#     valid = {m:r for m,r in results.items() if not str(r).startswith("[ERR")}
+#     if len(valid) == 0: return "[ERROR: all models failed]"
+#     if len(valid) == 1: return list(valid.values())[0]
+#     sections = "\n\n".join(f"=== {MODELS[m][0]} ===\n{valid[m]}" for m in models if m in valid)
+#     return call("glm", f"综合{len(valid)}个模型:\n\n{question}\n\n{sections}",
+#                 system="保留所有代码/SQL/数字。取各模型之精华。中文作答。", max_tok=4000)
 
 
 # ═══════════════════════════════════════════════════════════════

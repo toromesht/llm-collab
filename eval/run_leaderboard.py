@@ -8,9 +8,8 @@ COST={m:0.001 for m in['ds-pro','ds-think','glm','qwen','kimi']}
 COST['groq']=0.0002; COST['ds-pro']=0.002; COST['kimi']=0.0015
 
 def route_synapseflow(q):
-    from engine.brainstem_wrapper import load; from engine.pareto_fep import ParetoFEP
-    bs=load(); r=ParetoFEP(bs)
-    d=r.route(q); return [m for ml in d['selected_models'].values() for m in ml][:1],d
+    from engine.brain import score_task, decide_route
+    s=score_task(q); d=decide_route(s); return [d['model']], d
 
 def route_heuristic(q):
     ql=q.lower()

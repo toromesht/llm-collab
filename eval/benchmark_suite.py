@@ -132,7 +132,10 @@ def evaluate_answer(model_output, ground_truth, bench):
             return abs(float(nums[-1]) - float(ground_truth)) < 0.01
         return False
     elif bench == "humaneval":
-        return len(str(model_output)) > 50  # Simplified; real eval needs execution
+        # NOT evaluated by length — requires code execution sandbox.
+        # HumanEval expects Python function with signature; real eval needs
+        # running the generated code against test cases. Skipping.
+        return None  # None = unevaluated, skipped in scoring
     elif bench == "mmlu":
         # Check if correct letter appears
         return str(ground_truth).upper() in str(model_output).upper()[:20]
@@ -298,10 +301,13 @@ def main():
         routers["ucb1"] = UCB1Router()
     if args.router in ["synapseflow", "all"]:
         try:
-            from engine.brainstem_wrapper import load as load_bs
-            from engine.pareto_fep import ParetoFEP
-            bs = load_bs()
-            routers["synapseflow"] = ParetoFEP(bs)
+            from engine.brain import score_task, decide_route
+            class BrainRouter:
+                def route(self, question):
+                    s = score_task(question)
+                    d = decide_route(s)
+                    return {"action": "single", "model": d["model"]}
+            routers["synapseflow"] = BrainRouter()
         except Exception as e:
             print(f"[WARN] SynapseFlow router unavailable: {e}")
 
