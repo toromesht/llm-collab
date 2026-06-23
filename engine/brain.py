@@ -205,229 +205,335 @@ MODELS = {
 
 CC = {"R":"\033[0m","C":"\033[36m","G":"\033[32m","Y":"\033[33m","D":"\033[2m","E":"\033[31m","M":"\033[35m","B":"\033[1;34m","W":"\033[1;37m"}
 
-# ─── Feature Extraction (from Dynamic MoE: token-difficulty scoring) ──
-def score_task(question):
-    """Continuous difficulty scoring, not binary keywords.
-       Inspired by Dynamic MoE (Huang et al., ACL 2024): per-token difficulty -> K experts"""
+# ═══════════════════════════════════════════════════════════════
+# LAZY EMBEDDER — sentence-transformers, loaded once
+# ═══════════════════════════════════════════════════════════════
+_embedder = None
+
+def _get_embedder():
+    global _embedder
+    if _embedder is None:
+        try:
+            from sentence_transformers import SentenceTransformer
+            _embedder = SentenceTransformer('all-MiniLM-L6-v2')
+        except Exception:
+            _embedder = False  # Mark as tried-but-failed
+    return _embedder if _embedder is not False else None
+
+
+# ═══════════════════════════════════════════════════════════════
+# SEMANTIC CLASSIFICATION — embedding → k-NN over prototypes
+# Replaces the brittle keyword regex that caused:
+#   "蒙提霍尔问题" → math (regex hit "概率")      WRONG: it's logic
+#   "设计微服务架构" → combinatorics (regex hit "组合") WRONG: it's architecture
+#   "12球称重问题" → no match                     WRONG: it's logic
+# ═══════════════════════════════════════════════════════════════
+
+# Prototype questions per category (few-shot semantic anchors)
+CATEGORY_PROTOTYPES = {
+    "math": [
+        "求解微分方程 dy/dx = y",
+        "证明拉格朗日中值定理",
+        "计算矩阵的特征值和特征向量",
+        "求极限 lim(x→0) sin(x)/x",
+        "解方程 2x+5=17",
+        "计算定积分 ∫ sin(x)dx",
+        "证明根号2是无理数",
+    ],
+    "code": [
+        "用Python写一个二分查找算法",
+        "实现快速排序",
+        "写一个SQL查询找出前10名客户",
+        "用递归实现二叉树遍历",
+        "写一个LRU缓存",
+        "实现一个哈希表",
+        "用Python写一个Web服务器",
+    ],
+    "logic": [
+        "三个嫌疑犯只有一个说真话，找出罪犯",
+        "12个球中有一个重量不同，用天平称三次找出",
+        "蒙提霍尔问题：换门还是不换门",
+        "如果A则B，非B所以非A，这个推理对吗",
+        "所有猫都有四条腿，这个动物有四条腿，所以它是猫，对吗",
+        "悖论：这句话是假的",
+    ],
+    "architecture": [
+        "设计一个微服务架构的系统",
+        "如何设计一个高可用的数据库集群",
+        "设计一个电商系统的技术方案",
+        "后端技术选型：Go vs Java vs Python",
+        "如何设计一个消息队列系统",
+        "分布式系统的CAP理论权衡",
+    ],
+    "writing": [
+        "写一篇关于人工智能的论文摘要",
+        "翻译这段英文到中文",
+        "润色这段文字使其更流畅",
+        "写一首关于秋天的诗",
+        "总结这篇文章的要点",
+    ],
+    "knowledge": [
+        "什么是量子纠缠",
+        "法国首都是哪里",
+        "解释相对论的基本原理",
+        "DNA的结构是什么",
+        "二战的起因是什么",
+    ],
+}
+
+# Model routing rules — based on actual benchmark data (440 questions)
+# Each category maps to preferred model(s) with cost/latency awareness
+CATEGORY_MODEL_RULES = {
+    "math":         {"primary": "ds-think", "fallback": "ds-pro",   "reason": "DS-Think 97% GSM8K; DS-Pro 95%"},
+    "code":         {"primary": "ds-pro",   "fallback": "ds-think", "reason": "DS-Pro strongest coder"},
+    "logic":        {"primary": "ds-pro",   "fallback": "ds-think", "reason": "All models weak at logic (37-50%), DS-Pro best"},
+    "architecture": {"primary": "glm",      "fallback": "ds-pro",   "reason": "GLM 91% on medium-difficulty knowledge/arch"},
+    "writing":      {"primary": "glm",      "fallback": "kimi",     "reason": "GLM strongest Chinese; Kimi best writing"},
+    "knowledge":    {"primary": "groq",     "fallback": "glm",      "reason": "Easy knowledge → cheap Groq; hard → GLM"},
+}
+
+# Cost per 1k tokens (USD) and relative latency
+MODEL_COST = {
+    "ds-pro": 0.002, "ds-think": 0.001, "groq": 0.0002,
+    "glm": 0.001, "qwen": 0.001, "kimi": 0.0015,
+}
+MODEL_LATENCY = {
+    "ds-pro": 3.0, "ds-think": 8.0, "groq": 0.5,
+    "glm": 2.0, "qwen": 1.5, "kimi": 1.0,
+}
+
+# ─── Embedding-based task classification ──────────────────
+
+def _cosine_sim(a, b):
+    """Cosine similarity between two vectors."""
+    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-8))
+
+
+def classify_question(question: str) -> dict:
+    """
+    Semantic classification using sentence-transformer embeddings.
+    Finds nearest prototype category via cosine similarity.
+
+    Falls back to keyword heuristics if embedder unavailable.
+
+    Returns:
+      {"category": str, "confidence": float, "embedding": ndarray|None,
+       "category_scores": {category: score}}
+    """
+    embedder = _get_embedder()
+
+    if embedder is not None:
+        # ── Embedding-based classification ──
+        q_emb = embedder.encode(question, convert_to_numpy=True).astype(np.float64)
+
+        # Compute average prototype embedding per category
+        cat_scores = {}
+        for cat, prototypes in CATEGORY_PROTOTYPES.items():
+            proto_embs = []
+            for p in prototypes:
+                pe = embedder.encode(p, convert_to_numpy=True).astype(np.float64)
+                proto_embs.append(pe)
+            avg_proto = np.mean(proto_embs, axis=0)
+
+            # Score = max cosine similarity to any prototype in category
+            max_sim = max(_cosine_sim(q_emb, pe) for pe in proto_embs)
+            cat_scores[cat] = float(max_sim)
+
+        best_cat = max(cat_scores, key=cat_scores.get)
+        confidence = cat_scores[best_cat]
+
+        # If confidence too low, default to "knowledge" (safe general-purpose)
+        if confidence < 0.3:
+            best_cat = "knowledge"
+            confidence = 0.3
+
+        return {
+            "category": best_cat,
+            "confidence": round(confidence, 3),
+            "embedding": q_emb,
+            "category_scores": {k: round(v, 3) for k, v in
+                               sorted(cat_scores.items(), key=lambda x: -x[1])},
+        }
+    else:
+        # ── Fallback: lightweight keyword heuristics (better than nothing) ──
+        return _fallback_classify(question)
+
+
+def _fallback_classify(question: str) -> dict:
+    """Minimal keyword fallback when sentence-transformers unavailable.
+
+    Designed to avoid the original regex bugs:
+    - "组合" no longer triggers math (was matching combinatorics regex)
+    - "设计" + context determines architecture vs general writing
+    - Logic patterns expanded to catch "称重", "蒙提霍尔", etc.
+    """
     q = question.lower()
 
-    # Dimension scores — 10 math subfields + core categories
-    math_subfields = {
-        "group_theory":     len(re.findall(r'(群论|群作用|子群|正规子群|商群|同态|同构|置换群|循环群|对称群|李群|有限群|阿贝尔群|半群|幺半群|换位子)', q)),
-        "graph_theory":     len(re.findall(r'(图论|有向图|无向图|二分图|连通图|生成树|哈密顿|欧拉路径|平面图|着色|最大流|最小割|匹配|网络流|顶点|入度|出度)', q)),
-        "topology":         len(re.findall(r'(拓扑|开集|闭集|紧致|连通|同胚|同伦|基本群|覆盖空间|流形|微分流形|纤维丛|同调|上同调|单纯形|CW复形)', q)),
-        "linear_algebra":   len(re.findall(r'(线性代数|矩阵|特征值|特征向量|对角化|行列式|秩|线性变换|内积|正交|施密特|二次型|正定|逆矩阵|伴随|转置|张量)', q)),
-        "calculus":         len(re.findall(r'(微积分|极限|导数|积分|微分|偏导|梯度|散度|旋度|拉普拉斯|傅里叶|级数|收敛|发散|泰勒|麦克劳林|中值定理)', q)),
-        "probability":      len(re.findall(r'(概率|统计|分布|期望|方差|协方差|贝叶斯|假设检验|置信区间|回归|马尔可夫|随机过程|泊松|正态分布|二项分布|蒙特卡洛)', q)),
-        "number_theory":    len(re.findall(r'(数论|素数|质数|整除|同余|模运算|费马|欧拉|RSA|丢番图|连分数|二次互反|原根|剩余|算术基本定理)', q)),
-        "diff_eq":          len(re.findall(r'(微分方程|常微分|偏微分|ODE|PDE|边值问题|初值问题|分离变量|特征线|拉普拉斯方程|热方程|波动方程|薛定谔|稳定性|相图)', q)),
-        "combinatorics":    len(re.findall(r'(组合|排列|组合数|鸽巢|容斥|生成函数|递推|图计数|设计|拉丁方|区组设计|极值组合|拉姆齐)', q)),
-        "optimization":     len(re.findall(r'(优化|最优化|凸优化|线性规划|非线性规划|整数规划|动态规划|遗传算法|模拟退火|约束优化|目标函数|可行域|对偶|KKT|拉格朗日乘子)', q)),
+    # Logic: patterns based on problem structure, not just keywords
+    logic_score = len(re.findall(r'(说谎|谁说|真话|假话|悖论|逻辑推理|谁在.*说谎|判断.*谁|'
+                                 r'称重.*次|称.*次.*找出|蒙提霍尔|三个.*一个.*真|罪犯|'
+                                 r'如果.*那么.*对|前提.*结论|所有.*所以|推理)', q))
+
+    scores = {
+        "math": len(re.findall(r'(方程|积分|导数|极限|证明.*定理|矩阵|向量|几何|代数|'
+                               r'微积分|概率|统计|数论|微分|拉格朗日|费马)', q)),
+        "code": len(re.findall(r'(写.*代码|写.*函数|python|sql|算法|编程|实现.*程序|'
+                               r'class |def |import |用.*写.*一个|写一个)', q)),
+        "logic": logic_score,
+        "architecture": len(re.findall(r'(架构设计|系统设计|技术方案|选型|微服务|分布式|'
+                                       r'高可用|扩容|设计一个.*系统|设计.*架构|CAP|'
+                                       r'技术栈|后端.*选)', q)),
+        "writing": len(re.findall(r'(写作|论文|翻译|润色|写.*诗|写.*文章|总结.*要点|'
+                                  r'写一篇|帮我写|修改.*文字)', q)),
+        "knowledge": len(re.findall(r'(什么是|是谁|在哪里|何时|为什么|定义|概念|原理|'
+                                    r'历史|背景|如何|怎么|解释|区别)', q)),
     }
 
-    dims = {
-        "code": len(re.findall(r'(代码|sql|函数|算法|编程|python|写一个|实现|ddl|cte|class |def |import |SELECT|CREATE)', q)),
-        "math": sum(math_subfields.values()),  # Total math signal
-        "arch": len(re.findall(r'(架构|设计|系统|方案|权衡|选型|策略|规划|框架|整体|多方案)', q)),
-        "writing": len(re.findall(r'(写作|论文|文档|说明|报告|总结|翻译|润色|解释|描述)', q)),
-        "knowledge": len(re.findall(r'(什么|如何|为什么|定义|概念|原理|历史|背景|综述)', q)),
-        "trap_single": len(re.findall(r'(图遍历|递归cte|索引优化|sql调优|存储过程|触发器|算法复杂度)', q)),
-        "trap_need_collab": len(re.findall(r'(多视角|对比分析|跨领域|综合评估|深度剖析|多方|全面)', q)),
-        "logic": len(re.findall(r'(说谎|谁说|真话|假话|悖论|逻辑|推理.*谁|判断.*谁|谎言|真相)', q)),
-    }
-    # Merge math subfields into dims for fine-grained routing
-    dims.update(math_subfields)
+    # Dedup: if "设计" appears with "系统/架构/方案" → architecture, not math
+    # "设计" alone (e.g. "设计模式") stays general
 
-    # ─── Group-Equivariant Coupling (群等变耦合) ──────────────────
-    # When a model is strong in one subfield, it gets bonus in related subfields
-    # Based on gauge equivariant transformer principle (2024): symmetry-preserving routing
-    MATH_EQUIVARIANCE = {
-        "group_theory":   ["linear_algebra", "number_theory"],      # 矩阵表示论, 同余→群
-        "linear_algebra": ["group_theory", "calculus", "topology"], # 李代数, 微分方程
-        "topology":       ["calculus", "diff_eq", "linear_algebra"],# 微分拓扑, 同调代数
-        "graph_theory":   ["combinatorics", "optimization"],       # 图=组合结构, 网络流
-        "combinatorics":  ["graph_theory", "number_theory", "probability"],# 计数, 拉姆齐
-        "calculus":       ["diff_eq", "topology", "optimization"], # 连续→离散
-        "diff_eq":        ["calculus", "topology"],                # ODE↔PDE, 动力系统
-        "probability":    ["optimization", "combinatorics"],       # 随机优化
-        "optimization":   ["probability", "graph_theory"],         # 凸优化, 网络流
-        "number_theory":  ["group_theory", "combinatorics"],       # 同余→环, 丢番图
-    }
-
-    # Apply equivariant coupling: boost related subfield scores
-    for field, related in MATH_EQUIVARIANCE.items():
-        if dims.get(field, 0) > 0:
-            for rel in related:
-                dims[rel] = dims.get(rel, 0) + 0.5  # Half-weight coupling
-
-    # Simplicity signals (penalize trivial tasks)
-    is_trivial = len(question) < 80 and dims["arch"] == 0 and dims["math"] == 0
-    is_simple_code = dims["code"] >= 1 and dims["arch"] == 0 and len(question) < 100
-
-    # Continuous difficulty score (Dynamic MoE: harder tasks -> more experts)
-    complexity = (
-        dims["code"] * 1.0 +
-        dims["math"] * 1.5 +
-        dims["arch"] * 1.2 +
-        dims["writing"] * 0.5 +
-        dims["knowledge"] * 0.3
-    )
-    # Trivial penalty: simple short tasks get difficulty halved
-    if is_trivial or is_simple_code:
-        complexity *= 0.3
-
-    # Normalize to [0, 1] using sigmoid
-    difficulty = 1.0 / (1.0 + math.exp(-complexity / 5.0))
-
-    # Extra: trivial tasks are clamped to low difficulty
-    if is_trivial:
-        difficulty = min(difficulty, 0.35)
-
-    # Collaboration benefit score (from benchmark data)
-    collab_benefit = (
-        dims["arch"] * 0.4 +
-        dims["trap_need_collab"] * 0.6 -
-        dims["trap_single"] * 0.5  # Strong penalty for trap patterns
-    )
-    collab_benefit = max(-1.0, min(1.0, collab_benefit / 3.0))
-
-    # Model affinity (98 questions, 3 rounds):
-    #   Easy: any model works.
-    #   Medium: GLM(91%) > DS-Think(88%)
-    #   Hard: DS-PRO(72%) > DS-Think(70%) > GLM(67%)
-    #   All struggle on deep logic (37-50% wall)
-    model_affinity = {
-        "ds-pro":   dims["code"] * 0.45 + dims["math"] * 0.45 + dims["arch"] * 0.2,  # Hard tasks king (V3 72%)
-        "glm":      dims["arch"] * 0.4 + dims["knowledge"] * 0.4 + dims["writing"] * 0.3,  # Medium king (V2 91%)
-        "ds-think": dims["code"] * 0.35 + dims["math"] * 0.35 + dims["arch"] * 0.2 + dims["knowledge"] * 0.2,  # All-rounder (V1 100%)
-        "qwen":     dims["writing"] * 0.2 + dims["knowledge"] * 0.2 + dims["code"] * 0.15,  # Solid #3
-        "kimi":     dims["writing"] * 0.5,  # Writing only
-    }
+    best_cat = max(scores, key=scores.get)
+    if max(scores.values()) == 0:
+        best_cat = "knowledge"
 
     return {
-        "difficulty": difficulty,
-        "collab_benefit": collab_benefit,
+        "category": best_cat,
+        "confidence": 0.5,
+        "embedding": None,
+        "category_scores": scores,
+    }
+
+
+def estimate_difficulty(question: str, category: str) -> float:
+    """
+    Estimate question difficulty for routing.
+
+    Difficulty factors:
+    - Question length (longer = more complex)
+    - Category (math/logic > code/arch > knowledge/writing)
+    - Presence of reasoning keywords ("证明", "prove", "设计", "design")
+
+    Returns: difficulty ∈ [0, 1]
+    """
+    q = question.lower()
+    base = {
+        "math": 0.55, "logic": 0.50, "code": 0.40,
+        "architecture": 0.45, "writing": 0.30, "knowledge": 0.20,
+    }.get(category, 0.35)
+
+    # Length bonus: longer questions tend to be harder
+    length_bonus = min(0.2, len(question) / 2000 * 0.2)
+
+    # Reasoning keywords
+    reasoning = len(re.findall(r'(证明|推导|prove|设计|design|优化|optimize|分析|analyze)', q))
+    reasoning_bonus = min(0.2, reasoning * 0.1)
+
+    return min(1.0, base + length_bonus + reasoning_bonus)
+
+
+def score_task(question: str) -> dict:
+    """
+    Task classification + difficulty estimation → routing features.
+
+    This is the entry point for the router. Uses embedding-based semantic
+    classification (NOT keyword regex) with fallback heuristics.
+
+    Returns:
+      {"category": str, "difficulty": float, "confidence": float,
+       "model_affinity": dict, "dims": dict, "embedding": ndarray|None}
+    """
+    cls = classify_question(question)
+    cat = cls["category"]
+    difficulty = estimate_difficulty(question, cat)
+
+    # Model affinity based on category rules (from empirical benchmarks)
+    rules = CATEGORY_MODEL_RULES[cat]
+    model_affinity = {
+        "ds-pro":   0.8 if rules["primary"] == "ds-pro" else 0.3,
+        "ds-think": 0.8 if rules["primary"] == "ds-think" else 0.3,
+        "glm":      0.8 if rules["primary"] == "glm" else 0.3,
+        "groq":     0.8 if rules["primary"] == "groq" else 0.3,
+        "qwen":     0.5,
+        "kimi":     0.5,
+    }
+    # Boost fallback if primary is expensive and question is easy
+    if difficulty < 0.35 and rules["primary"] in ("ds-pro", "ds-think"):
+        model_affinity[rules.get("fallback", "groq")] = 0.7
+
+    return {
+        "category": cat,
+        "difficulty": round(difficulty, 3),
+        "confidence": cls["confidence"],
         "model_affinity": model_affinity,
-        "dims": dims,
+        "category_scores": cls["category_scores"],
+        "embedding": cls.get("embedding"),
+        "dims": {"code": 0, "math": 0, "logic": 0, "knowledge": 0, "writing": 0,
+                 "arch": 0, "trap_single": 0, "trap_need_collab": 0},
         "length": len(question),
     }
 
-# ─── Stage 1: Difficulty Estimation (Dynamic MoE: K = f(difficulty)) ──
+# ─── Simplified Router: single-model routing with cost awareness ──
+#
+# EMPIRICAL FINDING (440 questions, 7 benchmarks):
+#   Multi-model collaboration does NOT improve accuracy.
+#   Same accuracy (HumanEval 100% vs 100%, GSM8K 75% vs 75%)
+#   but 3.8x slower, 3-5x more API calls, 3-5x higher cost.
+#
+# ROUTING STRATEGY:
+#   Always route to a SINGLE model (K=1).
+#   Easy questions → cheap/fast models (Groq, GLM, Qwen).
+#   Hard questions → strong models (DS-Think, DS-Pro).
+#   Cost savings come from avoiding expensive models on trivial queries.
+# ═══════════════════════════════════════════════════════════════
 
-def estimate_K(difficulty, collab_benefit):
-    """Map difficulty to optimal number of models.
-       From Dynamic MoE: harder tasks activate MORE experts.
-       From benchmark: negative collab_benefit -> force single model."""
-    if collab_benefit < -0.3:
-        return 1  # Trap patterns: force single
+def decide_route(scores: dict) -> dict:
+    """
+    Single-model routing with cost/latency awareness.
 
-    if difficulty < 0.2:
-        return 1  # Very easy: single model
-    elif difficulty < 0.4:
-        return 1 if collab_benefit < 0.1 else 2  # Easy: single unless clear benefit
-    elif difficulty < 0.6:
-        return 2  # Medium: pipeline or dual-model
-    elif difficulty < 0.8:
-        return 3  # Hard: 3-model collab
+    Args:
+        scores: from score_task() — {category, difficulty, model_affinity, ...}
+
+    Returns:
+        {"action": "single", "model": str, "K": 1, "reason": str,
+         "estimated_cost": float, "estimated_latency": float}
+    """
+    cat = scores["category"]
+    difficulty = scores["difficulty"]
+    affinity = scores["model_affinity"]
+    rules = CATEGORY_MODEL_RULES.get(cat, CATEGORY_MODEL_RULES["knowledge"])
+
+    # ── Cost-aware model selection ──
+    # Easy question → use cheaper model from the category
+    # Hard question → use the strongest model for the category
+    if difficulty < 0.35:
+        # Easy: prefer cheap
+        model = rules.get("fallback", rules["primary"])
     else:
-        return 4  # Very hard: full 4-model collab
+        # Medium/Hard: use primary (strongest for category)
+        model = rules["primary"]
 
-# ─── Category Blacklist (RACER 2025: statistical exclusion) ──
-# Models with weight < 0 in a category are BANNED from that category.
-# From 98-question reward-penalty matrix.
+    # Override: very hard → always use strongest available
+    if difficulty > 0.75:
+        model = "ds-pro"  # DS-Pro strongest overall on hard tasks
 
-CATEGORY_BAN = {
-    "logic": ["ds-pro", "ds-think", "glm", "qwen"],
-}
+    # Override: trivial → always use cheapest
+    if difficulty < 0.2:
+        model = "groq"
 
-# Banned models serve as CRITICS (Nature 2025: limited-visibility consensus),
-# not answerers. They check the primary answer for flaws.
-CRITIC_MAP = {
-    "logic": ["ds-think", "glm"],  # These may suck at logic, but can spot obvious errors
-}
+    estimated_cost = MODEL_COST.get(model, 0.001)
+    estimated_latency = MODEL_LATENCY.get(model, 2.0)
 
-def get_allowed_models(category, candidates):
-    """Filter: only models NOT banned for this category"""
-    banned = CATEGORY_BAN.get(category, [])
-    allowed = [m for m in candidates if m not in banned]
-    if not allowed:
-        # All banned -> use least-bad (Kimi for logic, GLM for general)
-        fallback = {"logic": ["Kimi", "DS-Think"], "general": ["DS-PRO", "GLM"]}
-        return fallback.get(category, candidates[:2])
-    return allowed
-
-# ─── Stage 2: Collaboration Mode (MasRouter: cascaded decision) ──
-
-def decide_mode(K, difficulty, collab_benefit, affinity, dims):
-    # ─── Native C++ Router Fast Path ──────────────────────
-    if _HAS_NATIVE and _NATIVE_ROUTER is not None:
-        try:
-            # Use C++ router for sub-microsecond decision
-            features = {k: float(v) for k, v in dims.items()}
-            native_decision = _NATIVE_ROUTER.route(features, dims, 'general')
-            if native_decision.get('confidence', 0) > 0.3:
-                return native_decision
-        except Exception:
-            pass  # Fall back to Python routing
-    # ─── Python Router (original path) ────────────────────
-    """Strict exclusion routing (RACER 2025 + Router-R1 inspired):
-       Banned models = never called. Only allowed models participate."""
-    # Detect category from dims
-    primary_cat = "general"
-    if dims.get("code",0) >= 1: primary_cat = "code"
-    if dims.get("math",0) >= 1: primary_cat = "math"
-    if dims.get("logic",0) >= 1: primary_cat = "logic"
-    if dims.get("arch",0) >= 1 or dims.get("knowledge",0) >= 1: primary_cat = "knowledge"
-
-    allowed = get_allowed_models(primary_cat, list(affinity.keys()))
-
-    # Remove banned models from affinity
-    clean_affinity = {m: w for m, w in affinity.items() if m in allowed}
-
-    if K == 1:
-        # Diversity gate: prevent single model dominance
-        diverse_allowed = diversity_gate(list(allowed), None)
-        clean_diverse = {m: clean_affinity.get(m, 0.5) for m in diverse_allowed if m in clean_affinity}
-        if not clean_diverse: clean_diverse = clean_affinity
-        # EquiRouter ranking-based selection
-        best = ranking_based_route(clean_diverse, list(clean_diverse.keys()))
-
-        if difficulty > 0.7 and "ds-pro" in allowed:
-            best = "ds-pro"
-        elif difficulty > 0.4:
-            if dims.get("knowledge",0) > dims.get("code",0) and "glm" in allowed:
-                best = "glm"
-            elif best not in allowed:
-                best = max(clean_diverse, key=clean_diverse.get)
-        if best not in allowed:
-            best = allowed[0] if allowed else "ds-pro"
-
-        # Load balance: track routing counts
-        ROUTE_COUNTS[best] = ROUTE_COUNTS.get(best, 0) + 1
-        penalty = load_balance_penalty(best)
-        if penalty > 0.01 and len(diverse_allowed) > 1:
-            alt = [m for m in diverse_allowed if m != best and m in allowed]
-            if alt:
-                best = max(alt, key=lambda m: clean_affinity.get(m, 0.5) - load_balance_penalty(m))
-
-        return {"action": "single", "model": best, "K": 1,
-                "reason": f"Difficulty={difficulty:.2f}, best={best}"}
-
-    elif K == 2:
-        ranked = sorted(clean_affinity, key=clean_affinity.get, reverse=True)[:2]
-        excluded = set(affinity.keys()) - set(allowed)
-        ex_msg = f" | EXCLUDED: {', '.join(excluded)}" if excluded else ""
-        return {"action": "pipeline", "models": ranked, "K": 2,
-                "steps": [{"model": ranked[0], "role": "core"},
-                          {"model": ranked[1], "role": "polish"}],
-                "reason": f"Difficulty={difficulty:.2f}, pipeline: {' -> '.join(ranked)}{ex_msg}"}
-
-    else:  # K >= 3
-        ranked = sorted(clean_affinity, key=clean_affinity.get, reverse=True)[:K]
-        excluded = set(affinity.keys()) - set(allowed)
-        ex_msg = f" | EXCLUDED: {', '.join(excluded)}" if excluded else ""
-        return {"action": "collab", "models": ranked, "K": K,
-                "reason": f"Difficulty={difficulty:.2f}, {K}-model collab: {', '.join(ranked)}{ex_msg}"}
+    return {
+        "action": "single",
+        "model": model,
+        "K": 1,
+        "reason": f"cat={cat} diff={difficulty:.2f} → {model} "
+                  f"(est_cost=${estimated_cost:.4f}/1k, est_lat={estimated_latency}s)",
+        "estimated_cost": estimated_cost,
+        "estimated_latency": estimated_latency,
+        "category": cat,
+        "difficulty": difficulty,
+    }
 
 # ─── API Call ────────────────────────────────────────
 
@@ -1255,88 +1361,48 @@ def main():
         print("Usage: python brain.py <question>", file=sys.stderr)
         sys.exit(1)
 
-    # Step 1: Score task (Dynamic MoE difficulty estimation)
+    # Step 1: Semantic classification (embedding-based, NOT keyword regex)
     scores = score_task(question)
-    K = estimate_K(scores["difficulty"], scores["collab_benefit"])
+    decision = decide_route(scores)
 
-    # Step 2: Decide mode (MasRouter cascaded controller)
-    # TDA cache check: if similar question exists, reuse its routing
-    tda_hit = tda_find_similar(question, scores["dims"])
-    if tda_hit:
-        print(f"  {CC['M']}[TDA]{CC['R']} Similar question found (sim={tda_hit.get('action','?')} -> {tda_hit.get('model','?')})")
-    decision = decide_mode(K, scores["difficulty"], scores["collab_benefit"], scores["model_affinity"], scores["dims"])
-
-    print(f"\n{CC['W']}{'='*64}{CC['R']}")
-    print(f"  {CC['W']}Brain v6 | Paper-driven adaptive routing{CC['R']}")
-    print(f"  Difficulty={scores['difficulty']:.2f} | K={K} | Mode={decision['action']}")
+    print(f"\n{CC['W']}{'='*60}{CC['R']}")
+    print(f"  {CC['W']}SynapseFlow — Semantic Router{CC['R']}")
+    print(f"  Category: {scores['category']} (conf={scores['confidence']:.2f})")
+    print(f"  Difficulty: {scores['difficulty']:.2f}")
     print(f"  {decision['reason']}")
-    print(f"{CC['W']}{'='*64}{CC['R']}")
+    print(f"{CC['W']}{'='*60}{CC['R']}")
 
-    # Step 3: Execute
-    if decision["action"] == "single":
-        answer = execute_single(question, decision.get("model", "ds-pro"))
-        # Quality gate (Unified Cascade): if single answer low quality, cascade
-        if not quality_gate(answer, scores["dims"]) and K > 1:
-            print(f"  {CC['Y']}[CASCADE] Quality insufficient, escalating to pipeline...{CC['R']}")
-            # Re-route to next tier
-            if K == 2:
-                answer = execute_pipeline(question, decision.get("steps", [{"model":"ds-pro","role":"直接回答"}]))
-            else:
-                answer = execute_collab(question, decision.get("models", ["ds-pro","glm"]))
+    # Step 2: Execute single model
+    model = decision["model"]
+    answer = execute_single(question, model)
 
-    elif decision["action"] == "pipeline":
-        answer = execute_pipeline(question, decision.get("steps", [{"model":"ds-pro","role":"直接回答"}]))
-    else:
-        answer = execute_collab(question, decision.get("models", ["ds-pro","glm"]))
-
-    # Step 4: Critic review (banned models check primary answer)
-    primary_cat = "general"
-    if scores["dims"].get("logic",0) >= 1: primary_cat = "logic"
-    if scores["dims"].get("code",0) >= 1: primary_cat = "code"
-    critics = CRITIC_MAP.get(primary_cat, [])
-    if critics:
-        print(f"  {CC['M']}[CRITIC]{CC['R']} Banned models reviewing: {', '.join(critics)}")
-        for c in critics:
-            try:
-                review = call(c, f"检查以下回答是否有逻辑错误或矛盾。如有，指出具体问题。如无，回复OK。\n\n问题: {question[:200]}\n回答: {answer[:800]}", max_tok=200)
-                if "OK" not in review and len(review) > 5:
-                    print(f"  {CC['Y']}[CRITIC:{c}]{CC['R']} flagged: {review[:120]}...")
-                    answer += f"\n\n[审查意见/{c}]: {review}"
-                else:
-                    print(f"  {CC['D']}[CRITIC:{c}]{CC['R']} passed")
-            except:
-                pass
+    # Step 3: Track estimated cost
+    est_tokens = max(10, len(question + answer) // 4)
+    est_cost = MODEL_COST.get(model, 0.001) * est_tokens / 1000
 
     # Output
-    print(f"\n{CC['W']}{'='*64}{CC['R']}")
+    print(f"\n{CC['W']}{'='*60}{CC['R']}")
     print(answer[:3000] if len(answer) > 3000 else answer)
-    print(f"\n{CC['D']}v14 | diff={scores['difficulty']:.2f} K={K} | dims={scores['dims']}{CC['R']}\n")
+    print(f"\n{CC['D']}[{model}] cat={scores['category']} "
+          f"diff={scores['difficulty']:.2f} "
+          f"est_tok={est_tokens} "
+          f"est_cost=${est_cost:.6f}{CC['R']}\n")
 
-    # TDA cache: store this question→routing for future similarity matching
-    tda_cache_question(question, scores["dims"], decision)
-
-    # Log + Synaptic Update
+    # Log
     from datetime import datetime
-    round_counter = json.loads(open(Path.home() / ".claude" / "tools" / "round_counter.json", "r").read()) if (Path.home() / ".claude" / "tools" / "round_counter.json").exists() else 0
-    # Simple correctness guess from quality_gate
-    likely_correct = quality_gate(answer, scores["dims"])
-    used_model = decision.get("model") or (decision.get("models",["ds-pro"])[0] if decision.get("models") else "ds-pro")
-    synaptic_update(question, used_model, likely_correct, round_counter, scores["dims"])
-    spsa_step(likely_correct, scores["dims"])  # Online hyperparameter tuning
-    round_counter += 1
-    with open(Path.home() / ".claude" / "tools" / "round_counter.json", "w") as f:
-        f.write(str(round_counter))
-
     log = {
         "timestamp": datetime.now().isoformat(),
         "question_len": len(question),
-        "difficulty": round(scores["difficulty"], 3),
-        "K": K,
-        "action": decision["action"],
-        "models": decision.get("model") or decision.get("models", []),
-        "dims": scores["dims"],
+        "category": scores["category"],
+        "difficulty": scores["difficulty"],
+        "model": model,
+        "estimated_cost": round(est_cost, 6),
+        "estimated_tokens": est_tokens,
+        "action": "single",
     }
-    with open(Path.home() / ".claude" / "tools" / "decision-log.jsonl", "a", encoding="utf-8") as f:
+    log_dir = Path.home() / ".synapseflow" / "brain"
+    log_dir.mkdir(parents=True, exist_ok=True)
+    with open(log_dir / "decision-log.jsonl", "a", encoding="utf-8") as f:
         f.write(json.dumps(log, ensure_ascii=False) + "\n")
 
 if __name__ == "__main__":
