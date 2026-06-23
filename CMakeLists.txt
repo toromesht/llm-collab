@@ -12,6 +12,10 @@ set(CMAKE_Fortran_STANDARD 2018)
 # Find OpenMP FIRST (needed by Fortran)
 find_package(OpenMP REQUIRED)
 
+# Optional: MPI for distributed brainstem (Plan B)
+# Install: sudo apt install libopenmpi-dev (Linux) or MSYS2 mingw-w64-ucrt-x86_64-openmpi
+find_package(MPI COMPONENTS CXX Fortran QUIET)
+
 # Find correct Python (must be 64-bit, matching the compiler)
 find_package(Python 3.11 COMPONENTS Interpreter Development REQUIRED)
 find_package(pybind11 CONFIG QUIET)
@@ -68,4 +72,18 @@ if(pybind11_FOUND)
             )
         endforeach()
     endif()
+endif()
+
+# ─── Plan B: MPI Brainstem (optional, requires MPI) ──────
+if(MPI_Fortran_FOUND)
+    set(MPI_FORTRAN_SOURCES
+        engine/fortran/mpi_utils.f90
+        engine/fortran/brainstem_mpi.f90
+    )
+    add_executable(brainstem_mpi ${MPI_FORTRAN_SOURCES})
+    target_link_libraries(brainstem_mpi PRIVATE MPI::MPI_Fortran OpenMP::OpenMP_Fortran)
+    target_compile_options(brainstem_mpi PRIVATE -O2 -fopenmp)
+    set_target_properties(brainstem_mpi PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+    )
 endif()
