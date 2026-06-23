@@ -438,3 +438,223 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# BELOW: ARCHIVED — Neuro-synaptic mechanisms implemented but NOT wired into
+# the production routing path. Preserved as reference implementations.
+#
+# Why not used:
+#   1. No proven benefit over simple category→model rules (440q benchmark)
+#   2. SPSA gradient estimate is NOT unbiased (one-eval variant violates Spall 1992)
+#   3. 36-parameter space (6 models × 6 categories) too small for STDP+BCM+FEP convergence
+#   4. Alpha oscillation / Kuramoto operate at wrong timescale (ms vs episodes)
+#   5. Multi-model collaboration: same accuracy, 3.8x latency, 3-5x cost
+#
+# These are kept for:
+#   - Paper reproduction reference (neuro_runner.py wires them independently)
+#   - Future research if scale increases beyond current n=36
+#   - Honest documentation of what was tried
+# ═══════════════════════════════════════════════════════════════════════════
+
+
+# ═══════════════════════════════════════════════════════════════
+# ARCHIVED: SPSA — Simultaneous Perturbation Stochastic Approximation
+# Spall, IEEE Trans. Automatic Control 37(3):332-341 (1992)
+#
+# PROBLEM: The "one-eval SPSA" variant used J_plus=J (current) and
+# J_minus=last_J (EMA of past). This violates SPSA's requirement:
+#   gradient = (J(θ+cΔ) - J(θ-cΔ)) / (2cΔ)
+# Both evaluations must be AT THE SAME θ with independent perturbations.
+# Using historical EMA as J_minus produces biased, non-convergent updates.
+#
+# CORRECT SPSA requires TWO API calls per step (evaluate θ+cΔ AND θ-cΔ),
+# which doubles the already-high cost of multi-model routing.
+# ═══════════════════════════════════════════════════════════════
+#
+# SPSA_STATE = {"k": 0, "last_J": 0.5, "a": 0.01, "c": 0.05, "A": 50}
+#
+# def spsa_step(was_correct, dims):
+#     """[ARCHIVED] SPSA online hyperparameter optimization — NOT unbiased."""
+#     s = SPSA_STATE
+#     s["k"] += 1; k = s["k"]
+#     a_k = s["a"] / (s["A"] + k) ** 0.602
+#     c_k = s["c"] / k ** 0.101
+#     J = 1.0 if was_correct else 0.0
+#     s["last_J"] = 0.9 * s["last_J"] + 0.1 * J
+#     param_keys = ["stdp_A_plus","stdp_A_minus","stdp_tau_plus","stdp_tau_minus",
+#                   "bcm_alpha","lateral_alpha","prune_threshold","prune_rounds"]
+#     delta = {k: random.choice([-1, 1]) for k in param_keys}
+#     orig = {k: PARAMS[k] for k in param_keys}
+#     for kk in param_keys:
+#         PARAMS[kk] = max(0.001, orig[kk] + c_k * delta[kk])
+#     _refresh_params()
+#     J_plus = J  # ← BUG: should be independent evaluation
+#     J_minus = s["last_J"]  # ← BUG: historical EMA, not J(θ-cΔ)
+#     for kk in param_keys:
+#         gradient = (J_plus - J_minus) / (2 * c_k * delta[kk] + 1e-8)  # biased!
+#         PARAMS[kk] = max(0.001, orig[kk] - a_k * gradient)
+#     _refresh_params()
+
+
+# ═══════════════════════════════════════════════════════════════
+# ARCHIVED: STDP — Spike-Timing-Dependent Plasticity
+# Song, Miller & Abbott, Nature Neuroscience 3:919-926 (2000)
+#
+# STDP weight update per (model, category) pair:
+#   Δw = +A⁺·exp(-Δt/τ⁺) if correct   (LTP: causal pre→post)
+#   Δw = -A⁻·exp(-Δt/τ⁻) if incorrect (LTD: anti-causal)
+#
+# NOTES: Reasonable for online learning but operates at episode timescale
+# (seconds/minutes) vs biological millisecond scale. Mathematical guarantees
+# of STDP (stability, convergence) depend on continuous spike timing and
+# 10⁴+ synapses — not applicable at n=36 discrete events.
+# ═══════════════════════════════════════════════════════════════
+#
+# STDP_A_PLUS, STDP_A_MINUS = 0.15, 0.10
+# STDP_TAU_PLUS, STDP_TAU_MINUS = 5.0, 3.0
+#
+# def stdp_update(weight, model_category, correct, round_num):
+#     """[ARCHIVED] Pair-based STDP weight update."""
+#     cat = model_category
+#     last_c = cat.get("last_correct", 0)
+#     last_w = cat.get("last_wrong", 0)
+#     if correct:
+#         dt = round_num - last_c if last_c > 0 else 1
+#         dw = STDP_A_PLUS * math.exp(-dt / STDP_TAU_PLUS)
+#         cat["last_correct"] = round_num
+#     else:
+#         dt = round_num - last_w if last_w > 0 else 1
+#         dw = -STDP_A_MINUS * math.exp(-dt / STDP_TAU_MINUS)
+#         cat["last_wrong"] = round_num
+#     return max(-1.0, min(1.0, weight + dw))
+
+
+# ═══════════════════════════════════════════════════════════════
+# ARCHIVED: BCM — Bienenstock-Cooper-Munro Sliding Threshold
+# Bienenstock, Cooper & Munro, J Neuroscience 2(1):32-48 (1982)
+#
+# Key idea: LTP/LTD threshold slides with neuron activity history.
+#   If y > θ_M → LTP (above-average → strengthen)
+#   If y < θ_M → LTD (below-average → weaken)
+#   θ_M = E[y²] (moving average of squared activity)
+#
+# NOTES: Designed for rate-based neurons with continuous activity.
+# Applied to binary (correct/wrong) outcomes at n=36 — the sliding
+# threshold degenerates to a simple accuracy comparison.
+# ═══════════════════════════════════════════════════════════════
+#
+# BCM_ALPHA = 0.01
+#
+# def bcm_threshold_update(cat, round_num):
+#     """[ARCHIVED] BCM sliding threshold for plasticity modulation."""
+#     rate = cat.get("firing_rate", 0.5)
+#     threshold = rate ** 2  # θ_M = E[y²]
+#     cat["bcm_threshold"] = threshold
+#     recent_acc = (round_num - cat.get("last_wrong", 0)) / max(1,
+#         round_num - cat.get("last_correct", 0) + round_num - cat.get("last_wrong", 0))
+#     cat["firing_rate"] = rate + BCM_ALPHA * (recent_acc - rate)
+#     return threshold
+
+
+# ═══════════════════════════════════════════════════════════════
+# ARCHIVED: FEP — Free Energy Principle Temporal Memory
+# Friston, Nature Reviews Neuroscience 11:127-138 (2010)
+# Wong, R. "Affinity Is Not Enough" arXiv:2605.00604 (2025)
+#
+# Three mechanisms from Friston 2010 Eqs.1,3,4:
+#   β(t): LIF membrane potential accumulating routing context
+#   Π(t): per-expert inverse variance of prediction error
+#   Anticipatory bonus = β(t) × Π(t) (super-additive)
+#
+# NOTES: The FEP implementation uses Beta-Bernoulli conjugate updates
+# which is just Bayesian bandit. The "124x improvement" claim from
+# Wong (2025) was measured on domain-boundary routing with large
+# expert pools — not applicable to n=6 models.
+# ═══════════════════════════════════════════════════════════════
+#
+# FEP_STATE = {}
+#
+# def fep_temporal_memory(model_name, correct, round_num):
+#     """[ARCHIVED] β: LIF membrane potential for routing context."""
+#     if model_name not in FEP_STATE:
+#         FEP_STATE[model_name] = {"beta": 0.0, "precision": 1.0,
+#                                   "pred_error_ema": 0.5, "last_round": round_num}
+#     s = FEP_STATE[model_name]
+#     dt = max(1, round_num - s["last_round"])
+#     tau = 10.0
+#     signal = 1.0 if correct else -0.2
+#     s["beta"] = s["beta"] + dt * (-s["beta"]/tau + 0.3 * signal)
+#     s["last_round"] = round_num
+#     return s["beta"]
+#
+# def fep_precision_gate(model_name, correct):
+#     """[ARCHIVED] Π: per-expert inverse variance of prediction error."""
+#     if model_name not in FEP_STATE:
+#         FEP_STATE[model_name] = {"beta": 0.0, "precision": 1.0, "pred_error_ema": 0.5}
+#     s = FEP_STATE[model_name]
+#     error = 0.0 if correct else 1.0
+#     s["pred_error_ema"] = 0.9 * s["pred_error_ema"] + 0.1 * error
+#     s["precision"] = 1.0 / (s["pred_error_ema"] + 0.01)
+#     return s["precision"]
+
+
+# ═══════════════════════════════════════════════════════════════
+# ARCHIVED: Alpha Oscillation Inhibition (Duecker et al., PLOS CB 2024)
+# + Kuramoto Exploration (Front Comput Neurosci 2025)
+# + Temporally Layered Architecture (Patel & Sejnowski, Neural Comp 2024)
+#
+# All three operate on biologically-relevant timescales (10Hz alpha,
+# 5Hz theta, millisecond membrane dynamics) that don't map to
+# episode-level LLM API calls (seconds to minutes).
+#
+# Alpha filter: h_j = σ(z_j - c·r_j - m·sin(2π·10·t))
+# Kuramoto: dθ/dt = ω + (K/N)Σ sin(θ_j - θ_i)
+# TLA: fast layer (heuristic, low energy) vs slow layer (deliberative)
+#
+# These add computational overhead (O(n²) per filter) with no empirical
+# benefit at the current routing scale.
+# ═══════════════════════════════════════════════════════════════
+#
+# ALPHA_STATE, THETA_STATE, TLA_STATE = {}, {"phase": 0.0, "K": 1.0}, {...}
+# (implementations omitted — see git history for full code)
+
+
+# ═══════════════════════════════════════════════════════════════
+# ARCHIVED: Synaptic Pruning + Homeostatic Normalization
+#
+# Pruning: P(prune) = 1/(1+exp(-k·(t-t₀))) where t=consecutive failures
+# Homeostatic: Σ|w| normalized to constant per model
+#
+# NOTES: At n=36, pruning is equivalent to "if weight < threshold: ban".
+# The sigmoidal decay curve adds unjustified complexity. Homeostatic
+# normalization is just softmax at this scale.
+# ═══════════════════════════════════════════════════════════════
+#
+# PRUNE_THRESHOLD, PRUNE_ROUNDS = -0.3, 5
+# LATERAL_ALPHA = 0.03
+# def lateral_inhibition(weights_by_model, winner, category): ...
+# def homeostatic_normalize(weights_by_model): ...
+# def prune_check(weights_by_model, category): ...
+
+
+# ═══════════════════════════════════════════════════════════════
+# ARCHIVED: 7-Timescale Memory System
+#
+# MEMORY_TYPES with distinct τ: STF(0.2s), STD(0.5s), E-LTP(30min),
+# L-LTP(500h), E-LTD(20min), L-LTD(400h), Meta(100h)
+#
+# NOTES: 7 timescales for 36 parameters is over-parameterized.
+# The mathematical guarantees of multi-timescale plasticity
+# (Benna & Fusi, Nature Neuroscience 2016) require continuous
+# synapses and 10⁴+ parameters for stable cascade dynamics.
+# At n=36, a single EWMA (τ≈5) achieves equivalent behavior.
+# ═══════════════════════════════════════════════════════════════
+#
+# MEMORY_TYPES = {
+#     "STF": {"tau": 0.2, "amp": 0.05, ...},
+#     "STD": {"tau": 0.5, "amp": -0.03, ...},
+#     "E-LTP": {"tau": 30.0, "amp": 0.10, ...},
+#     "L-LTP": {"tau": 500.0, "amp": 0.20, ...},
+#     ...
+# }
