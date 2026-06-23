@@ -316,6 +316,186 @@ def call(model_id, prompt, system=None, max_tok=2000, temp=0.3):
 # ═══════════════════════════════════════════════════════════════
 # EXECUTION
 # ═══════════════════════════════════════════════════════════════
+# UNIFIED ROUTER — pluggable backends: semantic|math|deep|path
+# ═══════════════════════════════════════════════════════════════
+
+# Lazy-loaded router instances
+_router_instance = None
+_router_type = None
+
+ROUTER_TYPES = {
+    "semantic": "Rule-based category→model (default, zero training)",
+    "math":     "JL projection + LSH + Discounted UCB + CUSUM (online learning)",
+    "deep":     "3-layer MLP + MC Dropout + Thompson sampling (online learning)",
+    "path":     "Bayesian Beta posterior + Adaptive forgetting + UCB (online learning)",
+}
+
+
+def get_router(router_type: str = "semantic"):
+    """Get or initialize a router instance. Lazy-loaded, cached globally.
+
+    Args:
+        router_type: 'semantic' | 'math' | 'deep' | 'path'
+
+    Returns:
+        Router object with .route(question) → dict interface
+    """
+    global _router_instance, _router_type
+    if _router_type == router_type and _router_instance is not None:
+        return _router_instance
+
+    if router_type == "semantic" or router_type not in ("math", "deep", "path"):
+        _router_instance = SemanticRouter()
+        _router_type = "semantic"
+    elif router_type == "math":
+        try:
+            from engine.math_router import MathRouter
+            _router_instance = MathRouterAdapter()
+            _router_type = "math"
+        except ImportError:
+            _router_instance = SemanticRouter()
+            _router_type = "semantic"
+    elif router_type == "deep":
+        try:
+            from engine.deep_router import DeepRouter
+            _router_instance = DeepRouterAdapter()
+            _router_type = "deep"
+        except ImportError:
+            _router_instance = SemanticRouter()
+            _router_type = "semantic"
+    elif router_type == "path":
+        try:
+            from engine.path_learner import PathLearner
+            _router_instance = PathLearnerAdapter()
+            _router_type = "path"
+        except ImportError:
+            _router_instance = SemanticRouter()
+            _router_type = "semantic"
+
+    return _router_instance
+
+
+class SemanticRouter:
+    """Rule-based category→model routing. Zero training, instant setup."""
+    router_type = "semantic"
+
+    def route(self, question: str) -> dict:
+        s = score_task(question)
+        d = decide_route(s)
+        return {**d, "category": s["category"], "confidence": s["confidence"]}
+
+    def learn(self, question: str, model: str, reward: float):
+        pass  # No learning — rules are static
+
+    def stats(self) -> dict:
+        return {"type": "semantic", "episodes": 0}
+
+
+class MathRouterAdapter:
+    """Adapter: MathRouter (JL+LSH+UCB+CUSUM) → unified route interface."""
+    router_type = "math"
+
+    def __init__(self):
+        from engine.math_router import MathRouter
+        self._r = MathRouter()
+
+    def route(self, question: str) -> dict:
+        s = score_task(question)
+        features = {k: float(v) for k, v in s.get("dims", {}).items() if v}
+        features["category"] = s["category"]
+        features["difficulty"] = s["difficulty"]
+        try:
+            region_name, region_id, conf, diff = self._r.classify(features)
+            return {
+                "action": "single", "model": "ds-pro", "K": 1,
+                "reason": f"MathRouter: region={region_name} conf={conf:.2f} diff={diff:.2f}",
+                "category": s["category"], "confidence": conf,
+            }
+        except Exception:
+            return SemanticRouter().route(question)
+
+    def learn(self, question: str, model: str, reward: float):
+        try:
+            s = score_task(question)
+            self._r.update(
+                region=s["category"], model=model, category=s["category"],
+                success=reward > 0.5, features=s.get("dims", {}))
+        except Exception:
+            pass
+
+    def stats(self) -> dict:
+        return {"type": "math", "paths": len(self._r.paths)}
+
+
+class DeepRouterAdapter:
+    """Adapter: DeepRouter (3-layer MLP + Thompson) → unified route interface."""
+    router_type = "deep"
+
+    def __init__(self):
+        from engine.deep_router import DeepRouter
+        self._r = DeepRouter()
+
+    def route(self, question: str) -> dict:
+        try:
+            d = self._r.route(question)
+            return {
+                "action": "single", "model": d.get("primary_model", "ds-pro"),
+                "K": 1, "reason": f"DeepRouter: MLP+Thompson",
+                "predictions": d.get("model_scores", {}),
+            }
+        except Exception:
+            return SemanticRouter().route(question)
+
+    def learn(self, question: str, model: str, reward: float):
+        try:
+            self._r.learn(question, model, reward)
+        except Exception:
+            pass
+
+    def stats(self) -> dict:
+        return {"type": "deep", "episodes": self._r.episodes,
+                "loss": getattr(self._r, "total_loss", 0)}
+
+
+class PathLearnerAdapter:
+    """Adapter: PathLearner (Bayesian + Adaptive Forgetting + UCB) → route interface."""
+    router_type = "path"
+
+    def __init__(self):
+        from engine.path_learner import PathLearner
+        self._r = PathLearner()
+
+    def route(self, question: str) -> dict:
+        s = score_task(question)
+        try:
+            model, conf = self._r.route(
+                question_features=s.get("dims", {}),
+                brainstem_region=s["category"],
+                difficulty=s["difficulty"])
+            return {
+                "action": "single", "model": model, "K": 1,
+                "reason": f"PathLearner: Bayesian UCB conf={conf:.2f}",
+                "category": s["category"], "confidence": conf,
+            }
+        except Exception:
+            return SemanticRouter().route(question)
+
+    def learn(self, question: str, model: str, reward: float):
+        try:
+            s = score_task(question)
+            pid = f"{s['category']}::{model}::general"
+            from engine.path_learner import PathState
+            ps = PathState(path_id=pid, region=s["category"],
+                          model=model, category="general")
+            self._r.update(ps, reward)
+        except Exception:
+            pass
+
+    def stats(self) -> dict:
+        return {"type": "path", "paths": len(getattr(self._r, "paths", {}))}
+
+
+# ═══════════════════════════════════════════════════════════════
 
 def execute_single(question, model="ds-pro"):
     """Call a single model and return the answer."""
@@ -372,36 +552,63 @@ def execute_single(question, model="ds-pro"):
 # ═══════════════════════════════════════════════════════════════
 
 def main():
-    question = " ".join(sys.argv[1:]) if len(sys.argv) > 1 else (
+    import argparse
+    ap = argparse.ArgumentParser(description="SynapseFlow LLM Router")
+    ap.add_argument("question", nargs="*", help="Question text")
+    ap.add_argument("--router", choices=["semantic","math","deep","path"],
+                    default="semantic",
+                    help="semantic=rule(default) | math=JL+LSH+UCB | deep=MLP+Thompson | path=Bayesian+Forgetting")
+    ap.add_argument("--learn", type=float, default=None,
+                    help="Simulated reward for learning (0.0-1.0)")
+    ap.add_argument("--list-routers", action="store_true",
+                    help="Show available routers")
+    args = ap.parse_args()
+
+    if args.list_routers:
+        for k, v in ROUTER_TYPES.items():
+            print(f"  {k:12s} — {v}")
+        return
+
+    question = " ".join(args.question) if args.question else (
         sys.stdin.read().strip() if not sys.stdin.isatty() else "")
     if not question:
-        print("Usage: python brain.py <question>", file=sys.stderr)
+        print("Usage: python brain.py [--router semantic|math|deep|path] <question>",
+              file=sys.stderr)
         sys.exit(1)
 
-    # 1. Classify
-    scores = score_task(question)
-    decision = decide_route(scores)
+    # 1. Route via selected backend
+    router = get_router(args.router)
+    decision = router.route(question)
+    model = decision.get("model", "ds-pro")
+
+    # Build display info from whatever the router returns
+    category = decision.get("category", "?")
+    confidence = decision.get("confidence", 0.5)
+    difficulty = decision.get("difficulty",
+        decision.get("estimated_cost", 0.3))
 
     print(f"\n{CC['W']}{'='*60}{CC['R']}")
-    print(f"  {CC['W']}SynapseFlow Router{CC['R']}")
-    print(f"  Category: {scores['category']} (conf={scores['confidence']:.2f})")
-    print(f"  Difficulty: {scores['difficulty']:.2f}")
-    print(f"  {decision['reason']}")
+    print(f"  {CC['W']}SynapseFlow — {router.router_type.upper()} Router{CC['R']}")
+    print(f"  Category: {category} (conf={confidence:.2f})")
+    print(f"  {decision.get('reason', '')}")
     print(f"{CC['W']}{'='*60}{CC['R']}")
 
-    # 2. Execute single model
-    model = decision["model"]
+    # 2. Execute
     answer = execute_single(question, model)
 
-    # 3. Track cost
+    # 3. Learn (if --learn flag provided)
+    if args.learn is not None:
+        router.learn(question, model, args.learn)
+        print(f"  {CC['Y']}[LEARN] {model} reward={args.learn}{CC['R']}")
+
+    # 4. Track cost
     est_tokens = max(10, len(question + answer) // 4)
     est_cost = MODEL_COST.get(model, 0.001) * est_tokens / 1000
 
-    # Output
     print(f"\n{CC['W']}{'='*60}{CC['R']}")
     print(answer[:3000] if len(answer) > 3000 else answer)
-    print(f"\n{CC['D']}[{model}] cat={scores['category']} "
-          f"diff={scores['difficulty']:.2f} "
+    print(f"\n{CC['D']}[{model}] router={router.router_type} "
+          f"cat={category} "
           f"est_tok={est_tokens} "
           f"est_cost=${est_cost:.6f}{CC['R']}\n")
 
@@ -410,8 +617,8 @@ def main():
     log = {
         "timestamp": datetime.now().isoformat(),
         "question_len": len(question),
-        "category": scores["category"],
-        "difficulty": scores["difficulty"],
+        "router": router.router_type,
+        "category": category,
         "model": model,
         "estimated_cost": round(est_cost, 6),
         "estimated_tokens": est_tokens,
